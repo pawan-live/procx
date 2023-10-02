@@ -1,18 +1,16 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-npm run lint-staged
+npx lint-staged
 
-npm run format || (
-    echo "\n❌ Prettier Format Failed.❌\n Please run 'npm run format', add the changes, and try committing again. \n"
-    false
-)
+# npm run format || (
+#     echo "\n❌ Prettier Check Failed.❌\n Please run 'npm run format', add the changes, and try committing again.👀 \n"
+#     false
+# )
 
-# Check code formatting with Prettier
 npm run check-format || (
-    echo "\n❌ Prettier Check Failed.❌\n Please run 'npm run format', add the changes, and try committing again. \n"
+    echo "\n❌ Prettier Check Failed.❌\n Please run 'npm run format', add the changes, and try committing again.👀 \n"
     false
 )
 
-# If everything passes, we can now commit
-echo "✅ Commit Hook Passed! Committing changes. 🚀\n"
+echo "✅ Commit Hook Passed! Committing changes now. 💪\n"
