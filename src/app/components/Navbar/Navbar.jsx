@@ -7,6 +7,8 @@ import {
   AvatarImage,
 } from "@/app/components/ui/avatar";
 import { Button } from "../ui/button";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { LogOut, User } from "lucide-react";
 
 const Navbar = (Props) => {
   console.log(Props.navbarItems);
@@ -30,6 +32,22 @@ const Navbar = (Props) => {
         <AvatarImage src="https://github.com/shadcn.png" />
         <AvatarFallback>CN</AvatarFallback>
       </Avatar>
+      <Popover>
+        <PopoverTrigger asChild>
+          <Button>Hello</Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-50 p-2">
+          <div className="grid grid-gap-2 gap-y-2">
+            <Button variant="outline">
+              <User className="mr-5 h-4 w-4" /> My Profile
+            </Button>
+            <Button variant="outline">
+              <LogOut className="mr-5 h-4 w-4" />
+              Sign Out
+            </Button>
+          </div>
+        </PopoverContent>
+      </Popover>
     </nav>
   );
 };
