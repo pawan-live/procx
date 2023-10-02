@@ -1,14 +1,16 @@
 "use client";
-import Link from "next/link";
-import React from "react";
+
 import {
   Avatar,
   AvatarFallback,
   AvatarImage,
 } from "@/app/components/ui/avatar";
+import { LogOut, User } from "lucide-react";
+import Link from "next/link";
+import React from "react";
+
 import { Button } from "../ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { LogOut, User } from "lucide-react";
 
 const Navbar = (Props) => {
   console.log(Props.navbarItems);
@@ -20,7 +22,8 @@ const Navbar = (Props) => {
             <Link
               className="px-4 py-1 rounded-md hover:bg-slate-100"
               key={item.id}
-              href={item.url}>
+              href={item.url}
+            >
               {item.text}
             </Link>
           );
@@ -32,7 +35,8 @@ const Navbar = (Props) => {
         <PopoverTrigger asChild>
           <Avatar
             className="cursor-pointer outline-3 outline-slate-300 hover:outline"
-            onClick={() => {}}>
+            onClick={() => {}}
+          >
             <AvatarImage src="https://github.com/shadcn.png" />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
