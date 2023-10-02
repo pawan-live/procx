@@ -5,6 +5,8 @@ import { Inter } from "next/font/google";
 const inter = Inter({ subsets: ["latin"] });
 
 import NavbarData from "@/app/Utils/data/navbarData.json";
+import SidebarData from "@/app/Utils/data/sidebarData.json";
+import Sidebar from "./components/Sidebar/Sidebar";
 
 export const metadata = {
   title: "Create Next App",
@@ -15,8 +17,13 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Navbar navbarItems={NavbarData} />
-        {children}
+        <div className="flex flex-row h-screen">
+          <Sidebar sidebarItmes={SidebarData} />
+          <div className="w-full">
+            <Navbar navbarItems={NavbarData} />
+            {children}
+          </div>
+        </div>
       </body>
     </html>
   );
