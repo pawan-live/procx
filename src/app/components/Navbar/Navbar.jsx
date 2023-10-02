@@ -1,23 +1,35 @@
 "use client";
 import Link from "next/link";
 import React from "react";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/app/components/ui/avatar";
 import { Button } from "../ui/button";
 
 const Navbar = (Props) => {
   console.log(Props.navbarItems);
   return (
-    <nav className="flex flex-row justify-between items-center bg-yellow-400 text-black text-16px px-4 py-4">
-      <div className="flex gap-x-4">
+    <nav className="flex flex-row justify-between items-center bg-white shadow-md text-black text-16px px-6 py-4">
+      <div className="flex gap-x-2">
         {Props.navbarItems.map((item) => {
           return (
-            <Link key={item.id} href={item.url}>
+            <Link
+              className="px-4 py-1 rounded-md hover:bg-slate-100"
+              key={item.id}
+              href={item.url}>
               {item.text}
             </Link>
           );
         })}
-        {/*  */}
       </div>
-      <Button>Hello</Button>
+      <Avatar
+        className="cursor-pointer outline-3 outline-slate-300 hover:outline"
+        onClick={() => {}}>
+        <AvatarImage src="https://github.com/shadcn.png" />
+        <AvatarFallback>CN</AvatarFallback>
+      </Avatar>
     </nav>
   );
 };
