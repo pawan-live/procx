@@ -1,12 +1,12 @@
-import Navbar from "./components/Navbar/Navbar";
-import "./globals.css";
-import { Inter } from "next/font/google";
-
-const inter = Inter({ subsets: ["latin"] });
-
 import NavbarData from "@/app/Utils/data/navbarData.json";
 import SidebarData from "@/app/Utils/data/sidebarData.json";
+import { Inter } from "next/font/google";
+
+import Navbar from "./components/Navbar/Navbar";
 import Sidebar from "./components/Sidebar/Sidebar";
+import "./globals.css";
+
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Create Next App",
