@@ -17,19 +17,24 @@ const Navbar = (Props) => {
             </Link>
           );
         })}
-        {/*  */}
       </div>
       <Popover>
+        {/* Change Trigger*/}
         <PopoverTrigger asChild>
           <Button>Hello</Button>
         </PopoverTrigger>
-        <PopoverContent className="w-50 p-2">
+        <PopoverContent className="w-50 p-2 rounded-2xl">
           <div className="grid grid-gap-2 gap-y-2">
-            <Button variant="outline">
-              <User className="mr-5 h-4 w-4" /> My Profile
+            <Button variant="outline" className="rounded-xl">
+              <User strokeWidth={3} className="mr-5 h-4 w-4" color="#2B4E36" />
+              My Profile
             </Button>
-            <Button variant="outline">
-              <LogOut className="mr-5 h-4 w-4" />
+            <Button variant="outline" className="rounded-xl">
+              <LogOut
+                strokeWidth={3}
+                className="mr-5 h-4 w-4"
+                color="#2B4E36"
+              />
               Sign Out
             </Button>
           </div>
