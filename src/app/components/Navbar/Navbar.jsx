@@ -26,17 +26,17 @@ const Navbar = (Props) => {
           );
         })}
       </div>
-      <Avatar
-        className="cursor-pointer outline-3 outline-slate-300 hover:outline"
-        onClick={() => {}}>
-        <AvatarImage src="https://github.com/shadcn.png" />
-        <AvatarFallback>CN</AvatarFallback>
-      </Avatar>
+
       <Popover>
         <PopoverTrigger asChild>
-          <Button>Hello</Button>
+          <Avatar
+            className="cursor-pointer outline-3 outline-slate-300 hover:outline"
+            onClick={() => {}}>
+            <AvatarImage src="https://github.com/shadcn.png" />
+            <AvatarFallback>CN</AvatarFallback>
+          </Avatar>
         </PopoverTrigger>
-        <PopoverContent className="w-50 p-2">
+        <PopoverContent className="w-50 p-2 mt-2 mr-5">
           <div className="grid grid-gap-2 gap-y-2">
             <Button variant="outline">
               <User className="mr-5 h-4 w-4" /> My Profile
