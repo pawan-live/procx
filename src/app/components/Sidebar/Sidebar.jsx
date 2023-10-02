@@ -2,36 +2,30 @@
 import Link from "next/link";
 import Image from "next/image";
 import { React, useState } from "react";
+import { ChevronLeft } from "lucide-react";
 
 const Sidebar = (Props) => {
   console.log(Props.sidebarItmes);
   const [open, setOpen] = useState(true);
 
   return (
-    <div className="flex h-screen  ">
+    <div className="relative left-0 flex h-screen">
       <div
-        className={` ${
-          open ? "w-60" : "w-20 justify-space-between items-center "
-        } pr-2 pt-8  relative duration-300  rounded-r-lg bg-blue-500  flex flex-col justify-center items-center`}
-      >
+        className={`${
+          open ? "w-60" : "w-20 justify-space-between items-center"
+        } pr-2 pt-8 relative duration-300 rounded-r-lg bg-blue-500 flex flex-col justify-center items-center`}>
         <div
           className={`absolute cursor-pointer    top-4 transform transition duration-200 ease-in-out 
-             ${open ? "right-4" : "rotate-180"}`}
-        >
-          <Image
-            src={"/sideBarOpener.svg"}
-            width={40}
-            height={40}
-            alt=""
-            className="cursor-pointer p-1 rounded transition duration-300 hover:bg-gray-400"
+             ${open ? "right-4" : "rotate-180"}`}>
+          <ChevronLeft
+            className="w-10 h-10 cursor-pointer p-1 rounded transition duration-300 hover:bg-gray-400"
             onClick={() => setOpen(!open)}
           />
         </div>
         <div
           className={`${
             !open && "hidden"
-          } origin-left duration-200 flex flex-col gap-y-4 `}
-        >
+          } origin-left duration-200 flex flex-col gap-y-4 `}>
           {Props.sidebarItmes.map((item) => {
             return (
               <Link key={item.id} href={item.url}>

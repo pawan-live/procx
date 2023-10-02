@@ -17,9 +17,13 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Navbar navbarItems={NavbarData} />
-        <Sidebar sidebarItmes={SidebarData} />
-        {children}
+        <div className="flex flex-row h-screen">
+          <Sidebar sidebarItmes={SidebarData} />
+          <div className="w-full">
+            <Navbar navbarItems={NavbarData} />
+            {children}
+          </div>
+        </div>
       </body>
     </html>
   );
