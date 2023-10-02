@@ -1,22 +1,12 @@
 [
   {
     "id": 1,
-    "text": "Link 1",
-    "url": "https://www.google.com"
+    "text": "Dashboard",
+    "url": "/dashboard"
   },
   {
     "id": 2,
-    "text": "Link 2",
-    "url": "https://www.google.com"
-  },
-  {
-    "id": 3,
-    "text": "Link 3",
-    "url": "https://www.google.com"
-  },
-  {
-    "id": 4,
-    "text": "Link 4",
-    "url": "https://www.google.com"
+    "text": "Home",
+    "url": "/"
   }
 ]

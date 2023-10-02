@@ -56,6 +56,7 @@ module.exports = {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+        "25px": "25px",
       },
       keyframes: {
         "accordion-down": {
