@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "icon": "/sideBarDashboard.svg",
+    "text": "Dashboard",
+    "url": "https://www.google.com"
+  },
+  {
+    "id": 2,
+    "icon": "/sideBarOrders.svg",
+    "text": "Orders",
+    "url": "https://www.google.com"
+  },
+  {
+    "id": 3,
+    "icon": "/sideBarPayments.svg",
+    "text": "Payments",
+    "url": "https://www.google.com"
+  },
+  {
+    "id": 4,
+    "icon": "/sideBarProducts.svg",
+    "text": "Products",
+    "url": "https://www.google.com"
+  },
+   {
+    "id": 5,
+    "icon": "/sideBarSupplies.svg",
+    "text": "Supplies",
+    "url": "https://www.google.com"
+  }
+]

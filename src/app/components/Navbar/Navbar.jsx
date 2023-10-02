@@ -8,7 +8,7 @@ import { LogOut, User } from "lucide-react";
 const Navbar = (Props) => {
   console.log(Props.navbarItems);
   return (
-    <nav className="flex flex-row justify-between items-center bg-yellow-400 text-black text-16px px-4 py-4">
+    <nav className="flex flex-row justify-between items-center bg-yellow-400 text-black text-16px px-4 py-4" style={{borderRadius:"0 0 0 0"}}>
       <div className="flex gap-x-4">
         {Props.navbarItems.map((item) => {
           return (
