@@ -11,6 +11,7 @@ import React from "react";
 
 import { Button } from "../ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import BreadCrumbs from "./BreadCrumbs";
 
 const Navbar = (Props) => {
   console.log(Props.navbarItems);
@@ -29,6 +30,8 @@ const Navbar = (Props) => {
           );
         })}
       </div>
+
+      <BreadCrumbs />
 
       <Popover>
         {/* Change Trigger*/}
