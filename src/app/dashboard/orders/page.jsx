@@ -3,9 +3,7 @@ import React from "react";
 
 const page = () => {
   return (
-    <div>
-      <BreadCrumbs />
-    </div>
+    <div className="text-2xl text-green-500 font-bold">This is a page </div>
   );
 };
 
