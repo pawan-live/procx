@@ -11,9 +11,9 @@ import React from "react";
 
 import { Button } from "../ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import BreadCrumbs from "./BreadCrumbs";
 
 const Navbar = (Props) => {
-  console.log(Props.navbarItems);
   return (
     <nav className="flex flex-row justify-between items-center bg-white shadow-md text-black text-16px px-6 py-4">
       <div className="flex gap-x-2">
@@ -29,6 +29,8 @@ const Navbar = (Props) => {
           );
         })}
       </div>
+
+      <BreadCrumbs />
 
       <Popover>
         {/* Change Trigger*/}
