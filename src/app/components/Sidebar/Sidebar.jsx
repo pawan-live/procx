@@ -9,8 +9,20 @@ const Sidebar = (Props) => {
   console.log(Props.sidebarItmes);
   const [open, setOpen] = useState(true);
 
+  const handleMouseEnter = () => {
+    setOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    setOpen(false);
+  };
+
   return (
-    <div className="relative left-0 flex h-screen">
+    <div
+      className="relative left-0 flex h-screen"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
       <div
         className={`${
           open ? "w-60" : "w-20 justify-space-between items-center"
