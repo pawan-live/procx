@@ -1,10 +1,3 @@
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/app//components/ui/select";
 import BreadCrumbs from "@/app/components/Navbar/BreadCrumbs";
 import { Button } from "@/app/components/ui/button";
 import {
@@ -19,7 +12,6 @@ import { DateRangePicker } from "@/app/components/ui/dateRangePicker";
 import { Input } from "@/app/components/ui/input";
 import { Label } from "@/app/components/ui/label";
 import { Tabs, TabsContent } from "@/app/components/ui/tabs";
-import React from "react";
 
 const page = () => {
   return (
@@ -48,22 +40,11 @@ const page = () => {
                   <DateRangePicker />
                   <Label>Description</Label>
                   <Input type="text" required></Input>
-
-                  {/* <Label htmlFor="items">Items</Label>
-                  <Select required>
-                    <SelectTrigger id="catalogue">
-                      <SelectValue placeholder="Select" />
-                    </SelectTrigger>
-                    <SelectContent position="popper">
-                      <SelectItem value="next">Restricted</SelectItem>
-                      <SelectItem value="sveltekit">Not Restricted</SelectItem>
-                    </SelectContent>
-                  </Select> */}
                 </div>
               </form>
             </CardContent>
             <CardFooter className="flex justify-between items-center">
-              <Button onClick="">Add Supplier</Button>
+              <Button>Add Supplier</Button>
             </CardFooter>
           </Card>
         </div>
