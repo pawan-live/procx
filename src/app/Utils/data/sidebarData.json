@@ -1,31 +1,31 @@
 [
   {
     "id": 1,
-    "icon": "/sideBarDashboard.svg",
+    "icon": "/Sidebar/sideBarOrders.svg",
     "text": "Dashboard",
     "url": "https://www.google.com"
   },
   {
     "id": 2,
-    "icon": "/sideBarOrders.svg",
+    "icon": "/Sidebar/sideBarOrders.svg",
     "text": "Orders",
     "url": "https://www.google.com"
   },
   {
     "id": 3,
-    "icon": "/sideBarPayments.svg",
+    "icon": "/Sidebar/sideBarPayments.svg",
     "text": "Payments",
     "url": "https://www.google.com"
   },
   {
     "id": 4,
-    "icon": "/sideBarProducts.svg",
+    "icon": "/Sidebar/sideBarProducts.svg",
     "text": "Products",
     "url": "https://www.google.com"
   },
   {
     "id": 5,
-    "icon": "/sideBarSupplies.svg",
+    "icon": "/Sidebar/sideBarSupplies.svg",
     "text": "Supplies",
     "url": "https://www.google.com"
   }
