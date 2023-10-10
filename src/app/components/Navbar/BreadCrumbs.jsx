@@ -9,15 +9,6 @@ const BreadCrumbs = () => {
   const pages = pathname.split("/").filter((page) => page !== "");
 
   return (
-    // <div>
-    //   {pages.map((page, index) => (
-    //     <span className={`capitalize ${page===pages[pages.length-1]?"font-bold":""}`} key={index}>
-    //       {page}
-    //       {index !== pages.length - 1 && " > "}
-    //     </span>
-    //   ))}
-    // </div>
-
     <div>
       {pages.map((page, index) => (
         <span key={index}>
