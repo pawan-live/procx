@@ -1,3 +1,4 @@
+import { Button } from "@/app/components/ui/button";
 import {
   Card,
   CardContent,
@@ -6,21 +7,19 @@ import {
   CardHeader,
   CardTitle,
 } from "@/app/components/ui/card";
-import { ImagePlus } from "lucide-react";
-import React from "react";
-
-import { Button } from "../components/ui/button";
-import { DateRangePicker } from "../components/ui/dateRangePicker";
-import { Input } from "../components/ui/input";
-import { Label } from "../components/ui/label";
+import { DateRangePicker } from "@/app/components/ui/dateRangePicker";
+import { Input } from "@/app/components/ui/input";
+import { Label } from "@/app/components/ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../components/ui/select";
-import { Tabs, TabsContent } from "../components/ui/tabs";
+} from "@/app/components/ui/select";
+import { Tabs, TabsContent } from "@/app/components/ui/tabs";
+import { ImagePlus } from "lucide-react";
+import React from "react";
 
 const page = () => {
   return (

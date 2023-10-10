@@ -21,8 +21,8 @@ const page = () => {
         <div className="flex">
           <Card className="w-full">
             <CardHeader>
-              <CardTitle>View Supplier</CardTitle>
-              <CardDescription>View supplier details.</CardDescription>
+              <CardTitle>Update Supplier</CardTitle>
+              <CardDescription>Update supplier details here.</CardDescription>
             </CardHeader>
             <CardContent>
               <form>
