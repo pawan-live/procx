@@ -28,9 +28,12 @@ const Page = () => {
               <form>
                 <div className="flex flex-col md:flex-row gap-x-4 gap-y-4 w-full">
                   <div className="flex flex-col space-y-1.5 w-full lg:w-1/2">
+                    <Label>Supplier ID</Label>
+                    <Input type="text" readOnly></Input>
                     <Label>Supplier Name</Label>
                     <Input type="text" required></Input>
-                    <Label>Address</Label>
+
+                    <Label>Contact Number</Label>
                     <Input type="text" required></Input>
                     <Label>Description</Label>
                     <Input type="text" required></Input>
@@ -39,16 +42,17 @@ const Page = () => {
                   <div className="flex flex-col space-y-1.5 w-full lg:w-1/2">
                     <Label>Supervisor Name</Label>
                     <Input type="text" required></Input>
-                    <Label>Contact Number</Label>
+                    <Label>Supplier Address</Label>
                     <Input type="text" required></Input>
+
                     <Label>Contract Period</Label>
                     <DateRangePicker />
                   </div>
                 </div>
               </form>
             </CardContent>
-            <CardFooter className="flex justify-between items-center">
-              <Button>Update Supplier</Button>
+            <CardFooter>
+              <Button className="w-40">Update Supplier</Button>
             </CardFooter>
           </Card>
         </div>

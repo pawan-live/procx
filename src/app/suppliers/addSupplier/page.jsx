@@ -47,8 +47,8 @@ const Page = () => {
                 </div>
               </form>
             </CardContent>
-            <CardFooter className="flex justify-between items-center">
-              <Button>Add Supplier</Button>
+            <CardFooter>
+              <Button className="w-40">Add Supplier</Button>
             </CardFooter>
           </Card>
         </div>

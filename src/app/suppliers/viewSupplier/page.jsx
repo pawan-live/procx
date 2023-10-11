@@ -68,8 +68,8 @@ const Page = () => {
             </form>
           </CardContent>
           <CardFooter className="flex flex-col md:flex-row gap-x-52 gap-y-4 w-full">
-            <Button>Edit Supplier</Button>
-            <Button>Delete Supplier</Button>
+            <Button className="w-40">Edit Supplier</Button>
+            <Button className="w-40">Delete Supplier</Button>
           </CardFooter>
         </Card>
         <Card className="w-full">
@@ -101,8 +101,8 @@ const Page = () => {
               </TableBody>
             </Table>
           </CardContent>
-          <CardFooter className="flex flex-col md:flex-row gap-x-40 gap-y-4 w-full">
-            <Button>Edit Items</Button>
+          <CardFooter>
+            <Button className="w-40">Edit Items</Button>
           </CardFooter>
         </Card>
       </TabsContent>

@@ -64,7 +64,7 @@ const Page = () => {
                 </TableRow>
               </TableBody>
             </Table>
-            <Button>Assign Items</Button>
+            <Button className="w-40">Assign Items</Button>
           </CardContent>
         </Card>
       </TabsContent>
