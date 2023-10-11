@@ -25,7 +25,7 @@ const Page = () => {
     <Tabs defaultValue="overview" className="space-y-4 p-5">
       <TabsContent value="overview" className="space-y-4">
         <div className="flex gap-6">
-          <Card className="w-[350px]">
+          <Card className="w-full">
             <CardHeader>
               <CardTitle>Add New Item</CardTitle>
               <CardDescription>
@@ -48,18 +48,25 @@ const Page = () => {
                       <SelectItem value="sveltekit">Not Restricted</SelectItem>
                     </SelectContent>
                   </Select>
+                  <Label>Item Description</Label>
+                  <Input type="text" required></Input>
+                  <Label>Images</Label>
                   <Card>
-                    <CardHeader className="items-center">
-                      <Label>Upload Images</Label>
-                      <ImagePlus />
-                      <Button className="bg-slate-400">Choose Images</Button>
+                    <CardHeader>
+                      <div className="flex flex-col space-y-3 items-center">
+                        <Label>Upload Images Here</Label>
+                        <ImagePlus />
+                        <Button className="bg-slate-400">Choose Images</Button>
+                      </div>
                     </CardHeader>
                   </Card>
                 </div>
               </form>
             </CardContent>
             <CardFooter className="flex justify-between items-center">
-              <Button onClick="">Add Supplier</Button>
+              <Button onClick="" className="w-40">
+                Add Item
+              </Button>
             </CardFooter>
           </Card>
         </div>
