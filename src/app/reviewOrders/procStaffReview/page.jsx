@@ -9,15 +9,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/app/components/ui/card";
-import { Checkbox } from "@/app/components/ui/checkbox";
-import { Label } from "@/app/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/app/components/ui/select";
 import {
   Table,
   TableBody,
@@ -31,7 +22,7 @@ import {
 import { Tabs, TabsContent } from "@/app/components/ui/tabs";
 import React from "react";
 
-const page = () => {
+const Page = () => {
   return (
     <Tabs defaultValue="overview" className="space-y-4 p-5">
       <TabsContent value="overview" className="space-y-4">
@@ -50,6 +41,7 @@ const page = () => {
                   <TableHead>Required Date</TableHead>
                   <TableHead>Site Location</TableHead>
                   <TableHead>Budget</TableHead>
+                  <TableHead>Budget Status</TableHead>
                   <TableHead>Catalogue Status</TableHead>
                 </TableRow>
                 <TableRow>
@@ -59,6 +51,7 @@ const page = () => {
                   <TableCell>Colombo</TableCell>
                   <TableCell>200 000 LKR</TableCell>
                   <TableCell>Restricted</TableCell>
+                  <TableCell>Restricted</TableCell>
                   <TableCell>
                     <Button variant="destructive">Review</Button>
                   </TableCell>
@@ -67,9 +60,11 @@ const page = () => {
                 <TableRow>
                   <TableCell>OID002</TableCell>
                   <TableCell>Jan 30, 2022</TableCell>
+                  <TableCell>Feb 10, 2022</TableCell>
                   <TableCell>Matara</TableCell>
                   <TableCell>10 000 LKR</TableCell>
                   <TableCell>Not Restricted</TableCell>
+                  <TableCell>Restricted</TableCell>
                   <TableCell>
                     <Button variant="destructive">Review</Button>
                   </TableCell>
@@ -83,4 +78,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

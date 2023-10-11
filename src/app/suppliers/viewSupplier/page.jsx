@@ -8,8 +8,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/app/components/ui/card";
-import { Checkbox } from "@/app/components/ui/checkbox";
-import { DateRangePicker } from "@/app/components/ui/dateRangePicker";
 import { Input } from "@/app/components/ui/input";
 import { Label } from "@/app/components/ui/label";
 import {
@@ -24,7 +22,7 @@ import {
 } from "@/app/components/ui/table";
 import { Tabs, TabsContent } from "@/app/components/ui/tabs";
 
-const page = () => {
+const Page = () => {
   return (
     <Tabs defaultValue="overview" className="space-y-4 p-5">
       <TabsContent value="overview" className="space-y-4">
@@ -69,7 +67,7 @@ const page = () => {
               </div>
             </form>
           </CardContent>
-          <CardFooter className="flex flex-col md:flex-row gap-x-40 gap-y-4 w-full">
+          <CardFooter className="flex flex-col md:flex-row gap-x-52 gap-y-4 w-full">
             <Button>Edit Supplier</Button>
             <Button>Delete Supplier</Button>
           </CardFooter>
@@ -112,4 +110,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

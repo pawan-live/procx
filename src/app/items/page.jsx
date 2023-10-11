@@ -7,7 +7,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/app/components/ui/card";
-import { DateRangePicker } from "@/app/components/ui/dateRangePicker";
 import { Input } from "@/app/components/ui/input";
 import { Label } from "@/app/components/ui/label";
 import {
@@ -21,7 +20,7 @@ import { Tabs, TabsContent } from "@/app/components/ui/tabs";
 import { ImagePlus } from "lucide-react";
 import React from "react";
 
-const page = () => {
+const Page = () => {
   return (
     <Tabs defaultValue="overview" className="space-y-4 p-5">
       <TabsContent value="overview" className="space-y-4">
@@ -56,15 +55,6 @@ const page = () => {
                       <Button className="bg-slate-400">Choose Images</Button>
                     </CardHeader>
                   </Card>
-
-                  {/* <Label>Added Date</Label>
-                  <DateRangePicker /> */}
-
-                  {/* <Label>Add Suppliers</Label>
-                  <Input type="text" placeholder="Supplier01" required></Input>
-                  <Input type="text" placeholder="Supplier02" required></Input>
-                  <Input type="text" placeholder="Supplier03" required></Input>
-                  <Input type="text" placeholder="Supplier04" required></Input> */}
                 </div>
               </form>
             </CardContent>
@@ -78,4 +68,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
