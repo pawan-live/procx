@@ -21,7 +21,7 @@ const Sidebar = (Props) => {
     <div
       className="relative left-0 flex h-screen"
       onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      // onMouseLeave={handleMouseLeave}
     >
       <div
         className={`${

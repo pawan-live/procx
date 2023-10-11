@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Card,
   CardContent,
@@ -13,6 +15,7 @@ import {
 } from "@/app/components/ui/popover";
 import { cn } from "@/app/utils/utils";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 import { Button } from "../components/ui/button";
@@ -34,45 +37,15 @@ import {
   TabsTrigger,
 } from "../components/ui/tabs";
 
-const page = () => {
-  return (
-    /*     <div className="flex p-5">
-      <Card className="w-[350px]">
-      <CardHeader>
-        <CardTitle>Create project</CardTitle>
-        <CardDescription>Deploy your new project in one-click.</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <form>
-          <div className="grid w-full items-center gap-4">
-            <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="name">Name</Label>
-              <Input id="name" placeholder="Name of your project" />
-            </div>
-            <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="framework">Framework</Label>
-              <Select>
-                <SelectTrigger id="framework">
-                  <SelectValue placeholder="Select" />
-                </SelectTrigger>
-                <SelectContent position="popper">
-                  <SelectItem value="next">Next.js</SelectItem>
-                  <SelectItem value="sveltekit">SvelteKit</SelectItem>
-                  <SelectItem value="astro">Astro</SelectItem>
-                  <SelectItem value="nuxt">Nuxt.js</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-        </form>
-      </CardContent>
-      <CardFooter className="flex justify-between">
-        <Button variant="outline">Cancel</Button>
-        <Button>Deploy</Button>
-      </CardFooter>
-    </Card>
-    </div> */
+const Page = () => {
+  const router = useRouter();
 
+  const handleAddItem = (e) => {
+    e.preventDefault();
+    router.push("/items/addItems");
+    console.log("Yanawo");
+  };
+  return (
     <Tabs defaultValue="overview" className="space-y-4 p-5">
       <TabsContent value="overview" className="space-y-4">
         <div className="flex w-full justify-end">
@@ -179,10 +152,14 @@ const page = () => {
             </CardContent>
           </Card>
         </div>
-        <div className="flex gap-4 ">
-          <Button>Add New Product</Button>
-          <Button>Add New Bill</Button>
+
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+          <Button onClick={handleAddItem} className="w-full">
+            Add New Item
+          </Button>
+          <Button className="w-full">Add New Bill</Button>
         </div>
+
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-2">
           <Card className="col-span-4">
             <CardHeader>
@@ -263,4 +240,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
