@@ -46,14 +46,16 @@ const page = () => {
               <TableBody>
                 <TableRow>
                   <TableHead>Order ID</TableHead>
-                  <TableHead>Date</TableHead>
+                  <TableHead>Order Date</TableHead>
+                  <TableHead>Required Date</TableHead>
                   <TableHead>Site Location</TableHead>
                   <TableHead>Budget</TableHead>
                   <TableHead>Catalogue Status</TableHead>
                 </TableRow>
                 <TableRow>
-                  <TableCell>001</TableCell>
+                  <TableCell>OID001</TableCell>
                   <TableCell>Jan 20, 2022</TableCell>
+                  <TableCell>Jan 30, 2022</TableCell>
                   <TableCell>Colombo</TableCell>
                   <TableCell>200 000 LKR</TableCell>
                   <TableCell>Restricted</TableCell>
@@ -63,7 +65,7 @@ const page = () => {
                 </TableRow>
 
                 <TableRow>
-                  <TableCell>002</TableCell>
+                  <TableCell>OID002</TableCell>
                   <TableCell>Jan 30, 2022</TableCell>
                   <TableCell>Matara</TableCell>
                   <TableCell>10 000 LKR</TableCell>
