@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/app/components/ui/button";
 import {
   Card,
@@ -18,9 +20,18 @@ import {
 } from "@/app/components/ui/select";
 import { Tabs, TabsContent } from "@/app/components/ui/tabs";
 import { ImagePlus } from "lucide-react";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 const Page = () => {
+  const router = useRouter();
+
+  const handleAddItem = (e) => {
+    e.preventDefault();
+    router.push("/items/viewItems/viewItem");
+    console.log("Yanawo");
+  };
+
   return (
     <Tabs defaultValue="overview" className="space-y-4 p-5">
       <TabsContent value="overview" className="space-y-4">
@@ -64,7 +75,7 @@ const Page = () => {
               </form>
             </CardContent>
             <CardFooter className="flex justify-between items-center">
-              <Button onClick="" className="w-40">
+              <Button onClick={handleAddItem} className="w-40">
                 Add Item
               </Button>
             </CardFooter>

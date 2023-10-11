@@ -20,9 +20,17 @@ import {
   TableRow,
 } from "@/app/components/ui/table";
 import { Tabs, TabsContent } from "@/app/components/ui/tabs";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 const Page = () => {
+  const router = useRouter();
+
+  const handleReview = (e) => {
+    e.preventDefault();
+    router.push("/reviewOrders/procStaffReview/approveOrder");
+  };
+
   return (
     <Tabs defaultValue="overview" className="space-y-4 p-5">
       <TabsContent value="overview" className="space-y-4">
@@ -53,7 +61,9 @@ const Page = () => {
                   <TableCell>Restricted</TableCell>
                   <TableCell>Restricted</TableCell>
                   <TableCell>
-                    <Button variant="destructive">Review</Button>
+                    <Button onClick={handleReview} variant="destructive">
+                      Review
+                    </Button>
                   </TableCell>
                 </TableRow>
 
@@ -66,7 +76,9 @@ const Page = () => {
                   <TableCell>Not Restricted</TableCell>
                   <TableCell>Restricted</TableCell>
                   <TableCell>
-                    <Button variant="destructive">Review</Button>
+                    <Button onClick={handleReview} variant="destructive">
+                      Review
+                    </Button>
                   </TableCell>
                 </TableRow>
               </TableBody>

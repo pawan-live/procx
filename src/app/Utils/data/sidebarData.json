@@ -3,13 +3,13 @@
     "id": 1,
     "icon": "/Sidebar/sideBarOrders.svg",
     "text": "Dashboard",
-    "url": "https://www.google.com"
+    "url": "/dashboard"
   },
   {
     "id": 2,
     "icon": "/Sidebar/sideBarOrders.svg",
     "text": "Orders",
-    "url": "https://www.google.com"
+    "url": "/reviewOrders/procStaffReview"
   },
   {
     "id": 3,
@@ -20,13 +20,25 @@
   {
     "id": 4,
     "icon": "/Sidebar/sideBarProducts.svg",
-    "text": "Products",
-    "url": "https://www.google.com"
+    "text": "Items",
+    "url": "/items/viewItems"
   },
   {
     "id": 5,
+    "icon": "/Sidebar/sideBarProducts.svg",
+    "text": "Add Items",
+    "url": "/items/addItems"
+  },
+  {
+    "id": 6,
     "icon": "/Sidebar/sideBarSupplies.svg",
-    "text": "Supplies",
-    "url": "https://www.google.com"
+    "text": "Suppliers",
+    "url": "/suppliers"
+  },
+  {
+    "id": 7,
+    "icon": "/Sidebar/sideBarSupplies.svg",
+    "text": "Add Supplier",
+    "url": "/suppliers/addSupplier"
   }
 ]
