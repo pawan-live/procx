@@ -86,10 +86,6 @@ const Page = () => {
         <Card className="w-full">
           <CardHeader>
             <CardTitle>Approve Crieteria</CardTitle>
-            <CardDescription>
-              <p>You cannot approve order with budget greater than 200000LKR</p>
-              <p>You cannot approve orders with restricted items</p>
-            </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="flex flex-col md:flex-row gap-x-4 gap-y-4 w-full">
@@ -106,11 +102,6 @@ const Page = () => {
               <div className="flex flex-col space-y-1.5 w-full lg:w-1/2">
                 <Label>Catalogue Status</Label>
                 <Input type="text" value="Not Restricted" readOnly></Input>
-              </div>
-
-              <div className="flex flex-col space-y-1.5 w-full lg:w-1/2">
-                <Label>Approval Status</Label>
-                <Input type="text" value="Restricted" readOnly></Input>
               </div>
             </div>
           </CardContent>
@@ -151,7 +142,7 @@ const Page = () => {
                   <TableCell>200 LKR</TableCell>
                   <TableCell>200</TableCell>
                   <TableCell>40000</TableCell>
-                  <TableCell>Not Restricted</TableCell>
+                  <TableCell>Restricted</TableCell>
                   <TableCell>
                     <Checkbox />
                   </TableCell>
@@ -163,9 +154,6 @@ const Page = () => {
             <div className="flex flex-col space-y-3">
               <div className="flex flex-row  gap-x-28">
                 <Button className="w-44">Approve</Button>
-                <Button className="w-44">Send to Management</Button>
-              </div>
-              <div className="flex flex-row  gap-x-28">
                 <Button className="w-44" variant="destructive">
                   Reject
                 </Button>
