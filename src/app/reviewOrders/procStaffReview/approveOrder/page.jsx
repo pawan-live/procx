@@ -159,11 +159,13 @@ const Page = () => {
           <CardFooter className="flex flex-col md:flex-row gap-x-40 gap-y-4 w-full">
             <div className="flex flex-col space-y-3">
               <div className="flex flex-row  gap-x-28">
-                <Button className="w-44 bg-green-700">Approve</Button>
+                <Button className="w-44">Approve</Button>
                 <Button className="w-44">Send to Management</Button>
               </div>
               <div className="flex flex-row  gap-x-28">
-                <Button className="w-44 bg-red-600">Reject</Button>
+                <Button className="w-44" variant="destructive">
+                  Reject
+                </Button>
               </div>
             </div>
           </CardFooter>

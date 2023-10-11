@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/app/components/ui/button";
 import {
   Card,
@@ -10,9 +12,15 @@ import {
 import { Input } from "@/app/components/ui/input";
 import { Label } from "@/app/components/ui/label";
 import { Tabs, TabsContent } from "@/app/components/ui/tabs";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 const Page = () => {
+  const router = useRouter();
+  const handleItemEdit = (e) => {
+    e.preventDefault();
+    router.push("/items/editItems");
+  };
   return (
     <Tabs defaultValue="overview" className="space-y-4 p-5">
       <TabsContent value="overview" className="space-y-4">
@@ -44,7 +52,9 @@ const Page = () => {
               </form>
             </CardContent>
             <CardFooter className="flex flex-col md:flex-row gap-x-52 gap-y-4 w-full">
-              <Button className="w-40">Edit Item</Button>
+              <Button onClick={handleItemEdit} className="w-40">
+                Edit Item
+              </Button>
               <Button className="w-40">Delete item</Button>
             </CardFooter>
           </Card>

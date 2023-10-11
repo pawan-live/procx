@@ -1,3 +1,5 @@
+"use client";
+
 import BreadCrumbs from "@/app/components/Navbar/BreadCrumbs";
 import { Button } from "@/app/components/ui/button";
 import {
@@ -21,8 +23,18 @@ import {
   TableRow,
 } from "@/app/components/ui/table";
 import { Tabs, TabsContent } from "@/app/components/ui/tabs";
+import { useRouter } from "next/navigation";
 
 const Page = () => {
+  const router = useRouter();
+  const handleEditSupplier = (e) => {
+    e.preventDefault();
+    router.push("/suppliers/editSupplier");
+  };
+  const handleSupplierItems = (e) => {
+    e.preventDefault();
+    router.push("/suppliers/addSupplier/supplierItems");
+  };
   return (
     <Tabs defaultValue="overview" className="space-y-4 p-5">
       <TabsContent value="overview" className="space-y-4">
@@ -68,7 +80,9 @@ const Page = () => {
             </form>
           </CardContent>
           <CardFooter className="flex flex-col md:flex-row gap-x-52 gap-y-4 w-full">
-            <Button className="w-40">Edit Supplier</Button>
+            <Button onClick={handleEditSupplier} className="w-40">
+              Edit Supplier
+            </Button>
             <Button className="w-40">Delete Supplier</Button>
           </CardFooter>
         </Card>
@@ -102,7 +116,9 @@ const Page = () => {
             </Table>
           </CardContent>
           <CardFooter>
-            <Button className="w-40">Edit Items</Button>
+            <Button onClick={handleSupplierItems} className="w-40">
+              Edit Items
+            </Button>
           </CardFooter>
         </Card>
       </TabsContent>
