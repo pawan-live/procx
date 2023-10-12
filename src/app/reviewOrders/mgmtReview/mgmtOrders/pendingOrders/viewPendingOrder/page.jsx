@@ -31,7 +31,10 @@ const Page = () => {
         {/* Review order */}
         <Card className="w-full">
           <CardHeader>
-            <CardTitle>Review Order</CardTitle>
+            <CardTitle>Review Pending Order</CardTitle>
+            <CardDescription>
+              Review pending order sent by site manager
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <form>
@@ -85,7 +88,7 @@ const Page = () => {
         {/* Approve Crieteria */}
         <Card className="w-full">
           <CardHeader>
-            <CardTitle>Approve Crieteria</CardTitle>
+            <CardTitle>Approval Crieteria</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex flex-col md:flex-row gap-x-4 gap-y-4 w-full">
@@ -103,6 +106,11 @@ const Page = () => {
                 <Label>Catalogue Status</Label>
                 <Input type="text" value="Not Restricted" readOnly></Input>
               </div>
+
+              {/* <div className="flex flex-col space-y-1.5 w-full lg:w-1/2">
+                <Label>Approval Status</Label>
+                <Input type="text" value="Restricted" readOnly></Input>
+              </div> */}
             </div>
           </CardContent>
         </Card>
@@ -122,7 +130,6 @@ const Page = () => {
                   <TableHead>Quantity</TableHead>
                   <TableHead>Budget</TableHead>
                   <TableHead>Catalogue Status</TableHead>
-                  <TableHead>Selection</TableHead>
                 </TableRow>
                 <TableRow>
                   <TableCell>001</TableCell>
@@ -131,9 +138,6 @@ const Page = () => {
                   <TableCell>12</TableCell>
                   <TableCell>1800</TableCell>
                   <TableCell>Restricted</TableCell>
-                  <TableCell>
-                    <Checkbox />
-                  </TableCell>
                 </TableRow>
 
                 <TableRow>
@@ -142,10 +146,7 @@ const Page = () => {
                   <TableCell>200 LKR</TableCell>
                   <TableCell>200</TableCell>
                   <TableCell>40000</TableCell>
-                  <TableCell>Restricted</TableCell>
-                  <TableCell>
-                    <Checkbox />
-                  </TableCell>
+                  <TableCell>Not Restricted</TableCell>
                 </TableRow>
               </TableBody>
             </Table>
