@@ -28,7 +28,7 @@ const Page = () => {
 
   const handleReview = (e) => {
     e.preventDefault();
-    router.push("/reviewOrders/procStaffReview/approveOrder");
+    router.push("/reviewOrders/mgmtReview/approveOrder");
   };
 
   return (
@@ -38,7 +38,9 @@ const Page = () => {
         <Card className="w-full">
           <CardHeader>
             <CardTitle>Review Orders</CardTitle>
-            <CardDescription>Review orders here.</CardDescription>
+            <CardDescription>
+              Review orders sent by procurement department here.
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <Table>
