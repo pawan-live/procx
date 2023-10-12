@@ -87,9 +87,9 @@ const Page = () => {
                 <AlertDialogTrigger>Assign Items</AlertDialogTrigger>
                 <AlertDialogContent>
                   <AlertDialogHeader>
-                    <AlertDialogTitle>Create Supplier?</AlertDialogTitle>
+                    <AlertDialogTitle>Assign Supplier?</AlertDialogTitle>
                     <AlertDialogDescription>
-                      <p>This action will create a new supplier.</p>
+                      <p>This action will assign items to supplier.</p>
                       <p>
                         Make sure assigned items are correct before proceeding.
                       </p>
@@ -103,7 +103,7 @@ const Page = () => {
                       className="w-40"
                       onClick={handleAssignItems}
                     >
-                      Create Supplier
+                      Assign Supplier
                     </AlertDialogAction>
                   </AlertDialogFooter>
                 </AlertDialogContent>

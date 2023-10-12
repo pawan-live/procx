@@ -26,6 +26,11 @@ const Page = () => {
     router.push("/items/addItems");
     console.log("Yanawo");
   };
+  const handleAddSupplier = (e) => {
+    e.preventDefault();
+    router.push("/suppliers/addSupplier");
+    console.log("Yanawo");
+  };
   return (
     <Tabs defaultValue="overview" className="space-y-4 p-5">
       <TabsContent value="overview" className="space-y-4">
@@ -153,7 +158,9 @@ const Page = () => {
           <Button onClick={handleAddItem} className="w-full">
             Add New Item
           </Button>
-          <Button className="w-full">Add New Supplier</Button>
+          <Button onClick={handleAddSupplier} className="w-full">
+            Add New Supplier
+          </Button>
           <Button className="w-full">Add New Bill</Button>
         </div>
 
