@@ -1,6 +1,17 @@
 "use client";
 
 import BreadCrumbs from "@/app/components/Navbar/BreadCrumbs";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/app/components/ui/alert-dialog";
 import { Button } from "@/app/components/ui/button";
 import {
   Card,
@@ -27,13 +38,18 @@ import { useRouter } from "next/navigation";
 
 const Page = () => {
   const router = useRouter();
+
   const handleEditSupplier = (e) => {
     e.preventDefault();
     router.push("/suppliers/editSupplier");
   };
-  const handleSupplierItems = (e) => {
+  const handleEditSupplierItems = (e) => {
     e.preventDefault();
     router.push("/suppliers/addSupplier/supplierItems");
+  };
+  const handleDeleteSupplier = (e) => {
+    e.preventDefault();
+    router.push("/suppliers");
   };
   return (
     <Tabs defaultValue="overview" className="space-y-4 p-5">
@@ -83,7 +99,29 @@ const Page = () => {
             <Button onClick={handleEditSupplier} className="w-40">
               Edit Supplier
             </Button>
-            <Button className="w-40">Delete Supplier</Button>
+
+            <Button className="w-40">
+              <AlertDialog>
+                <AlertDialogTrigger>Delete Supplier</AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>
+                      Are you sure you want to delete?
+                    </AlertDialogTitle>
+                    <AlertDialogDescription>
+                      <p>This action cannot be undone.</p>
+                      <p>This will permanently delete supplier details.</p>
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction onClick={handleDeleteSupplier}>
+                      Delete
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            </Button>
           </CardFooter>
         </Card>
         <Card className="w-full">
@@ -116,7 +154,7 @@ const Page = () => {
             </Table>
           </CardContent>
           <CardFooter>
-            <Button onClick={handleSupplierItems} className="w-40">
+            <Button onClick={handleEditSupplierItems} className="w-40">
               Edit Items
             </Button>
           </CardFooter>

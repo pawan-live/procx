@@ -1,5 +1,16 @@
 "use client";
 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/app/components/ui/alert-dialog";
 import { Button } from "@/app/components/ui/button";
 import {
   Card,
@@ -20,6 +31,10 @@ const Page = () => {
   const handleItemEdit = (e) => {
     e.preventDefault();
     router.push("/items/editItems");
+  };
+  const handleDeleteItem = (e) => {
+    e.preventDefault();
+    router.push("/items/viewItems");
   };
   return (
     <Tabs defaultValue="overview" className="space-y-4 p-5">
@@ -55,7 +70,28 @@ const Page = () => {
               <Button onClick={handleItemEdit} className="w-40">
                 Edit Item
               </Button>
-              <Button className="w-40">Delete item</Button>
+              <Button className="w-40">
+                <AlertDialog>
+                  <AlertDialogTrigger>Delete Item</AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>
+                        Are you sure you want to delete?
+                      </AlertDialogTitle>
+                      <AlertDialogDescription>
+                        <p>This action cannot be undone.</p>
+                        <p>This will permanently delete item details.</p>
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogAction onClick={handleDeleteItem}>
+                        Delete
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+              </Button>
             </CardFooter>
           </Card>
         </div>

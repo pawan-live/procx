@@ -1,5 +1,16 @@
 "use client";
 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/app/components/ui/alert-dialog";
 import { Button } from "@/app/components/ui/button";
 import {
   Card,
@@ -71,8 +82,32 @@ const Page = () => {
                 </TableRow>
               </TableBody>
             </Table>
-            <Button onClick={handleAssignItems} className="w-40">
-              Assign Items
+            <Button className="w-40">
+              <AlertDialog>
+                <AlertDialogTrigger>Assign Items</AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Create Supplier?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      <p>This action will create a new supplier.</p>
+                      <p>
+                        Make sure assigned items are correct before proceeding.
+                      </p>
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel className="w-40">
+                      Cancel
+                    </AlertDialogCancel>
+                    <AlertDialogAction
+                      className="w-40"
+                      onClick={handleAssignItems}
+                    >
+                      Create Supplier
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
             </Button>
           </CardContent>
         </Card>
