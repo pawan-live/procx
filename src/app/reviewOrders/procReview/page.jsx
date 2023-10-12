@@ -17,12 +17,24 @@ import { useRouter } from "next/navigation";
 import React from "react";
 
 const Page = () => {
-  // const router = useRouter();
+  const router = useRouter();
 
-  // const handleReviewBtn = (e) => {
-  //   e.preventDefault();
-  //   router.push("/dashboard");
-  // };
+  const handlePendingOrders = (e) => {
+    e.preventDefault();
+    router.push("/reviewOrders/procReview/pendingOrders");
+  };
+  const handleApprovedOrders = (e) => {
+    e.preventDefault();
+    router.push("/reviewOrders/procReview/approvedOrders");
+  };
+  const handleRejectedOrders = (e) => {
+    e.preventDefault();
+    router.push("/reviewOrders/procReview/rejectedOrders");
+  };
+  const handleCompletedOrders = (e) => {
+    e.preventDefault();
+    router.push("/reviewOrders/procReview/completedOrders");
+  };
 
   return (
     <Tabs defaultValue="overview" className="space-y-4 p-5">
@@ -35,7 +47,7 @@ const Page = () => {
         </div>
 
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          <Card>
+          <Card onClick={handlePendingOrders}>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-2xl font-bold">
                 Pending Orders
@@ -61,7 +73,7 @@ const Page = () => {
               </p>
             </CardContent>
           </Card>
-          <Card>
+          <Card onClick={handleApprovedOrders}>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-2xl font-bold">
                 Approved Orders
@@ -87,7 +99,7 @@ const Page = () => {
               </p>
             </CardContent>
           </Card>
-          <Card>
+          <Card onClick={handleRejectedOrders}>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-2xl font-bold">
                 Rejected Orders
@@ -113,7 +125,7 @@ const Page = () => {
               </p>
             </CardContent>
           </Card>
-          <Card>
+          <Card onClick={handleCompletedOrders}>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-2xl font-bold">
                 Completed Orders

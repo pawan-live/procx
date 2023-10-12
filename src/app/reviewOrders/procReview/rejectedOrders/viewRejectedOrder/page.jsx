@@ -31,7 +31,7 @@ const Page = () => {
         {/* Review order */}
         <Card className="w-full">
           <CardHeader>
-            <CardTitle>Review Order</CardTitle>
+            <CardTitle>Review Rejected Order</CardTitle>
           </CardHeader>
           <CardContent>
             <form>
@@ -39,6 +39,8 @@ const Page = () => {
                 <div className="flex flex-col space-y-1.5 w-full lg:w-1/2">
                   <Label>Order ID</Label>
                   <Input type="text" value="OID001" readOnly></Input>
+                  <Label>Order Date</Label>
+                  <Input type="text" value="Jan 20, 2022" readOnly></Input>
                   <Label>Order raised by</Label>
                   <Input
                     type="text"
@@ -51,27 +53,20 @@ const Page = () => {
                 <div className="flex flex-col space-y-1.5 lg:w-1/2">
                   <Label>Site Location</Label>
                   <Input type="text" value="Colombo 05" readOnly></Input>
+                  <Label>Required Date</Label>
+                  <Input type="text" value="Jan 20, 2022" readOnly></Input>
                   <Label>Site Manager Phone</Label>
                   <Input type="text" value="0712345234" readOnly></Input>
                 </div>
                 <div className="flex flex-col space-y-1.5 w-full lg:w-1/2">
-                  <div className="flex flex-row  gap-x-4 justify-between">
-                    <div className="flex flex-col space-y-1.5 justify-between">
-                      <Label>Order Date</Label>
-                      <Input type="text" value="Jan 20, 2022" readOnly></Input>
-                    </div>
-                    <div className="flex flex-col space-y-1.5 justify-between">
-                      <Label>Required Date</Label>
-                      <Input type="text" value="Jan 20, 2022" readOnly></Input>
-                    </div>
-                  </div>
                   <Label>Supplier Name</Label>
                   <Input
                     type="text"
                     value="Badu Hari Suppliers"
                     readOnly
                   ></Input>
-                  <Label></Label>
+                  <Label>Rejected Date</Label>
+                  <Input type="text" value="Jan 20, 2022" readOnly></Input>
                 </div>
               </div>
             </form>
@@ -85,14 +80,10 @@ const Page = () => {
         {/* Approve Crieteria */}
         <Card className="w-full">
           <CardHeader>
-            <CardTitle>Approve Crieteria</CardTitle>
-            <CardDescription>
-              <p>You cannot approve order with budget greater than 200000LKR</p>
-              <p>You cannot approve orders with restricted items</p>
-            </CardDescription>
+            <CardTitle>Approval Crieteria</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="flex flex-col md:flex-row gap-x-4 gap-y-4 w-full">
+            <div className="flex flex-col md:flex-row gap-x-4 gap-y-6 w-full">
               <div className="flex flex-col space-y-1.5 w-full lg:w-1/2">
                 <Label>Total Budget</Label>
                 <Input type="text" value="200 000" readOnly></Input>
@@ -110,9 +101,18 @@ const Page = () => {
 
               <div className="flex flex-col space-y-1.5 w-full lg:w-1/2">
                 <Label>Approval Status</Label>
-                <Input type="text" value="Restricted" readOnly></Input>
+                <Input
+                  type="text"
+                  value="Rejected"
+                  className="bg-destructive"
+                  readOnly
+                ></Input>
               </div>
             </div>
+          </CardContent>
+          <CardContent className="space-y-1.5">
+            <CardTitle>Rejected Reason</CardTitle>
+            <Input value="Reject kala thamai. Ai?" readOnly></Input>
           </CardContent>
         </Card>
 
@@ -131,7 +131,6 @@ const Page = () => {
                   <TableHead>Quantity</TableHead>
                   <TableHead>Budget</TableHead>
                   <TableHead>Catalogue Status</TableHead>
-                  <TableHead>Selection</TableHead>
                 </TableRow>
                 <TableRow>
                   <TableCell>001</TableCell>
@@ -140,11 +139,7 @@ const Page = () => {
                   <TableCell>12</TableCell>
                   <TableCell>1800</TableCell>
                   <TableCell>Restricted</TableCell>
-                  <TableCell>
-                    <Checkbox />
-                  </TableCell>
                 </TableRow>
-
                 <TableRow>
                   <TableCell>002</TableCell>
                   <TableCell>Vali</TableCell>
@@ -152,25 +147,21 @@ const Page = () => {
                   <TableCell>200</TableCell>
                   <TableCell>40000</TableCell>
                   <TableCell>Not Restricted</TableCell>
-                  <TableCell>
-                    <Checkbox />
-                  </TableCell>
                 </TableRow>
               </TableBody>
             </Table>
           </CardContent>
-          <CardFooter className="flex flex-col md:flex-row gap-x-40 gap-y-4 w-full">
-            <div className="flex flex-col space-y-3">
-              <div className="flex flex-row  gap-x-28">
-                <Button className="w-44">Approve</Button>
-                <Button className="w-44">Send to Management</Button>
-              </div>
-              <div className="flex flex-row  gap-x-28">
-                <Button className="w-44" variant="destructive">
-                  Reject
-                </Button>
-              </div>
-            </div>
+          <CardFooter>
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-2xl font-bold">
+                  Total Budget
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="text-sm font-medium">30000 LKR</div>
+              </CardContent>
+            </Card>
           </CardFooter>
         </Card>
       </TabsContent>
