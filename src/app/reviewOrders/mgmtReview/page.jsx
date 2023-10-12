@@ -12,37 +12,45 @@ import {
 import { DateRangePicker } from "@/app/components/ui/dateRangePicker";
 import { Input } from "@/app/components/ui/input";
 import { Label } from "@/app/components/ui/label";
-import { Overview } from "@/app/components/ui/overview";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/app/components/ui/popover";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/app/components/ui/select";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/app/components/ui/tabs";
-import { cn } from "@/app/utils/utils";
-import Image from "next/image";
+import { Tabs, TabsContent } from "@/app/components/ui/tabs";
 import { useRouter } from "next/navigation";
 import React from "react";
 
 const Page = () => {
-  // const router = useRouter();
+  const router = useRouter();
 
-  // const handleReviewBtn = (e) => {
-  //   e.preventDefault();
-  //   router.push("/dashboard");
-  // };
+  const handlePendingMgmtOrders = (e) => {
+    e.preventDefault();
+    router.push("/reviewOrders/mgmtReview/mgmtOrders/pendingOrders");
+  };
+  const handleApprovedMgmtOrders = (e) => {
+    e.preventDefault();
+    router.push("/reviewOrders/mgmtReview/mgmtOrders/approvedOrders");
+  };
+  const handleRejecetedMgmtOrders = (e) => {
+    e.preventDefault();
+    router.push("/reviewOrders/mgmtReview/mgmtOrders/rejectedOrders");
+  };
+  const handleCompletedMgmtOrders = (e) => {
+    e.preventDefault();
+    router.push("/reviewOrders/mgmtReview/mgmtOrders/completedOrders");
+  };
+  const handlePendingProcOrders = (e) => {
+    e.preventDefault();
+    router.push("/reviewOrders/procReview/pendingOrders");
+  };
+  const handleApprovedProcOrders = (e) => {
+    e.preventDefault();
+    router.push("/reviewOrders/procReview/approvedOrders");
+  };
+  const handleRejectedProcOrders = (e) => {
+    e.preventDefault();
+    router.push("/reviewOrders/procReview/rejectedOrders");
+  };
+  const handleCompletedProcOrders = (e) => {
+    e.preventDefault();
+    router.push("/reviewOrders/procReview/completedOrders");
+  };
 
   return (
     <Tabs defaultValue="overview" className="space-y-4 p-5">
@@ -61,7 +69,7 @@ const Page = () => {
           </CardHeader>
           <CardContent>
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-              <Card>
+              <Card onClick={handlePendingMgmtOrders}>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-2xl font-bold">
                     Pending Orders
@@ -89,7 +97,7 @@ const Page = () => {
                   </p>
                 </CardContent>
               </Card>
-              <Card>
+              <Card onClick={handleApprovedMgmtOrders}>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-2xl font-bold">
                     Approved Orders
@@ -117,7 +125,7 @@ const Page = () => {
                   </p>
                 </CardContent>
               </Card>
-              <Card>
+              <Card onClick={handleRejecetedMgmtOrders}>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-2xl font-bold">
                     Rejected Orders
@@ -143,7 +151,7 @@ const Page = () => {
                   </p>
                 </CardContent>
               </Card>
-              <Card>
+              <Card onClick={handleCompletedMgmtOrders}>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-2xl font-bold">
                     Completed Orders
@@ -182,7 +190,7 @@ const Page = () => {
           </CardHeader>
           <CardContent>
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-              <Card>
+              <Card onClick={handlePendingProcOrders}>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-2xl font-bold">
                     Pending Orders
@@ -210,7 +218,7 @@ const Page = () => {
                   </p>
                 </CardContent>
               </Card>
-              <Card>
+              <Card onClick={handleApprovedProcOrders}>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-2xl font-bold">
                     Approved Orders
@@ -238,7 +246,7 @@ const Page = () => {
                   </p>
                 </CardContent>
               </Card>
-              <Card>
+              <Card onClick={handleRejectedProcOrders}>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-2xl font-bold">
                     Rejected Orders
@@ -264,7 +272,7 @@ const Page = () => {
                   </p>
                 </CardContent>
               </Card>
-              <Card>
+              <Card onClick={handleCompletedProcOrders}>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-2xl font-bold">
                     Completed Orders

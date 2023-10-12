@@ -26,9 +26,11 @@ import React from "react";
 const Page = () => {
   const router = useRouter();
 
-  const handleReview = (e) => {
+  const handleCompletedReview = (e) => {
     e.preventDefault();
-    router.push("/reviewOrders/mgmtReview/orderList/approveOrder");
+    router.push(
+      "/reviewOrders/mgmtReview/mgmtOrders/completedOrders/viewCompletedOrder",
+    );
   };
 
   return (
@@ -37,9 +39,9 @@ const Page = () => {
         <div className="flex gap-6"></div>
         <Card className="w-full">
           <CardHeader>
-            <CardTitle>Review Orders</CardTitle>
+            <CardTitle>Completed Orders</CardTitle>
             <CardDescription>
-              Review orders sent by procurement department here.
+              Review completed orders sent by procurement department
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -49,6 +51,7 @@ const Page = () => {
                   <TableHead>Order ID</TableHead>
                   <TableHead>Order Date</TableHead>
                   <TableHead>Required Date</TableHead>
+                  <TableHead>Received Date</TableHead>
                   <TableHead>Site Location</TableHead>
                   <TableHead>Budget</TableHead>
                   <TableHead>Budget Status</TableHead>
@@ -58,12 +61,16 @@ const Page = () => {
                   <TableCell>OID001</TableCell>
                   <TableCell>Jan 20, 2022</TableCell>
                   <TableCell>Jan 30, 2022</TableCell>
+                  <TableCell>Jan 25, 2022</TableCell>
                   <TableCell>Colombo</TableCell>
                   <TableCell>200 000 LKR</TableCell>
                   <TableCell>Restricted</TableCell>
                   <TableCell>Restricted</TableCell>
                   <TableCell>
-                    <Button onClick={handleReview} variant="destructive">
+                    <Button
+                      onClick={handleCompletedReview}
+                      variant="destructive"
+                    >
                       Review
                     </Button>
                   </TableCell>
@@ -73,12 +80,16 @@ const Page = () => {
                   <TableCell>OID002</TableCell>
                   <TableCell>Jan 30, 2022</TableCell>
                   <TableCell>Feb 10, 2022</TableCell>
+                  <TableCell>Feb 05, 2022</TableCell>
                   <TableCell>Matara</TableCell>
                   <TableCell>10 000 LKR</TableCell>
                   <TableCell>Not Restricted</TableCell>
                   <TableCell>Restricted</TableCell>
                   <TableCell>
-                    <Button onClick={handleReview} variant="destructive">
+                    <Button
+                      onClick={handleCompletedReview}
+                      variant="destructive"
+                    >
                       Review
                     </Button>
                   </TableCell>
