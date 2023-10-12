@@ -1,5 +1,16 @@
 "use client";
 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/app/components/ui/alert-dialog";
 import { Button } from "@/app/components/ui/button";
 import {
   Card,
@@ -75,8 +86,32 @@ const Page = () => {
               </form>
             </CardContent>
             <CardFooter className="flex justify-between items-center">
-              <Button onClick={handleAddItem} className="w-40">
-                Add Item
+              <Button className="w-40">
+                <AlertDialog>
+                  <AlertDialogTrigger>Add Item</AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>Create Item?</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        <p>This action will create a new item.</p>
+                        <p>
+                          Make sure added details are correct before proceeding.
+                        </p>
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel className="w-40">
+                        Cancel
+                      </AlertDialogCancel>
+                      <AlertDialogAction
+                        className="w-40"
+                        onClick={handleAddItem}
+                      >
+                        Create Item
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
               </Button>
             </CardFooter>
           </Card>
