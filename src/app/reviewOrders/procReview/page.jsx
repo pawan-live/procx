@@ -12,38 +12,17 @@ import {
 import { DateRangePicker } from "@/app/components/ui/dateRangePicker";
 import { Input } from "@/app/components/ui/input";
 import { Label } from "@/app/components/ui/label";
-import { Overview } from "@/app/components/ui/overview";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/app/components/ui/popover";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/app/components/ui/select";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/app/components/ui/tabs";
-import { cn } from "@/app/utils/utils";
-import Image from "next/image";
+import { Tabs, TabsContent } from "@/app/components/ui/tabs";
 import { useRouter } from "next/navigation";
 import React from "react";
 
 const Page = () => {
-  const router = useRouter();
+  // const router = useRouter();
 
-  const handleAddItem = (e) => {
-    e.preventDefault();
-    router.push("/items/addItems");
-    console.log("Yanawo");
-  };
+  // const handleReviewBtn = (e) => {
+  //   e.preventDefault();
+  //   router.push("/dashboard");
+  // };
 
   return (
     <Tabs defaultValue="overview" className="space-y-4 p-5">
