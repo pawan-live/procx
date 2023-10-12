@@ -21,9 +21,16 @@ import {
   TableRow,
 } from "@/app/components/ui/table";
 import { Tabs, TabsContent } from "@/app/components/ui/tabs";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 const Page = () => {
+  const router = useRouter();
+
+  const handleAssignItems = (e) => {
+    e.preventDefault();
+    router.push("/suppliers/viewSupplier");
+  };
   return (
     <Tabs defaultValue="overview" className="space-y-4 p-5">
       <TabsContent value="overview" className="space-y-4">
@@ -64,7 +71,9 @@ const Page = () => {
                 </TableRow>
               </TableBody>
             </Table>
-            <Button className="w-40">Assign Items</Button>
+            <Button onClick={handleAssignItems} className="w-40">
+              Assign Items
+            </Button>
           </CardContent>
         </Card>
       </TabsContent>

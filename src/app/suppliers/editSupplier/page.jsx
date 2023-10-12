@@ -1,3 +1,5 @@
+"use client";
+
 import BreadCrumbs from "@/app/components/Navbar/BreadCrumbs";
 import { Button } from "@/app/components/ui/button";
 import {
@@ -12,8 +14,16 @@ import { DateRangePicker } from "@/app/components/ui/dateRangePicker";
 import { Input } from "@/app/components/ui/input";
 import { Label } from "@/app/components/ui/label";
 import { Tabs, TabsContent } from "@/app/components/ui/tabs";
+import { useRouter } from "next/navigation";
 
 const Page = () => {
+  const router = useRouter();
+
+  const handleUpdateSupplier = (e) => {
+    e.preventDefault();
+    router.push("/suppliers/viewSupplier");
+  };
+
   return (
     <Tabs defaultValue="overview" className="space-y-4 p-5">
       <TabsContent value="overview" className="space-y-4">
@@ -52,7 +62,9 @@ const Page = () => {
               </form>
             </CardContent>
             <CardFooter>
-              <Button className="w-40">Update Supplier</Button>
+              <Button onClick={handleUpdateSupplier} className="w-40">
+                Update Supplier
+              </Button>
             </CardFooter>
           </Card>
         </div>
