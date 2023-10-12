@@ -12,13 +12,6 @@ import {
 import { DateRangePicker } from "@/app/components/ui/dateRangePicker";
 import { Label } from "@/app/components/ui/label";
 import { Overview } from "@/app/components/ui/overview";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/app/components/ui/select";
 import { Tabs, TabsContent } from "@/app/components/ui/tabs";
 import { useRouter } from "next/navigation";
 import React from "react";
@@ -160,25 +153,9 @@ const Page = () => {
           <Button onClick={handleAddItem} className="w-full">
             Add New Item
           </Button>
+          <Button className="w-full">Add New Supplier</Button>
           <Button className="w-full">Add New Bill</Button>
         </div>
-        {/* <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-2">
-          <Card className="col-span-4">
-            <CardHeader>
-              <CardTitle>Overview</CardTitle>
-            </CardHeader>
-            <CardContent className="w-1/2">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-sm font-medium">
-                    Completed Monthly Orders
-                  </CardTitle>
-                </CardHeader>
-                <Overview />
-              </Card>
-            </CardContent>
-          </Card>
-        </div> */}
 
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-2">
           <Card className="col-span-4">
@@ -186,7 +163,7 @@ const Page = () => {
               <CardTitle>Overview</CardTitle>
             </CardHeader>
             <CardContent className="flex gap-4">
-              <Card className="w-1/2">
+              <Card className="w-full">
                 <CardHeader>
                   <CardTitle className="text-sm font-medium">
                     Completed Monthly Orders
