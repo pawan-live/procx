@@ -11,12 +11,7 @@ import {
 } from "@/app/components/ui/card";
 import { DateRangePicker } from "@/app/components/ui/dateRangePicker";
 import { Label } from "@/app/components/ui/label";
-// import { Overview } from "@/app/components/ui/overview";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/app/components/ui/popover";
+import { Overview } from "@/app/components/ui/overview";
 import {
   Select,
   SelectContent,
@@ -24,14 +19,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/app/components/ui/select";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/app/components/ui/tabs";
+import { Tabs, TabsContent } from "@/app/components/ui/tabs";
 import { useRouter } from "next/navigation";
 import React from "react";
+
+import { Input } from "../components/ui/input";
 
 const Page = () => {
   const router = useRouter();
@@ -44,7 +36,10 @@ const Page = () => {
   return (
     <Tabs defaultValue="overview" className="space-y-4 p-5">
       <TabsContent value="overview" className="space-y-4">
-        <div className="flex w-full justify-end">
+        <div className="flex w-full justify-between">
+          <Label className="text-2xl font-semibold leading-none tracking-tight">
+            Procurement Department
+          </Label>
           <DateRangePicker />
         </div>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -167,78 +162,71 @@ const Page = () => {
           </Button>
           <Button className="w-full">Add New Bill</Button>
         </div>
+        {/* <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-2">
+          <Card className="col-span-4">
+            <CardHeader>
+              <CardTitle>Overview</CardTitle>
+            </CardHeader>
+            <CardContent className="w-1/2">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-sm font-medium">
+                    Completed Monthly Orders
+                  </CardTitle>
+                </CardHeader>
+                <Overview />
+              </Card>
+            </CardContent>
+          </Card>
+        </div> */}
 
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-2">
           <Card className="col-span-4">
             <CardHeader>
               <CardTitle>Overview</CardTitle>
             </CardHeader>
-            <CardContent className="pl-2">{/* <Overview /> */}</CardContent>
-          </Card>
-        </div>
-        <div className="flex gap-6">
-          <Card className="w-[350px]">
-            <CardHeader>
-              <CardTitle>Review Orders</CardTitle>
-              <CardDescription>
-                Deploy your new project in one-click.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <form>
-                <div className="grid w-full items-center gap-4">
-                  <div className="flex flex-col space-y-1.5">
-                    <Label htmlFor="framework">Orders</Label>
-                    <Select>
-                      <SelectTrigger id="framework">
-                        <SelectValue placeholder="Select" />
-                      </SelectTrigger>
-                      <SelectContent position="popper">
-                        <SelectItem value="next">Order 1</SelectItem>
-                        <SelectItem value="sveltekit">Order 2</SelectItem>
-                        <SelectItem value="astro">Order 3</SelectItem>
-                        <SelectItem value="nuxt">Order 4</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-              </form>
+            <CardContent className="flex gap-4">
+              <Card className="w-1/2">
+                <CardHeader>
+                  <CardTitle className="text-sm font-medium">
+                    Completed Monthly Orders
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="flex">
+                  <Overview />
+                </CardContent>
+              </Card>
+              <div className="grid gap-y-4 w-full lg:grid-rows-2">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Review Orders</CardTitle>
+                    <CardDescription>
+                      Search a specific order here
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <Input placeholder="Order ID"></Input>
+                  </CardContent>
+                  <CardFooter className="flex justify-between">
+                    <Button>Review</Button>
+                  </CardFooter>
+                </Card>
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Review Bills</CardTitle>
+                    <CardDescription>
+                      Search a specific bill here
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <Input placeholder="Order ID"></Input>
+                  </CardContent>
+                  <CardFooter className="flex justify-between">
+                    <Button>Review</Button>
+                  </CardFooter>
+                </Card>
+              </div>
             </CardContent>
-            <CardFooter className="flex justify-between">
-              <Button>Review</Button>
-            </CardFooter>
-          </Card>
-
-          <Card className="w-[350px]">
-            <CardHeader>
-              <CardTitle>Review Payments</CardTitle>
-              <CardDescription>
-                Deploy your new project in one-click.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <form>
-                <div className="grid w-full items-center gap-4">
-                  <div className="flex flex-col space-y-1.5">
-                    <Label htmlFor="framework">Orders</Label>
-                    <Select>
-                      <SelectTrigger id="framework">
-                        <SelectValue placeholder="Select" />
-                      </SelectTrigger>
-                      <SelectContent position="popper">
-                        <SelectItem value="next">Payment 1</SelectItem>
-                        <SelectItem value="sveltekit">Payment 2</SelectItem>
-                        <SelectItem value="astro">Payment 3</SelectItem>
-                        <SelectItem value="nuxt">Payment 4</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-              </form>
-            </CardContent>
-            <CardFooter className="flex justify-between">
-              <Button>Review</Button>
-            </CardFooter>
           </Card>
         </div>
       </TabsContent>
