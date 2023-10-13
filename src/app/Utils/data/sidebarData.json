@@ -3,30 +3,30 @@
     "id": 1,
     "icon": "/Sidebar/sideBarOrders.svg",
     "text": "Proc Dashboard",
-    "url": "/dashboardProcStaff"
+    "url": "/dashboard/dashboardProcStaff"
   },
   {
     "id": 2,
     "icon": "/Sidebar/sideBarOrders.svg",
     "text": "Mgmt Dashboard",
-    "url": "/dashboardMgmt"
+    "url": "/dashboard/dashboardMgmt"
   },
   {
     "id": 3,
     "icon": "/Sidebar/sideBarPayments.svg",
     "text": "Payments",
-    "url": "/bills/viewBills/viewApprovedBills"
+    "url": "/dashboard/bills/viewBills/viewApprovedBills"
   },
   {
     "id": 4,
     "icon": "/Sidebar/sideBarProducts.svg",
     "text": "Items",
-    "url": "/items/viewItems"
+    "url": "/dashboard/items/viewItems"
   },
   {
     "id": 5,
     "icon": "/Sidebar/sideBarSupplies.svg",
     "text": "Suppliers",
-    "url": "/suppliers"
+    "url": "/dashboard/suppliers"
   }
 ]

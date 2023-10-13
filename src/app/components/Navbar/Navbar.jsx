@@ -5,6 +5,7 @@ import {
   AvatarFallback,
   AvatarImage,
 } from "@/app/components/ui/avatar";
+import { UserButton } from "@clerk/nextjs";
 import { LogOut, User } from "lucide-react";
 import Link from "next/link";
 import React from "react";
@@ -32,8 +33,7 @@ const Navbar = (Props) => {
 
       <BreadCrumbs />
 
-      <Popover>
-        {/* Change Trigger*/}
+      {/* <Popover>
         <PopoverTrigger asChild>
           <Avatar
             className="cursor-pointer outline-3 outline-slate-300 hover:outline"
@@ -59,7 +59,8 @@ const Navbar = (Props) => {
             </Button>
           </div>
         </PopoverContent>
-      </Popover>
+      </Popover> */}
+      <UserButton afterSignOutUrl="/" />
     </nav>
   );
 };
