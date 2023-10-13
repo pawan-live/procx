@@ -39,7 +39,7 @@ const Page = () => {
           <CardHeader>
             <CardTitle>Review Pending Orders</CardTitle>
             <CardDescription>
-              Review orders sent by site managers here.
+              Review orders added by site managers here.
             </CardDescription>
           </CardHeader>
           <CardContent>
