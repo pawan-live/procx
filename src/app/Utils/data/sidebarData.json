@@ -13,44 +13,20 @@
   },
   {
     "id": 3,
-    "icon": "/Sidebar/sideBarOrders.svg",
-    "text": "Proc Orders",
-    "url": "/reviewOrders/procReview"
+    "icon": "/Sidebar/sideBarPayments.svg",
+    "text": "Payments",
+    "url": "/bills/viewBills/viewApprovedBills"
   },
   {
     "id": 4,
-    "icon": "/Sidebar/sideBarOrders.svg",
-    "text": "Mgr Orders",
-    "url": "/reviewOrders/mgmtReview"
-  },
-  {
-    "id": 5,
-    "icon": "/Sidebar/sideBarPayments.svg",
-    "text": "Payments",
-    "url": "https://www.google.com"
-  },
-  {
-    "id": 6,
     "icon": "/Sidebar/sideBarProducts.svg",
     "text": "Items",
     "url": "/items/viewItems"
   },
   {
-    "id": 7,
-    "icon": "/Sidebar/sideBarProducts.svg",
-    "text": "Add Items",
-    "url": "/items/addItems"
-  },
-  {
-    "id": 8,
+    "id": 5,
     "icon": "/Sidebar/sideBarSupplies.svg",
     "text": "Suppliers",
     "url": "/suppliers"
-  },
-  {
-    "id": 9,
-    "icon": "/Sidebar/sideBarSupplies.svg",
-    "text": "Add Supplier",
-    "url": "/suppliers/addSupplier"
   }
 ]

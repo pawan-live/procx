@@ -21,11 +21,27 @@ import { Input } from "../components/ui/input";
 const Page = () => {
   const router = useRouter();
 
-  const handleAddItem = (e) => {
+  const handleOrders = (e) => {
     e.preventDefault();
-    router.push("/items/addItems");
-    console.log("Yanawo");
+    router.push("/reviewOrders/mgmtReview");
   };
+  const handlePendingBills = (e) => {
+    e.preventDefault();
+    router.push("/bills/viewBills/viewPendingBills");
+  };
+  const handlePaidBills = (e) => {
+    e.preventDefault();
+    router.push("/bills/viewBills/viewApprovedBills");
+  };
+  const handleSuppliers = (e) => {
+    e.preventDefault();
+    router.push("/suppliers");
+  };
+  const handleAddBill = (e) => {
+    e.preventDefault();
+    router.push("/bills/addBill");
+  };
+
   return (
     <Tabs defaultValue="overview" className="space-y-4 p-5">
       <TabsContent value="overview" className="space-y-4">
@@ -36,11 +52,9 @@ const Page = () => {
           <DateRangePicker />
         </div>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          <Card>
+          <Card onClick={handleOrders}>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">
-                Pending Orders
-              </CardTitle>
+              <CardTitle className="text-sm font-medium">Orders</CardTitle>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -56,13 +70,13 @@ const Page = () => {
               </svg>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">230 no of orders</div>
+              <div className="text-2xl font-bold">View Orders</div>
               <p className="text-xs text-muted-foreground">
                 Click here to view
               </p>
             </CardContent>
           </Card>
-          <Card>
+          <Card onClick={handlePendingBills}>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
                 Pending Bills
@@ -87,7 +101,7 @@ const Page = () => {
               </p>
             </CardContent>
           </Card>
-          <Card>
+          <Card onClick={handlePaidBills}>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Paid Bills</CardTitle>
               <svg
@@ -109,7 +123,7 @@ const Page = () => {
               </p>
             </CardContent>
           </Card>
-          <Card>
+          <Card onClick={handleSuppliers}>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Suppliers</CardTitle>
               <svg
@@ -150,7 +164,9 @@ const Page = () => {
         </div>
 
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          <Button className="w-full">Add New Bill</Button>
+          <Button onClick={handleAddBill} className="w-full">
+            Add New Bill
+          </Button>
         </div>
 
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-2">
