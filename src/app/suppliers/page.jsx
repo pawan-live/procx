@@ -6,14 +6,14 @@ import React from "react";
 
 const Page = () => {
   const router = useRouter();
-  const handleViewSupplier = (e) => {
+  const handleAddSupplier = (e) => {
     e.preventDefault();
-    router.push("/suppliers/viewSupplier");
+    router.push("/suppliers/addSupplier");
   };
   return (
     <div>
       <p>All Suppliers List Here</p>
-      <Button onClick={handleViewSupplier}>View Supplier Individually</Button>
+      <Button onClick={handleAddSupplier}>Add New Supplier</Button>
     </div>
   );
 };

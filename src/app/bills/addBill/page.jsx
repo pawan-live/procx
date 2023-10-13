@@ -23,6 +23,13 @@ import { Label } from "@/app/components/ui/label";
 import MinusCircle from "@/app/components/ui/minus-circle";
 import PlusCircle from "@/app/components/ui/plus-circle";
 import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/app/components/ui/select";
+import {
   Table,
   TableBody,
   TableCaption,
@@ -87,6 +94,11 @@ const Page = () => {
   //   setTblRow(updatedTblRow);
   // };
 
+  const handleSend = (e) => {
+    e.preventDefault();
+    router.push("/bills/viewBills/viewPendingBills");
+  };
+
   return (
     <Tabs defaultValue="overview" className="space-y-4 p-5">
       <TabsContent value="overview" className="space-y-6">
@@ -98,12 +110,28 @@ const Page = () => {
         </div>
 
         <Card className="col-span-4">
-          <CardHeader className="space-y-3">
+          <CardHeader className="space-y-2">
             <div className="flex-col space-y-3">
               <CardTitle>Invoice No. </CardTitle>
               <Input value="0001089238" className="w-40 " />
             </div>
+            <form>
+              <div className="flex flex-col md:flex-row gap-x-4 gap-y-4 w-full">
+                <div className="flex flex-col space-y-1.5 w-full lg:w-1/2">
+                  <Label>Supplier ID</Label>
+                  <Input type="text" required></Input>
+                  <Label>Site Manager ID</Label>
+                  <Input type="text" required></Input>
+                </div>
 
+                <div className="flex flex-col space-y-1.5 w-full lg:w-1/2">
+                  <Label>Supplier Name</Label>
+                  <Input type="text" required></Input>
+                  <Label>Site</Label>
+                  <Input type="text" required></Input>
+                </div>
+              </div>
+            </form>
             <Dialog>
               <div className="flex gap-2 items-center">
                 <DialogTrigger onClick={handleAddRow}>
@@ -192,22 +220,58 @@ const Page = () => {
                 ))}
               </TableBody>
             </Table>
-
-            <Button>Send for Approval</Button>
           </CardContent>
         </Card>
 
-        <div className="grid  lg:grid-cols-2">
+        <div className="grid  lg:grid-cols-1">
           <Card>
             <CardHeader>
-              <CardTitle>Search Orders</CardTitle>
-              <CardDescription>Search a specific order here</CardDescription>
+              <CardTitle>Checking Process</CardTitle>
+              <CardDescription>Procurement Department Review</CardDescription>
             </CardHeader>
             <CardContent>
-              <Input placeholder="Order ID"></Input>
+              <form>
+                <div className="flex flex-col md:flex-row gap-x-4 gap-y-4 w-full">
+                  <div className="flex flex-col space-y-1.5 w-full lg:w-1/2">
+                    <Label>Checked By</Label>
+                    <Input placeholder="Procurement Staff ID"></Input>
+                  </div>
+
+                  <div className="flex flex-col space-y-1.5 w-full lg:w-1/2">
+                    <Label>Quantity Status</Label>
+                    <Select required>
+                      <SelectTrigger id="qtyStatus">
+                        <SelectValue placeholder="Select" />
+                      </SelectTrigger>
+                      <SelectContent position="popper">
+                        <SelectItem value="correct">Correct</SelectItem>
+                        <SelectItem value="partial">
+                          Partially Received
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="flex flex-col space-y-1.5 w-full lg:w-1/2">
+                    <Label>Quality Status</Label>
+                    <Select required>
+                      <SelectTrigger id="qualityStatus">
+                        <SelectValue placeholder="Select" />
+                      </SelectTrigger>
+                      <SelectContent position="popper">
+                        <SelectItem value="exclnt">Excellent</SelectItem>
+                        <SelectItem value="gd">Good</SelectItem>
+                        <SelectItem value="sat">Satisfactory</SelectItem>
+                        <SelectItem value="po">Poor</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+                <Label>Comments</Label>
+                <Input type="text" required></Input>
+              </form>
             </CardContent>
             <CardFooter className="flex justify-between">
-              <Button>Review</Button>
+              <Button onClick={handleSend}>Send for Approval</Button>
             </CardFooter>
           </Card>
         </div>
