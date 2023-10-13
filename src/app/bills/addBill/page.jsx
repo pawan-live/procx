@@ -20,6 +20,7 @@ import {
 } from "@/app/components/ui/dialog";
 import { Input } from "@/app/components/ui/input";
 import { Label } from "@/app/components/ui/label";
+import MinusCircle from "@/app/components/ui/minus-circle";
 import PlusCircle from "@/app/components/ui/plus-circle";
 import {
   Table,
@@ -56,13 +57,18 @@ const Page = () => {
     setTblRow(updatedTblRow);
   };
 
-  //check last row
-  const lastRow = tblRow[tblRow.length - 1];
-  const isLastRowFilled = Object.values(lastRow).every((value) => value !== "");
+  //dialog box
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   //add new row
   const handleAddRow = () => {
+    //check last row
+    const lastRow = tblRow[tblRow.length - 1];
+    const isLastRowFilled = Object.values(lastRow).every(
+      (value) => value !== "",
+    );
     if (isLastRowFilled) {
+      setIsDialogOpen(false);
       const newRow = {
         itemId: "",
         itemName: "",
@@ -71,8 +77,15 @@ const Page = () => {
         amount: "",
       };
       setTblRow([...tblRow, newRow]);
+    } else {
+      setIsDialogOpen(true);
     }
   };
+
+  // const handleRowRemove = (index) => {
+  //   const updatedTblRow = tblRow.filter((_, rowIndex) => rowIndex !== index);
+  //   setTblRow(updatedTblRow);
+  // };
 
   return (
     <Tabs defaultValue="overview" className="space-y-4 p-5">
@@ -96,6 +109,19 @@ const Page = () => {
                 <DialogTrigger onClick={handleAddRow}>
                   <PlusCircle />
                 </DialogTrigger>
+                {isDialogOpen && (
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>
+                        Please complete current item data
+                      </DialogTitle>
+                      <DialogDescription>
+                        Fill all the columns to add new item to the bill.
+                      </DialogDescription>
+                    </DialogHeader>
+                  </DialogContent>
+                )}
+
                 <CardDescription>Click here to add new item</CardDescription>
               </div>
             </Dialog>
@@ -109,6 +135,7 @@ const Page = () => {
                   <TableHead>Unit Price</TableHead>
                   <TableHead>Quantity</TableHead>
                   <TableHead>Amount</TableHead>
+                  <TableHead></TableHead>
                 </TableRow>
 
                 {tblRow.map((row, index) => (
@@ -165,6 +192,7 @@ const Page = () => {
                 ))}
               </TableBody>
             </Table>
+
             <Button>Send for Approval</Button>
           </CardContent>
         </Card>
