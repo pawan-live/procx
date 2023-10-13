@@ -3,7 +3,7 @@
 import { addDoc, collection } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 
-import { Button } from "../components/ui/button";
+import { Button } from "../../components/ui/button";
 import {
   Table,
   TableBody,
@@ -12,8 +12,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "../components/ui/table";
-import { db } from "../firebase/firebase";
+} from "../../components/ui/table";
+import { db } from "../../firebase/firebase";
 
 export default function Page() {
   const [items, setItems] = useState({ name: "" });

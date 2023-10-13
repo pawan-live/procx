@@ -6,23 +6,10 @@ import Link from "next/link";
 import { React, useState } from "react";
 
 const Sidebar = (Props) => {
-  console.log(Props.sidebarItmes);
   const [open, setOpen] = useState(true);
 
-  const handleMouseEnter = () => {
-    setOpen(true);
-  };
-
-  const handleMouseLeave = () => {
-    setOpen(false);
-  };
-
   return (
-    <div
-      className="relative left-0 flex h-screen"
-      onMouseEnter={handleMouseEnter}
-      // onMouseLeave={handleMouseLeave}
-    >
+    <div className="relative left-0 flex h-screen">
       <div
         className={`${
           open ? "w-60" : "w-20 justify-space-between items-center"
@@ -66,10 +53,6 @@ const Sidebar = (Props) => {
           })}
         </div>
       </div>
-      {/* Show Bredscrum
-      <div className="h-screen flex-1 p-7">
-        <h1 className="text-2xl font-semibold pl-2">Home Page</h1>
-      </div> */}
     </div>
   );
 };

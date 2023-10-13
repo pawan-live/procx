@@ -16,14 +16,14 @@ import { Tabs, TabsContent } from "@/app/components/ui/tabs";
 import { useRouter } from "next/navigation";
 import React from "react";
 
-import { Input } from "../components/ui/input";
+import { Input } from "../../components/ui/input";
 
 const Page = () => {
   const router = useRouter();
 
   const handleOrders = (e) => {
     e.preventDefault();
-    router.push("/reviewOrders/mgmtReview");
+    router.push("/reviewOrders/procReview");
   };
   const handlePendingBills = (e) => {
     e.preventDefault();
@@ -37,6 +37,14 @@ const Page = () => {
     e.preventDefault();
     router.push("/suppliers");
   };
+  const handleAddItem = (e) => {
+    e.preventDefault();
+    router.push("/items/addItems");
+  };
+  const handleAddSupplier = (e) => {
+    e.preventDefault();
+    router.push("/suppliers/addSupplier");
+  };
   const handleAddBill = (e) => {
     e.preventDefault();
     router.push("/bills/addBill");
@@ -47,7 +55,7 @@ const Page = () => {
       <TabsContent value="overview" className="space-y-4">
         <div className="flex w-full justify-between">
           <Label className="text-2xl font-semibold leading-none tracking-tight">
-            Management
+            Procurement Department
           </Label>
           <DateRangePicker />
         </div>
@@ -164,6 +172,12 @@ const Page = () => {
         </div>
 
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+          <Button onClick={handleAddItem} className="w-full">
+            Add New Item
+          </Button>
+          <Button onClick={handleAddSupplier} className="w-full">
+            Add New Supplier
+          </Button>
           <Button onClick={handleAddBill} className="w-full">
             Add New Bill
           </Button>
