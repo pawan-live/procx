@@ -32,7 +32,6 @@ import {
 import { Tabs, TabsContent } from "@/app/components/ui/tabs";
 import { ImagePlus } from "lucide-react";
 import { useRouter } from "next/navigation";
-import React from "react";
 
 const Page = () => {
   const router = useRouter();
@@ -86,33 +85,30 @@ const Page = () => {
               </form>
             </CardContent>
             <CardFooter className="flex justify-between items-center">
-              <Button className="w-40">
-                <AlertDialog>
-                  <AlertDialogTrigger>Add Item</AlertDialogTrigger>
-                  <AlertDialogContent>
-                    <AlertDialogHeader>
-                      <AlertDialogTitle>Create Item?</AlertDialogTitle>
-                      <AlertDialogDescription>
-                        <p>This action will create a new item.</p>
-                        <p>
-                          Make sure added details are correct before proceeding.
-                        </p>
-                      </AlertDialogDescription>
-                    </AlertDialogHeader>
-                    <AlertDialogFooter>
-                      <AlertDialogCancel className="w-40">
-                        Cancel
-                      </AlertDialogCancel>
-                      <AlertDialogAction
-                        className="w-40"
-                        onClick={handleAddItem}
-                      >
-                        Create Item
-                      </AlertDialogAction>
-                    </AlertDialogFooter>
-                  </AlertDialogContent>
-                </AlertDialog>
-              </Button>
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button>Add item</Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Create Item?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      <p>This action will create a new item.</p>
+                      <p>
+                        Make sure added details are correct before proceeding.
+                      </p>
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel className="w-40">
+                      Cancel
+                    </AlertDialogCancel>
+                    <AlertDialogAction className="w-40" onClick={handleAddItem}>
+                      Create Item
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
             </CardFooter>
           </Card>
         </div>
