@@ -20,8 +20,8 @@
   {
     "id": 4,
     "icon": "/Sidebar/sideBarProducts.svg",
-    "text": "Items",
-    "url": "/dashboard/items/viewItems"
+    "text": "View Items",
+    "url": "/dashboard/items/view"
   },
   {
     "id": 5,
