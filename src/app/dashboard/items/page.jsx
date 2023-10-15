@@ -55,7 +55,6 @@ const Page = () => {
         {isLoading && (
           <div className="flex flex-col justify-center items-center w-full h-60">
             <BarLoader width={300} height={5} color="black" />
-            <p className="text-xl font-normal mt-2">Loading</p>
           </div>
         )}
         {!isLoading && (

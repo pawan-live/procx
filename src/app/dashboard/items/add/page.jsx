@@ -30,16 +30,37 @@ import {
   SelectValue,
 } from "@/app/components/ui/select";
 import { Tabs, TabsContent } from "@/app/components/ui/tabs";
+import { uploadImageToSpaces } from "@/app/helpers/uploadImageToSpaces";
 import { ImagePlus } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 const Page = () => {
   const router = useRouter();
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [imageURL, setImageURL] = useState("");
+
+  const handleImageChange = (e) => {
+    setSelectedImage(e.target.files[0]);
+  };
 
   const handleAddItem = (e) => {
     e.preventDefault();
     router.push("/items/viewItems/viewItem");
-    console.log("Yanawo");
+  };
+
+  const handleImageUpload = async () => {
+    if (!selectedImage) {
+      alert("Please select an image to upload.");
+      return;
+    }
+
+    try {
+      const uploadedURL = await uploadImageToSpaces(selectedImage);
+      setImageURL(uploadedURL);
+    } catch (error) {
+      console.error("Error uploading image:", error);
+    }
   };
 
   return (
@@ -55,34 +76,42 @@ const Page = () => {
             </CardHeader>
             <CardContent>
               <form>
-                <div className="flex flex-col space-y-1.5">
-                  <Label>Item Name</Label>
-                  <Input type="text" required></Input>
+                <div className="flex flex-col gap-y-4">
+                  <div>
+                    <Label>Item Name</Label>
+                    <Input type="text" required></Input>
+                  </div>
                   {/* catalogue dropdown */}
-                  <Label htmlFor="catalogue">Catalogue Status</Label>
-                  <Select required>
-                    <SelectTrigger id="catalogue">
-                      <SelectValue placeholder="Select" />
-                    </SelectTrigger>
-                    <SelectContent position="popper">
-                      <SelectItem value="next">Restricted</SelectItem>
-                      <SelectItem value="sveltekit">Not Restricted</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <Label>Item Description</Label>
-                  <Input type="text" required></Input>
-                  <Label>Images</Label>
-                  <Card>
-                    <CardHeader>
-                      <div className="flex flex-col space-y-3 items-center">
-                        <Label>Upload Images Here</Label>
-                        <ImagePlus />
-                        <Button className="bg-slate-400">Choose Images</Button>
-                      </div>
-                    </CardHeader>
-                  </Card>
+                  <div>
+                    <Label htmlFor="catalogue">Catalogue Status</Label>
+                    <Select required>
+                      <SelectTrigger id="catalogue">
+                        <SelectValue placeholder="Select" />
+                      </SelectTrigger>
+                      <SelectContent position="popper">
+                        <SelectItem value="next">Restricted</SelectItem>
+                        <SelectItem value="sveltekit">
+                          Not Restricted
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div>
+                    <Label>Item Description</Label>
+                    <Input type="text" required></Input>
+                  </div>
+                  <div>
+                    <Label>Image</Label>
+                    <Input
+                      id="picture"
+                      type="file"
+                      onChange={handleImageChange}
+                    />
+                  </div>
+                  {imageURL && <img src={imageURL} alt="Uploaded Image" />}
                 </div>
               </form>
+              <Button onClick={handleImageUpload}>Upload</Button>
             </CardContent>
             <CardFooter className="flex justify-between items-center">
               <AlertDialog>
