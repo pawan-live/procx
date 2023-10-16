@@ -11,6 +11,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/app/components/ui/alert-dialog";
+import { Badge } from "@/app/components/ui/badge";
 import { Button } from "@/app/components/ui/button";
 import {
   Card,
@@ -96,21 +97,21 @@ const Page = ({ params }) => {
                   <Label>Item ID</Label>
                   <Input type="text" defaultValue={itemId} disabled></Input>
                   <Label>Item Name</Label>
-                  <Input type="text" defaultValue={itemName}></Input>
+                  <Input type="text" defaultValue={itemName} disabled></Input>
 
-                  <Select defaultValue={restricted}>
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="Restricted">Restricted</SelectItem>
-                      <SelectItem value="Not Restricted">
-                        Not Restricted
-                      </SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <Label>Restricted</Label>
+
+                  {restricted ? (
+                    <Input type="text" value="Yes" disabled></Input>
+                  ) : (
+                    <Input type="text" value="No" disabled></Input>
+                  )}
                   <Label>Item Description</Label>
-                  <Input type="text" defaultValue={itemDescription}></Input>
+                  <Input
+                    type="text"
+                    defaultValue={itemDescription}
+                    disabled
+                  ></Input>
                   <Label>Images</Label>
                   <Card>
                     <CardHeader>
