@@ -167,6 +167,10 @@ const Page = () => {
           <Button onClick={handleAddBill} className="w-full">
             Add New Bill
           </Button>
+
+          <Button onClick={handleAddBill} className="w-full">
+            Suppliers
+          </Button>
         </div>
 
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-2">

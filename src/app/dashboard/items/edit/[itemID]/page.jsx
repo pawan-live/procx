@@ -36,7 +36,7 @@ const Page = () => {
         <div className="flex gap-6">
           <Card className="w-full">
             <CardHeader>
-              <CardTitle>Update Item</CardTitle>
+              <CardTitle>Edit Item</CardTitle>
               <CardDescription>Update item details here.</CardDescription>
             </CardHeader>
             <CardContent>
@@ -63,7 +63,7 @@ const Page = () => {
                       <div className="flex flex-col space-y-3 items-center">
                         <Label>Upload Images Here</Label>
                         <ImagePlus />
-                        <Button className="bg-slate-400">Choose Images</Button>
+                        <Button variant="outline">Choose Images</Button>
                       </div>
                     </CardHeader>
                   </Card>

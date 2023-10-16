@@ -2,14 +2,14 @@
   {
     "id": 1,
     "icon": "/Sidebar/sideBarOrders.svg",
-    "text": "Proc Dashboard",
-    "url": "/dashboard/dashboardProcStaff"
+    "text": "Proc Dept",
+    "url": "/dashboard/staff"
   },
   {
     "id": 2,
     "icon": "/Sidebar/sideBarOrders.svg",
-    "text": "Mgmt Dashboard",
-    "url": "/dashboard/dashboardMgmt"
+    "text": "Management",
+    "url": "/dashboard/management"
   },
   {
     "id": 3,
@@ -20,13 +20,19 @@
   {
     "id": 4,
     "icon": "/Sidebar/sideBarProducts.svg",
-    "text": "Items",
-    "url": "/dashboard/items/viewItems"
+    "text": "View Items",
+    "url": "/dashboard/items/view"
   },
   {
     "id": 5,
     "icon": "/Sidebar/sideBarSupplies.svg",
     "text": "Suppliers",
     "url": "/dashboard/suppliers"
+  },
+  {
+    "id": 5,
+    "icon": "/Sidebar/sideBarSupplies.svg",
+    "text": "Items",
+    "url": "/dashboard/items/view"
   }
 ]

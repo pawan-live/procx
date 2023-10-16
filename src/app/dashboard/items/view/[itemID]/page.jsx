@@ -23,19 +23,16 @@ import {
 import { Input } from "@/app/components/ui/input";
 import { Label } from "@/app/components/ui/label";
 import { Tabs, TabsContent } from "@/app/components/ui/tabs";
-import { useRouter } from "next/navigation";
-import React from "react";
+import { Edit, Trash } from "lucide-react";
+import Link from "next/link";
 
-const Page = () => {
-  const router = useRouter();
-  const handleItemEdit = (e) => {
-    e.preventDefault();
-    router.push("/items/editItems");
+// pass in params as props to access URL params
+const Page = ({ params }) => {
+  const handleDelete = (id) => {
+    // TODO: Delete item from database
+    console.log("Deleted item with id: " + id);
   };
-  const handleDeleteItem = (e) => {
-    e.preventDefault();
-    router.push("/items/viewItems");
-  };
+
   return (
     <Tabs defaultValue="overview" className="space-y-4 p-5">
       <TabsContent value="overview" className="space-y-4">
@@ -66,32 +63,41 @@ const Page = () => {
                 </div>
               </form>
             </CardContent>
-            <CardFooter className="flex flex-col md:flex-row gap-x-52 gap-y-4 w-full">
-              <Button onClick={handleItemEdit} className="w-40">
-                Edit Item
-              </Button>
-              <Button className="w-40">
-                <AlertDialog>
-                  <AlertDialogTrigger>Delete Item</AlertDialogTrigger>
-                  <AlertDialogContent>
-                    <AlertDialogHeader>
-                      <AlertDialogTitle>
-                        Are you sure you want to delete?
-                      </AlertDialogTitle>
-                      <AlertDialogDescription>
-                        <p>This action cannot be undone.</p>
-                        <p>This will permanently delete item details.</p>
-                      </AlertDialogDescription>
-                    </AlertDialogHeader>
-                    <AlertDialogFooter>
-                      <AlertDialogCancel>Cancel</AlertDialogCancel>
-                      <AlertDialogAction onClick={handleDeleteItem}>
-                        Delete
-                      </AlertDialogAction>
-                    </AlertDialogFooter>
-                  </AlertDialogContent>
-                </AlertDialog>
-              </Button>
+            <CardFooter className="flex flex-col md:flex-row gap-x-2 gap-y-4 w-full">
+              <Link href={`/dashboard/items/edit/${params.itemID}`}>
+                <Button variant="" className="w-40">
+                  Edit <Edit className="ml-2 w-4" />
+                </Button>
+              </Link>
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button className="w-40" variant="destructive">
+                    Delete <Trash className="ml-2 w-4" />
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>
+                      Are you sure you want to delete?
+                    </AlertDialogTitle>
+                    <AlertDialogDescription>
+                      <p>This action cannot be undone.</p>
+                      <p>This will permanently delete item details.</p>
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction
+                      // get params from URL
+                      onClick={() => {
+                        handleDelete(params.itemID);
+                      }}
+                    >
+                      Delete
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
             </CardFooter>
           </Card>
         </div>

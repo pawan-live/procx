@@ -32,7 +32,7 @@ const Sidebar = (Props) => {
         >
           {Props.sidebarItmes.map((item) => {
             return (
-              <Link key={item.id} href={item.url}>
+              <Link key={item.text} href={item.url}>
                 <div
                   className="flex flex-row items-center gap-x-2  bg-white rounded transition duration-300 hover:bg-darkGreen p-2 w-40 group"
                   style={{ borderRadius: "16px" }}
