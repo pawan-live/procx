@@ -22,15 +22,63 @@ import {
 } from "@/app/components/ui/card";
 import { Input } from "@/app/components/ui/input";
 import { Label } from "@/app/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/app/components/ui/select";
 import { Tabs, TabsContent } from "@/app/components/ui/tabs";
+import { API_URLS, BASE_URL } from "@/app/utils/constants";
+import axios from "axios";
 import { Edit, Trash } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import React, { useEffect } from "react";
 
 // pass in params as props to access URL params
 const Page = ({ params }) => {
-  const handleDelete = (id) => {
-    // TODO: Delete item from database
-    console.log("Deleted item with id: " + id);
+  const [items, setItems] = React.useState([]);
+  const [itemId, setItemId] = React.useState([]);
+  const [itemName, setItemName] = React.useState([]);
+  const [itemDescription, setItemDescription] = React.useState([]);
+  const [imageUrl, setImageUrl] = React.useState([]);
+  const [restricted, setRestricted] = React.useState([]);
+  const [isLoading, setIsLoading] = React.useState(true);
+  const router = useRouter();
+
+  useEffect(() => {
+    const getItemByID = async () => {
+      try {
+        const res = await axios.get(
+          `${BASE_URL}${API_URLS.ITEMS}/${params.itemID}`,
+        );
+        setIsLoading(false);
+        console.log(res.data);
+        setItemId(res.data.id);
+        setItemName(res.data.itemName);
+        setItemDescription(res.data.description);
+        setRestricted(res.data.restricted);
+        setImageUrl(res.data.imageUrl);
+      } catch (error) {
+        console.error("Error fetching item:", error);
+      }
+    };
+
+    getItemByID();
+  }, [params.itemID]);
+
+  const handleDelete = async (id) => {
+    try {
+      const response = await axios.delete(`${BASE_URL}${API_URLS.ITEMS}/${id}`);
+      console.log("Item deleted successfully");
+      console.log(response.data);
+      router.push("/dashboard/items");
+    } catch (error) {
+      console.error("Error deleting item:", error);
+    }
   };
 
   return (
@@ -46,18 +94,35 @@ const Page = ({ params }) => {
               <form>
                 <div className="flex flex-col space-y-1.5">
                   <Label>Item ID</Label>
-                  <Input type="text" readOnly></Input>
+                  <Input type="text" defaultValue={itemId} disabled></Input>
                   <Label>Item Name</Label>
-                  <Input type="text" readOnly></Input>
-                  {/* catalogue dropdown */}
-                  <Label htmlFor="catalogue">Catalogue Status</Label>
-                  <Input type="text" readOnly></Input>
+                  <Input type="text" defaultValue={itemName}></Input>
+
+                  <Select defaultValue={restricted}>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Restricted">Restricted</SelectItem>
+                      <SelectItem value="Not Restricted">
+                        Not Restricted
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
                   <Label>Item Description</Label>
-                  <Input type="text" readOnly></Input>
+                  <Input type="text" defaultValue={itemDescription}></Input>
                   <Label>Images</Label>
                   <Card>
                     <CardHeader>
-                      {/* Uploaded Image Should Be Displayed Here */}
+                      <div className="relative w-60 h-60">
+                        <Image
+                          src={imageUrl}
+                          alt={itemName}
+                          fill
+                          className="object-cover rounded-md"
+                          quality={40}
+                        />
+                      </div>
                     </CardHeader>
                   </Card>
                 </div>
