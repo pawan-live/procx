@@ -129,14 +129,19 @@ const Page = ({ params }) => {
                   <Label htmlFor="catalogue">Catalogue Status</Label>
                   <Select
                     required
-                    onChange={(e) => setRestricted(e.target.value)}
+                    onChange={(e) => {
+                      console.log("Selected value:", e.target.value);
+                      setRestricted(e.target.value);
+                    }}
                   >
                     <SelectTrigger id="catalogue">
                       <SelectValue placeholder="Select" />
                     </SelectTrigger>
                     <SelectContent position="popper">
-                      <SelectItem value="next">Restricted</SelectItem>
-                      <SelectItem value="sveltekit">Not Restricted</SelectItem>
+                      <SelectItem value="Restricted">Restricted</SelectItem>
+                      <SelectItem value="Not Restricted">
+                        Not Restricted
+                      </SelectItem>
                     </SelectContent>
                   </Select>
 
