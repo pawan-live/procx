@@ -21,19 +21,19 @@ const Page = () => {
 
   const handlePendingOrders = (e) => {
     e.preventDefault();
-    router.push("/reviewOrders/procReview/pendingOrders");
+    router.push("/dashboard/reviewOrders/procReview/pendingOrders");
   };
   const handleApprovedOrders = (e) => {
     e.preventDefault();
-    router.push("/reviewOrders/procReview/approvedOrders");
+    router.push("/dashboard/reviewOrders/procReview/approvedOrders");
   };
   const handleRejectedOrders = (e) => {
     e.preventDefault();
-    router.push("/reviewOrders/procReview/rejectedOrders");
+    router.push("/dashboard/reviewOrders/procReview/rejectedOrders");
   };
   const handleCompletedOrders = (e) => {
     e.preventDefault();
-    router.push("/reviewOrders/procReview/completedOrders");
+    router.push("/dashboard/reviewOrders/procReview/completedOrders");
   };
 
   return (

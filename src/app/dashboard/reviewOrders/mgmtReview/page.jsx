@@ -21,35 +21,37 @@ const Page = () => {
 
   const handlePendingMgmtOrders = (e) => {
     e.preventDefault();
-    router.push("/reviewOrders/mgmtReview/mgmtOrders/pendingOrders");
+    router.push("/dashboard/reviewOrders/mgmtReview/mgmtOrders/pendingOrders");
   };
   const handleApprovedMgmtOrders = (e) => {
     e.preventDefault();
-    router.push("/reviewOrders/mgmtReview/mgmtOrders/approvedOrders");
+    router.push("/dashboard/reviewOrders/mgmtReview/mgmtOrders/approvedOrders");
   };
   const handleRejecetedMgmtOrders = (e) => {
     e.preventDefault();
-    router.push("/reviewOrders/mgmtReview/mgmtOrders/rejectedOrders");
+    router.push("/dashboard/reviewOrders/mgmtReview/mgmtOrders/rejectedOrders");
   };
   const handleCompletedMgmtOrders = (e) => {
     e.preventDefault();
-    router.push("/reviewOrders/mgmtReview/mgmtOrders/completedOrders");
+    router.push(
+      "/dashboard/reviewOrders/mgmtReview/mgmtOrders/completedOrders",
+    );
   };
   const handlePendingProcOrders = (e) => {
     e.preventDefault();
-    router.push("/reviewOrders/procReview/pendingOrders");
+    router.push("/dashboard/reviewOrders/procReview/pendingOrders");
   };
   const handleApprovedProcOrders = (e) => {
     e.preventDefault();
-    router.push("/reviewOrders/procReview/approvedOrders");
+    router.push("/dashboard/reviewOrders/procReview/approvedOrders");
   };
   const handleRejectedProcOrders = (e) => {
     e.preventDefault();
-    router.push("/reviewOrders/procReview/rejectedOrders");
+    router.push("/dashboard/reviewOrders/procReview/rejectedOrders");
   };
   const handleCompletedProcOrders = (e) => {
     e.preventDefault();
-    router.push("/reviewOrders/procReview/completedOrders");
+    router.push("/dashboard/reviewOrders/procReview/completedOrders");
   };
 
   return (

@@ -23,31 +23,31 @@ const Page = () => {
 
   const handleOrders = (e) => {
     e.preventDefault();
-    router.push("/reviewOrders/procReview");
+    router.push("/dashboard/reviewOrders/procReview");
   };
   const handlePendingBills = (e) => {
     e.preventDefault();
-    router.push("/bills/viewBills/viewPendingBills");
+    router.push("/dashboard/bills/viewBills/viewPendingBills");
   };
   const handlePaidBills = (e) => {
     e.preventDefault();
-    router.push("/bills/viewBills/viewApprovedBills");
+    router.push("/dashboard/bills/viewBills/viewApprovedBills");
   };
   const handleSuppliers = (e) => {
     e.preventDefault();
-    router.push("/suppliers");
+    router.push("/dashboard/suppliers");
   };
   const handleAddItem = (e) => {
     e.preventDefault();
-    router.push("/items/addItems");
+    router.push("/dashboard/items/add");
   };
   const handleAddSupplier = (e) => {
     e.preventDefault();
-    router.push("/suppliers/addSupplier");
+    router.push("/dashboard/suppliers/add");
   };
   const handleAddBill = (e) => {
     e.preventDefault();
-    router.push("/bills/addBill");
+    router.push("/dashboard/bills/addBill");
   };
 
   return (

@@ -28,7 +28,9 @@ const Page = () => {
 
   const handleReview = (e) => {
     e.preventDefault();
-    router.push("/reviewOrders/procReview/pendingOrders/viewPendingOrder");
+    router.push(
+      "/dashboard/reviewOrders/procReview/pendingOrders/viewPendingOrder",
+    );
   };
 
   return (
