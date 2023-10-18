@@ -23,23 +23,23 @@ const Page = () => {
 
   const handleOrders = (e) => {
     e.preventDefault();
-    router.push("/reviewOrders/mgmtReview");
+    router.push("/dashboard/reviewOrders/mgmtReview");
   };
   const handlePendingBills = (e) => {
     e.preventDefault();
-    router.push("/bills/viewBills/viewPendingBills");
+    router.push("/dashboard/bills/viewBills/viewPendingBills");
   };
   const handlePaidBills = (e) => {
     e.preventDefault();
-    router.push("/bills/viewBills/viewApprovedBills");
+    router.push("/dashboard/bills/viewBills/viewApprovedBills");
   };
   const handleSuppliers = (e) => {
     e.preventDefault();
-    router.push("/suppliers");
+    router.push("/dashboard/suppliers");
   };
   const handleAddBill = (e) => {
     e.preventDefault();
-    router.push("/bills/addBill");
+    router.push("/dashboard/bills/addBill");
   };
 
   return (
@@ -168,7 +168,7 @@ const Page = () => {
             Add New Bill
           </Button>
 
-          <Button onClick={handleAddBill} className="w-full">
+          <Button onClick={handleSuppliers} className="w-full">
             Suppliers
           </Button>
         </div>
