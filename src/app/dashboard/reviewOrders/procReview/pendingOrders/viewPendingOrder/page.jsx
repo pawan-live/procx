@@ -1,3 +1,5 @@
+"use client";
+
 import BreadCrumbs from "@/app/components/Navbar/BreadCrumbs";
 import { Button } from "@/app/components/ui/button";
 import {
@@ -22,8 +24,16 @@ import {
   TableRow,
 } from "@/app/components/ui/table";
 import { Tabs, TabsContent } from "@/app/components/ui/tabs";
+import { useRouter } from "next/navigation";
 
 const Page = () => {
+  const router = useRouter();
+
+  const handleViewSupplier = (e) => {
+    e.preventDefault();
+    router.push("dashboard/suppliers/view");
+  };
+
   return (
     <Tabs defaultValue="overview" className="space-y-4 p-5">
       <TabsContent value="overview" className="space-y-4">

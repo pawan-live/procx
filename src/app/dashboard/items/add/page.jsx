@@ -27,6 +27,7 @@ import { set } from "date-fns";
 import { UploadCloud } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { BarLoader } from "react-spinners";
@@ -44,6 +45,8 @@ const formSchema = z.object({
 });
 
 const Page = () => {
+  const router = useRouter();
+
   const [isLoading, setIsLoading] = useState(false);
   const [isReqLoading, setIsReqLoading] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
@@ -62,6 +65,7 @@ const Page = () => {
       .then((res) => {
         console.log(res);
         setIsReqLoading(false);
+        router.push("/dashboard/items/view");
       })
       .catch((err) => {
         console.log(err);

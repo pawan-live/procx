@@ -28,7 +28,9 @@ const Page = () => {
 
   const handleRejectedReview = (e) => {
     e.preventDefault();
-    router.push("/reviewOrders/procReview/rejectedOrders/viewRejectedOrder");
+    router.push(
+      "/dashboard/reviewOrders/procReview/rejectedOrders/viewRejectedOrder",
+    );
   };
 
   return (
