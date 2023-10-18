@@ -22,7 +22,9 @@ import {
 import { Tabs, TabsContent } from "@/app/components/ui/tabs";
 import { API_URLS, BASE_LOCAL, BASE_URL } from "@/app/utils/constants";
 import axios from "axios";
-import { format } from "date-fns";
+import { format, set } from "date-fns";
+import { Eye } from "lucide-react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import { BarLoader } from "react-spinners";
@@ -43,8 +45,8 @@ const Page = () => {
     const res = await axios.get(`${BASE_LOCAL}${API_URLS.ORDERS}`);
     setIsLoading(false);
     //console.log(res.data);
-    console.log(res.data[19]);
-    console.log(res.data[20]);
+    // console.log(res.data[0]);
+    // console.log(res.data[1]);
 
     setOrders(res.data);
   };
@@ -53,9 +55,16 @@ const Page = () => {
     getItems();
   }, []);
 
+  let totals = 0;
   const filterCondition2 = (order) => {
+    let total = 0;
     for (let i = 0; i < order.items.length; i++) {
-      console.log(order.managerstatus);
+      total += order.items[i].price * order.items[i].qty;
+    }
+    total = totals;
+
+    for (let i = 0; i < order.items.length; i++) {
+      // console.log(order.managerstatus);
       if (
         order.items[i].restricted === true &&
         order.managerstatus === "pending"
@@ -106,13 +115,28 @@ const Page = () => {
                           {format(new Date(order.deliverDate), "dd/MM/yyyy")}
                         </TableCell>
                         <TableCell>Colombo</TableCell>
-                        <TableCell>200 000 LKR</TableCell>
+                        <TableCell>
+                          {
+                            (totals = order.items.reduce(
+                              (acc, item) => acc + item.price * item.qty,
+                              0,
+                            ))
+                          }
+                        </TableCell>
                         <TableCell>Restricted</TableCell>
                         <TableCell>Restricted</TableCell>
                         <TableCell>
-                          <Button onClick={handleReview} variant="destructive">
-                            Review
-                          </Button>
+                          <Link
+                            href={`/dashboard/reviewOrders/mgmtReview/mgmtOrders/pendingOrders/viewPendingOrder/${order.id}`}
+                          >
+                            <Button
+                              variant="destructive"
+                              className="flex items-center"
+                            >
+                              Review
+                              <Eye className="w-4 ml-2" />
+                            </Button>
+                          </Link>
                         </TableCell>
                       </TableRow>
                     ))}
