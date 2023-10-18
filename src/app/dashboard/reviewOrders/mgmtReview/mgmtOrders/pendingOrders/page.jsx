@@ -20,17 +20,50 @@ import {
   TableRow,
 } from "@/app/components/ui/table";
 import { Tabs, TabsContent } from "@/app/components/ui/tabs";
+import { API_URLS, BASE_LOCAL, BASE_URL } from "@/app/utils/constants";
+import axios from "axios";
+import { format } from "date-fns";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useEffect } from "react";
+import { BarLoader } from "react-spinners";
 
 const Page = () => {
   const router = useRouter();
+  const [orders, setOrders] = React.useState([]);
+  const [isLoading, setIsLoading] = React.useState(true);
 
   const handleReview = (e) => {
     e.preventDefault();
     router.push(
-      "/reviewOrders/mgmtReview/mgmtOrders/pendingOrders/viewPendingOrder",
+      "/dashboard/reviewOrders/mgmtReview/mgmtOrders/pendingOrders/viewPendingOrder",
     );
+  };
+
+  const getItems = async () => {
+    const res = await axios.get(`${BASE_LOCAL}${API_URLS.ORDERS}`);
+    setIsLoading(false);
+    //console.log(res.data);
+    console.log(res.data[19]);
+    console.log(res.data[20]);
+
+    setOrders(res.data);
+  };
+
+  useEffect(() => {
+    getItems();
+  }, []);
+
+  const filterCondition2 = (order) => {
+    for (let i = 0; i < order.items.length; i++) {
+      console.log(order.managerstatus);
+      if (
+        order.items[i].restricted === true &&
+        order.managerstatus === "pending"
+      ) {
+        return true;
+      }
+    }
+    return false;
   };
 
   return (
@@ -45,48 +78,47 @@ const Page = () => {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <Table>
-              <TableBody>
-                <TableRow>
-                  <TableHead>Order ID</TableHead>
-                  <TableHead>Order Date</TableHead>
-                  <TableHead>Required Date</TableHead>
-                  <TableHead>Site Location</TableHead>
-                  <TableHead>Budget</TableHead>
-                  <TableHead>Budget Status</TableHead>
-                  <TableHead>Catalogue Status</TableHead>
-                </TableRow>
-                <TableRow>
-                  <TableCell>OID001</TableCell>
-                  <TableCell>Jan 20, 2022</TableCell>
-                  <TableCell>Jan 30, 2022</TableCell>
-                  <TableCell>Colombo</TableCell>
-                  <TableCell>200 000 LKR</TableCell>
-                  <TableCell>Restricted</TableCell>
-                  <TableCell>Restricted</TableCell>
-                  <TableCell>
-                    <Button onClick={handleReview} variant="destructive">
-                      Review
-                    </Button>
-                  </TableCell>
-                </TableRow>
-
-                <TableRow>
-                  <TableCell>OID002</TableCell>
-                  <TableCell>Jan 30, 2022</TableCell>
-                  <TableCell>Feb 10, 2022</TableCell>
-                  <TableCell>Matara</TableCell>
-                  <TableCell>10 000 LKR</TableCell>
-                  <TableCell>Not Restricted</TableCell>
-                  <TableCell>Restricted</TableCell>
-                  <TableCell>
-                    <Button onClick={handleReview} variant="destructive">
-                      Review
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
+            {isLoading && (
+              <div className="flex flex-col justify-center items-center w-full h-60">
+                <BarLoader width={300} height={5} color="black" />
+              </div>
+            )}
+            {!isLoading && (
+              <Table>
+                <TableBody>
+                  <TableRow>
+                    <TableHead>Order ID</TableHead>
+                    <TableHead>Order Date</TableHead>
+                    <TableHead>Required Date</TableHead>
+                    <TableHead>Site Location</TableHead>
+                    <TableHead>Budget</TableHead>
+                    <TableHead>Budget Status</TableHead>
+                    <TableHead>Catalogue Status</TableHead>
+                  </TableRow>
+                  {orders.length > 0 &&
+                    orders.filter(filterCondition2).map((order) => (
+                      <TableRow key={order.id}>
+                        <TableCell>{order.orderNo}</TableCell>
+                        <TableCell>
+                          {format(new Date(order.createdAt), "dd/MM/yyyy")}
+                        </TableCell>
+                        <TableCell>
+                          {format(new Date(order.deliverDate), "dd/MM/yyyy")}
+                        </TableCell>
+                        <TableCell>Colombo</TableCell>
+                        <TableCell>200 000 LKR</TableCell>
+                        <TableCell>Restricted</TableCell>
+                        <TableCell>Restricted</TableCell>
+                        <TableCell>
+                          <Button onClick={handleReview} variant="destructive">
+                            Review
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                </TableBody>
+              </Table>
+            )}
           </CardContent>
         </Card>
       </TabsContent>

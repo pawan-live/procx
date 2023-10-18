@@ -9,8 +9,10 @@ export const PROCUREMENT_STATUS = {
 
 // BASE URL
 export const BASE_URL = "https://procx-api-o9suw.ondigitalocean.app/api";
+export const BASE_LOCAL = "http://localhost:3000";
 
 export const API_URLS = {
   ITEMS: "/items",
   SUPPLIERS: "/suppliers",
+  ORDERS: "/orders",
 };
