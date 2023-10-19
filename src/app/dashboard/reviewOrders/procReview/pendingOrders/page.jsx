@@ -22,32 +22,35 @@ import {
 import { Tabs, TabsContent } from "@/app/components/ui/tabs";
 import { API_URLS, BASE_URL } from "@/app/utils/constants";
 import axios from "axios";
+import { format } from "date-fns";
+import { or } from "firebase/firestore";
 import { Eye } from "lucide-react";
 import Link from "next/link";
 import { useEffect } from "react";
 import React from "react";
+import { BarLoader } from "react-spinners";
 
 const Page = () => {
-  const [pendingOrders, setPendingOrders] = React.useState([]);
+  const [orders, setOrders] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
 
   useEffect(() => {
-    getPendingOrders();
+    getOrders();
   });
 
   // function to send request to server
-  const getPendingOrders = async () => {
+  const getOrders = async () => {
     try {
       const res = await axios.get(`${BASE_URL}${API_URLS.ORDERS}`);
       console.log("SERVER response:", res);
       setIsLoading(false);
-      setPendingOrders(res.data);
+      setOrders(res.data);
     } catch (error) {
       console.error("ERROR fetching data:", error);
     }
   };
 
-  //filter ordersStatus pending
+  //filter condition
   const filterConditionPending = (order) => {
     for (let i = 0; i < order.items.length; i++) {
       console.log(order.orderStatus);
@@ -56,6 +59,18 @@ const Page = () => {
       }
     }
     return false;
+  };
+
+  //budget calculation
+  let totals = 0;
+  const budgetCal = (order) => {
+    let total = 0;
+    for (let i = 0; i < order.items.length; i++) {
+      total += order.items[i].price * order.items[i].qty;
+    }
+    total = totals;
+    totals = order.items.reduce((acc, item) => acc + item.price * item.qty, 0);
+    return totals;
   };
 
   return (
@@ -70,32 +85,40 @@ const Page = () => {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <Table>
-              <TableBody>
-                <TableRow>
-                  <TableHead>Order ID</TableHead>
-                  <TableHead>Order Date</TableHead>
-                  <TableHead>Required Date</TableHead>
-                  <TableHead>Site Location</TableHead>
-                  <TableHead>Budget</TableHead>
-                  <TableHead>Budget Status</TableHead>
-                  <TableHead>Catalogue Status</TableHead>
-                </TableRow>
-                {pendingOrders.length > 0 &&
-                  pendingOrders
-                    .filter(filterConditionPending)
-                    .map((pendingOrder) => (
-                      <TableRow key={pendingOrder.id}>
-                        <TableCell>{pendingOrder.id.toString()}</TableCell>
-                        <TableCell>{pendingOrder.createdAt}</TableCell>
-                        <TableCell>{pendingOrder.deliverDate}</TableCell>
-                        <TableCell>{pendingOrder.site}</TableCell>
-                        <TableCell>{pendingOrder.budget}</TableCell>
-                        <TableCell>{pendingOrder.status}</TableCell>
-                        <TableCell>{pendingOrder.catalogue}</TableCell>
+            {isLoading && (
+              <div className="flex flex-col justify-center items-center w-full h-60">
+                <BarLoader width={300} height={5} color="black" />
+              </div>
+            )}
+            {!isLoading && (
+              <Table>
+                <TableBody>
+                  <TableRow>
+                    <TableHead>Order ID</TableHead>
+                    <TableHead>Order Date</TableHead>
+                    <TableHead>Required Date</TableHead>
+                    <TableHead>Site Location</TableHead>
+                    <TableHead>Budget</TableHead>
+                    <TableHead>Budget Status</TableHead>
+                    <TableHead>Catalogue Status</TableHead>
+                  </TableRow>
+                  {orders.length > 0 &&
+                    orders.filter(filterConditionPending).map((order) => (
+                      <TableRow key={order.id}>
+                        <TableCell>{order.id.toString()}</TableCell>
+                        <TableCell>
+                          {format(new Date(order.createdAt), "dd/MM/yyyy")}
+                        </TableCell>
+                        <TableCell>
+                          {format(new Date(order.deliverDate), "dd/MM/yyyy")}
+                        </TableCell>
+                        <TableCell>{order.site}</TableCell>
+                        <TableCell>{budgetCal(order)}</TableCell>
+                        <TableCell>{order.status}</TableCell>
+                        <TableCell>{order.catalogue}</TableCell>
                         <TableCell>
                           <Link
-                            href={`/dashboard/reviewOrders/procReview/pendingOrders/${pendingOrder.id}`}
+                            href={`/dashboard/reviewOrders/procReview/pendingOrders/${order.id}`}
                           >
                             <Button variant="" className="flex items-center">
                               View
@@ -105,8 +128,9 @@ const Page = () => {
                         </TableCell>
                       </TableRow>
                     ))}
-              </TableBody>
-            </Table>
+                </TableBody>
+              </Table>
+            )}
           </CardContent>
         </Card>
       </TabsContent>
