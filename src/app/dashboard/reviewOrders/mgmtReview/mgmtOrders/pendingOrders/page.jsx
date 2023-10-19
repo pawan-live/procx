@@ -44,7 +44,7 @@ const Page = () => {
   const getItems = async () => {
     const res = await axios.get(`${BASE_URL}${API_URLS.ORDERS}`);
     setIsLoading(false);
-    //console.log(res.data);
+    console.log(res.data);
     // console.log(res.data[0]);
     // console.log(res.data[1]);
 
@@ -55,14 +55,7 @@ const Page = () => {
     getItems();
   }, []);
 
-  let totals = 0;
   const filterCondition2 = (order) => {
-    let total = 0;
-    for (let i = 0; i < order.items.length; i++) {
-      total += order.items[i].price * order.items[i].qty;
-    }
-    total = totals;
-
     for (let i = 0; i < order.items.length; i++) {
       // console.log(order.managerstatus);
       if (
@@ -73,6 +66,18 @@ const Page = () => {
       }
     }
     return false;
+  };
+
+  //budget calculation
+  let totals = 0;
+  const budgetCal = (order) => {
+    let total = 0;
+    for (let i = 0; i < order.items.length; i++) {
+      total += order.items[i].price * order.items[i].qty;
+    }
+    total = totals;
+    totals = order.items.reduce((acc, item) => acc + item.price * item.qty, 0);
+    return totals;
   };
 
   return (
@@ -115,14 +120,7 @@ const Page = () => {
                           {format(new Date(order.deliverDate), "dd/MM/yyyy")}
                         </TableCell>
                         <TableCell>Colombo</TableCell>
-                        <TableCell>
-                          {
-                            (totals = order.items.reduce(
-                              (acc, item) => acc + item.price * item.qty,
-                              0,
-                            ))
-                          }
-                        </TableCell>
+                        <TableCell>{budgetCal(order)}</TableCell>
                         <TableCell>Restricted</TableCell>
                         <TableCell>Restricted</TableCell>
                         <TableCell>

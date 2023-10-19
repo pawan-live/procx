@@ -37,7 +37,6 @@ const Page = ({ params }) => {
   const router = useRouter();
   console.log(params);
   const [order, setOrder] = React.useState([]);
-  const [orderStatus, setStatus] = React.useState();
   const [isLoading, setIsLoading] = React.useState(true);
 
   useEffect(() => {
@@ -102,6 +101,17 @@ const Page = ({ params }) => {
     updateOrder();
   };
 
+  //budget calculation
+  let totals = 0;
+  const budgetCal = (order) => {
+    let total = 0;
+    for (let i = 0; i < order.length; i++) {
+      total += order[i].price * order[i].qty;
+    }
+    total = totals;
+    totals = order.reduce((acc, order) => acc + order.price * order.qty, 0);
+    return totals;
+  };
   return (
     <Tabs defaultValue="overview" className="space-y-4 p-5">
       <ToastContainer />
@@ -177,27 +187,38 @@ const Page = ({ params }) => {
             <CardTitle>Approval Crieteria</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="flex flex-col md:flex-row gap-x-4 gap-y-4 w-full">
-              <div className="flex flex-col space-y-1.5 w-full lg:w-1/2">
-                <Label>Total Budget</Label>
-                <Input type="text" value="200 000" readOnly></Input>
+            {isLoading && (
+              <div className="flex flex-col justify-center items-center w-full h-60">
+                <BarLoader width={300} height={5} color="black" />
               </div>
+            )}
+            {!isLoading && (
+              <div className="flex flex-col md:flex-row gap-x-4 gap-y-4 w-full">
+                <div className="flex flex-col space-y-1.5 w-full lg:w-1/2">
+                  <Label>Total Budget</Label>
+                  <Input
+                    type="text"
+                    value={budgetCal(order.items)}
+                    readOnly
+                  ></Input>
+                </div>
 
-              <div className="flex flex-col space-y-1.5 w-full lg:w-1/2">
-                <Label>Budget Status</Label>
-                <Input type="text" value="Restricted" readOnly></Input>
-              </div>
+                <div className="flex flex-col space-y-1.5 w-full lg:w-1/2">
+                  <Label>Budget Status</Label>
+                  <Input type="text" value="Restricted" readOnly></Input>
+                </div>
 
-              <div className="flex flex-col space-y-1.5 w-full lg:w-1/2">
-                <Label>Catalogue Status</Label>
-                <Input type="text" value="Not Restricted" readOnly></Input>
-              </div>
+                <div className="flex flex-col space-y-1.5 w-full lg:w-1/2">
+                  <Label>Catalogue Status</Label>
+                  <Input type="text" value="Not Restricted" readOnly></Input>
+                </div>
 
-              {/* <div className="flex flex-col space-y-1.5 w-full lg:w-1/2">
+                {/* <div className="flex flex-col space-y-1.5 w-full lg:w-1/2">
                 <Label>Approval Status</Label>
                 <Input type="text" value="Restricted" readOnly></Input>
               </div> */}
-            </div>
+              </div>
+            )}
           </CardContent>
         </Card>
 
