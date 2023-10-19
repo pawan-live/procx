@@ -112,6 +112,29 @@ const Page = ({ params }) => {
     totals = order.reduce((acc, order) => acc + order.price * order.qty, 0);
     return totals;
   };
+
+  //budget status
+  const budgetStatus = (order) => {
+    let status = "Not Restricted";
+    for (let i = 0; i < order.length; i++) {
+      if (order[i].price * order[i].qty > 200000) {
+        status = "Restricted";
+      }
+    }
+    return status;
+  };
+
+  //catalogue status
+  const catStatus = (order) => {
+    let status = "Not Restricted";
+    for (let i = 0; i < order.length; i++) {
+      if (order[i].restricted == true) {
+        status = "Restricted";
+      }
+    }
+    return status;
+  };
+
   return (
     <Tabs defaultValue="overview" className="space-y-4 p-5">
       <ToastContainer />
@@ -205,12 +228,20 @@ const Page = ({ params }) => {
 
                 <div className="flex flex-col space-y-1.5 w-full lg:w-1/2">
                   <Label>Budget Status</Label>
-                  <Input type="text" value="Restricted" readOnly></Input>
+                  <Input
+                    type="text"
+                    value={budgetStatus(order.items)}
+                    readOnly
+                  ></Input>
                 </div>
 
                 <div className="flex flex-col space-y-1.5 w-full lg:w-1/2">
                   <Label>Catalogue Status</Label>
-                  <Input type="text" value="Not Restricted" readOnly></Input>
+                  <Input
+                    type="text"
+                    value={catStatus(order.items)}
+                    readOnly
+                  ></Input>
                 </div>
 
                 {/* <div className="flex flex-col space-y-1.5 w-full lg:w-1/2">
