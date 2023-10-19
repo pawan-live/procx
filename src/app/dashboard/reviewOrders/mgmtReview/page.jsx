@@ -15,6 +15,10 @@ import { Label } from "@/app/components/ui/label";
 import { Tabs, TabsContent } from "@/app/components/ui/tabs";
 import { useRouter } from "next/navigation";
 import React from "react";
+import { ToastContainer } from "react-toastify";
+
+// import { ToastContainer, toast } from "react-toastify";
+// import "react-toastify/dist/ReactToastify.css";
 
 const Page = () => {
   const router = useRouter();
@@ -56,6 +60,7 @@ const Page = () => {
 
   return (
     <Tabs defaultValue="overview" className="space-y-4 p-5">
+      <ToastContainer />
       <TabsContent value="overview" className="space-y-6">
         <div className="flex w-full justify-between">
           <Label className="text-2xl font-semibold leading-none tracking-tight">
