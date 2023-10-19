@@ -39,18 +39,6 @@ const Page = ({ params }) => {
   const [isLoading, setIsLoading] = React.useState(true);
   const router = useRouter();
 
-  // const [pendingOrders, setPendingOrders] = React.useState([]);
-  // const [orderId, setOrderId] = React.useState([]);
-  // const [orderDate, setOrderDate] = React.useState([]);
-  // const [requireDate, setRequireDate] = React.useState([]);
-  // const [site, setSite] = React.useState([]);
-  // const [budget, setBudget] = React.useState([]);
-  // const [budgetStatus, setBudgetStatus] = React.useState([]);
-  // const [restricted, setRestricted] = React.useState([]);
-  // //add these fields
-  // const [siteManagerName, setSiteManagerName] = React.useState([]);
-  // const [supplier, setSupplier] = React.useState([]);
-
   useEffect(() => {
     const getOrderByID = async () => {
       try {
@@ -61,15 +49,6 @@ const Page = ({ params }) => {
         console.log("SERVER response:", res);
         setIsLoading(false);
         setOrder(res.data);
-        // setOrderId(res.data.id);
-        // setOrderDate(res.data.createdAt);
-        // setRequireDate(res.data.deliverDate);
-        // setSite(res.data.site);
-        // setBudget(res.data.budget);
-        // setBudgetStatus(res.data.budgetStatus);
-        // setRestricted(res.data.restricted);
-        // setSiteManagerName(res.data.siteManagerName);
-        // setSupplier(res.data.supplier);
       } catch (error) {
         console.error("ERROR fetching item:", error);
       }
