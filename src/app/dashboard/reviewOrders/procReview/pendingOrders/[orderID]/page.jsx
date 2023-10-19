@@ -11,6 +11,14 @@ import {
   CardTitle,
 } from "@/app/components/ui/card";
 import { Checkbox } from "@/app/components/ui/checkbox";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/app/components/ui/dialog";
 import { Input } from "@/app/components/ui/input";
 import { Label } from "@/app/components/ui/label";
 import {
@@ -28,7 +36,7 @@ import { API_URLS, BASE_LOCAL, BASE_URL } from "@/app/utils/constants";
 import axios from "axios";
 import { format, isValid, parseISO } from "date-fns";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import React from "react";
 
 // pass in params as props to access URL params
@@ -38,12 +46,14 @@ const Page = ({ params }) => {
   const [order, setOrder] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
   const router = useRouter();
+  //dialog box
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   useEffect(() => {
     const getOrderByID = async () => {
       try {
         const res = await axios.get(
-          `${BASE_LOCAL}${API_URLS.ORDERS}/${params.orderID}`,
+          `${BASE_URL}${API_URLS.ORDERS}/${params.orderID}`,
         );
 
         console.log("SERVER response:", res);
@@ -55,6 +65,16 @@ const Page = ({ params }) => {
     };
     getOrderByID();
   }, [params.orderID]);
+
+  const handleBtnApprove = (budget) => {
+    if (budget > 100000) {
+      console.log("Order approve response: false");
+      setIsDialogOpen(true);
+    } else {
+      console.log("Order approve response: true");
+      setIsDialogOpen(false);
+    }
+  };
 
   //format date
   function formatDate(date) {
@@ -68,12 +88,16 @@ const Page = ({ params }) => {
   //budget calculation
   let totals = 0;
   const budgetCal = (order) => {
+    console.log(order);
     let total = 0;
-    for (let i = 0; i < order.items.length; i++) {
-      total += order.items[i].price * order.items[i].qty;
+    // if (!order) {
+    //   return 0;
+    // }
+    for (let i = 0; i < order.length; i++) {
+      total += order[i].price * order[i].qty;
     }
     total = totals;
-    totals = order.items.reduce((acc, item) => acc + item.price * item.qty, 0);
+    totals = order.reduce((acc, order) => acc + order.price * order.qty, 0);
     return totals;
   };
 
@@ -173,7 +197,7 @@ const Page = ({ params }) => {
                 <Label>Total Budget</Label>
                 <Input
                   type="text"
-                  defaultValue={budgetCal(order)}
+                  defaultValue={budgetCal(order.items)}
                   disabled
                 ></Input>
               </div>
@@ -182,7 +206,7 @@ const Page = ({ params }) => {
                 <Label>Budget Status</Label>
                 <Input
                   type="text"
-                  defaultValue={getBudgetStatus(budgetCal(order))}
+                  defaultValue={getBudgetStatus(budgetCal(order.items))}
                   disabled
                 ></Input>
               </div>
@@ -236,7 +260,26 @@ const Page = ({ params }) => {
           <CardFooter className="flex flex-col md:flex-row gap-x-40 gap-y-4 w-full">
             <div className="flex flex-col space-y-3">
               <div className="flex flex-row  gap-x-28">
-                <Button className="w-44">Approve</Button>
+                <Dialog>
+                  {/* <div className="flex gap-2 items-center"> */}
+                  <DialogTrigger onClick={handleBtnApprove}>
+                    <Button className="w-44">Approve</Button>
+                  </DialogTrigger>
+                  {isDialogOpen && (
+                    <DialogContent>
+                      <DialogHeader>
+                        <DialogTitle>Please send to Management</DialogTitle>
+                        <DialogDescription>
+                          You cannot approve orders above 100000LKR
+                        </DialogDescription>
+                      </DialogHeader>
+                    </DialogContent>
+                  )}
+
+                  <CardDescription>Click here to add new item</CardDescription>
+                  {/* </div> */}
+                </Dialog>
+
                 <Button className="w-44">Send to Management</Button>
               </div>
               <div className="flex flex-row  gap-x-28">
