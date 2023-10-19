@@ -20,17 +20,42 @@ import {
   TableRow,
 } from "@/app/components/ui/table";
 import { Tabs, TabsContent } from "@/app/components/ui/tabs";
-import { useRouter } from "next/navigation";
+import { API_URLS, BASE_URL } from "@/app/utils/constants";
+import axios from "axios";
+import { Eye } from "lucide-react";
+import Link from "next/link";
+import { useEffect } from "react";
 import React from "react";
 
 const Page = () => {
-  const router = useRouter();
+  const [pendingOrders, setPendingOrders] = React.useState([]);
+  const [isLoading, setIsLoading] = React.useState(true);
 
-  const handleReview = (e) => {
-    e.preventDefault();
-    router.push(
-      "/dashboard/reviewOrders/procReview/pendingOrders/viewPendingOrder",
-    );
+  useEffect(() => {
+    getPendingOrders();
+  });
+
+  // function to send request to server
+  const getPendingOrders = async () => {
+    try {
+      const res = await axios.get(`${BASE_URL}${API_URLS.ORDERS}`);
+      console.log("SERVER response:", res);
+      setIsLoading(false);
+      setPendingOrders(res.data);
+    } catch (error) {
+      console.error("ERROR fetching data:", error);
+    }
+  };
+
+  //filter ordersStatus pending
+  const filterConditionPending = (order) => {
+    for (let i = 0; i < order.items.length; i++) {
+      console.log(order.orderStatus);
+      if (order.orderStatus === "pending") {
+        return true;
+      }
+    }
+    return false;
   };
 
   return (
@@ -56,35 +81,30 @@ const Page = () => {
                   <TableHead>Budget Status</TableHead>
                   <TableHead>Catalogue Status</TableHead>
                 </TableRow>
-                <TableRow>
-                  <TableCell>OID001</TableCell>
-                  <TableCell>Jan 20, 2022</TableCell>
-                  <TableCell>Jan 30, 2022</TableCell>
-                  <TableCell>Colombo</TableCell>
-                  <TableCell>200 000 LKR</TableCell>
-                  <TableCell>Restricted</TableCell>
-                  <TableCell>Restricted</TableCell>
-                  <TableCell>
-                    <Button onClick={handleReview} variant="destructive">
-                      Review
-                    </Button>
-                  </TableCell>
-                </TableRow>
-
-                <TableRow>
-                  <TableCell>OID002</TableCell>
-                  <TableCell>Jan 30, 2022</TableCell>
-                  <TableCell>Feb 10, 2022</TableCell>
-                  <TableCell>Matara</TableCell>
-                  <TableCell>10 000 LKR</TableCell>
-                  <TableCell>Not Restricted</TableCell>
-                  <TableCell>Restricted</TableCell>
-                  <TableCell>
-                    <Button onClick={handleReview} variant="destructive">
-                      Review
-                    </Button>
-                  </TableCell>
-                </TableRow>
+                {pendingOrders.length > 0 &&
+                  pendingOrders
+                    .filter(filterConditionPending)
+                    .map((pendingOrder) => (
+                      <TableRow key={pendingOrder.id}>
+                        <TableCell>{pendingOrder.id.toString()}</TableCell>
+                        <TableCell>{pendingOrder.createdAt}</TableCell>
+                        <TableCell>{pendingOrder.deliverDate}</TableCell>
+                        <TableCell>{pendingOrder.site}</TableCell>
+                        <TableCell>{pendingOrder.budget}</TableCell>
+                        <TableCell>{pendingOrder.status}</TableCell>
+                        <TableCell>{pendingOrder.catalogue}</TableCell>
+                        <TableCell>
+                          <Link
+                            href={`/dashboard/reviewOrders/procReview/pendingOrders/${pendingOrder.id}`}
+                          >
+                            <Button variant="" className="flex items-center">
+                              View
+                              <Eye className="w-4 ml-2" />
+                            </Button>
+                          </Link>
+                        </TableCell>
+                      </TableRow>
+                    ))}
               </TableBody>
             </Table>
           </CardContent>
