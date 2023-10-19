@@ -147,8 +147,9 @@ const Page = ({ params }) => {
                       Are you sure you want to delete?
                     </AlertDialogTitle>
                     <AlertDialogDescription>
-                      <p>This action cannot be undone.</p>
-                      <p>This will permanently delete item details.</p>
+                      This action cannot be undone.
+                      <br />
+                      This will permanently delete item details.
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>

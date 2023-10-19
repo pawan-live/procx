@@ -122,7 +122,7 @@ const Page = ({ params }) => {
           <CardHeader>
             <CardTitle>Review Pending Order</CardTitle>
             <CardDescription>
-              Review pending order sent by site manager
+              Review pending order sent by procurement staff
             </CardDescription>
           </CardHeader>
           <CardContent>

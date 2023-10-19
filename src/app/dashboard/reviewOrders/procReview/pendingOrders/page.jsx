@@ -36,7 +36,7 @@ const Page = () => {
 
   useEffect(() => {
     getOrders();
-  });
+  }, []);
 
   // function to send request to server
   const getOrders = async () => {
@@ -52,7 +52,7 @@ const Page = () => {
 
   //filter condition
   const filterConditionPending = (order) => {
-    for (let i = 0; i < order.items.length; i++) {
+    for (let i = 0; i < orders.length; i++) {
       console.log(order.orderStatus);
       if (order.orderStatus === "pending") {
         return true;
