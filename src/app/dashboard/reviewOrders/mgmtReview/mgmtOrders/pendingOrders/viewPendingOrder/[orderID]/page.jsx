@@ -1,3 +1,5 @@
+"use client";
+
 import BreadCrumbs from "@/app/components/Navbar/BreadCrumbs";
 import { Button } from "@/app/components/ui/button";
 import {
@@ -22,8 +24,40 @@ import {
   TableRow,
 } from "@/app/components/ui/table";
 import { Tabs, TabsContent } from "@/app/components/ui/tabs";
+import { API_URLS, BASE_LOCAL, BASE_URL } from "@/app/utils/constants";
+import axios from "axios";
+import { format, isValid, parseISO } from "date-fns";
+import React, { useEffect } from "react";
 
-const Page = () => {
+const Page = ({ params }) => {
+  console.log(params);
+  const [order, setOrder] = React.useState([]);
+  const [isLoading, setIsLoading] = React.useState(true);
+
+  useEffect(() => {
+    const getOrderByID = async () => {
+      try {
+        const res = await axios.get(
+          `${BASE_LOCAL}${API_URLS.ORDERS}/${params.orderID}`,
+        );
+        setIsLoading(false);
+        console.log(res.data);
+        setOrder(res.data);
+      } catch (error) {
+        console.error("Error fetching item:", error);
+      }
+    };
+
+    getOrderByID();
+  }, [params.orderID]);
+
+  function formatDate(date) {
+    return date && isValid(parseISO(date))
+      ? format(parseISO(date), "dd/MM/yyyy")
+      : null;
+  }
+  const orderDate = formatDate(order && order.createdAt);
+  const deliveryDate = formatDate(order && order.deliverDate);
   return (
     <Tabs defaultValue="overview" className="space-y-4 p-5">
       <TabsContent value="overview" className="space-y-4">
@@ -41,13 +75,9 @@ const Page = () => {
               <div className="flex flex-col md:flex-row gap-x-4 gap-y-4 w-full">
                 <div className="flex flex-col space-y-1.5 w-full lg:w-1/2">
                   <Label>Order ID</Label>
-                  <Input type="text" value="OID001" readOnly></Input>
+                  <Input type="text" value={order.orderNo} readOnly></Input>
                   <Label>Order raised by</Label>
-                  <Input
-                    type="text"
-                    value="Haththikke Samarasuriya"
-                    readOnly
-                  ></Input>
+                  <Input type="text" value="Site Manager" readOnly></Input>
                   {/* <Label>Description</Label>
                   <Input type="text" value="Fuck SLIIT" readOnly></Input> */}
                 </div>
@@ -61,17 +91,17 @@ const Page = () => {
                   <div className="flex flex-row  gap-x-4 justify-between">
                     <div className="flex flex-col space-y-1.5 justify-between">
                       <Label>Order Date</Label>
-                      <Input type="text" value="Jan 20, 2022" readOnly></Input>
+                      <Input type="text" value={orderDate} readOnly></Input>
                     </div>
                     <div className="flex flex-col space-y-1.5 justify-between">
                       <Label>Required Date</Label>
-                      <Input type="text" value="Jan 20, 2022" readOnly></Input>
+                      <Input type="text" value={deliveryDate} readOnly></Input>
                     </div>
                   </div>
                   <Label>Supplier Name</Label>
                   <Input
                     type="text"
-                    value="Badu Hari Suppliers"
+                    value={order && order.supplier && order.supplier.name}
                     readOnly
                   ></Input>
                   <Label></Label>
@@ -131,23 +161,21 @@ const Page = () => {
                   <TableHead>Budget</TableHead>
                   <TableHead>Catalogue Status</TableHead>
                 </TableRow>
-                <TableRow>
-                  <TableCell>001</TableCell>
-                  <TableCell>Gal</TableCell>
-                  <TableCell>150 LKR</TableCell>
-                  <TableCell>12</TableCell>
-                  <TableCell>1800</TableCell>
-                  <TableCell>Restricted</TableCell>
-                </TableRow>
 
-                <TableRow>
-                  <TableCell>002</TableCell>
-                  <TableCell>Vali</TableCell>
-                  <TableCell>200 LKR</TableCell>
-                  <TableCell>200</TableCell>
-                  <TableCell>40000</TableCell>
-                  <TableCell>Not Restricted</TableCell>
-                </TableRow>
+                {order &&
+                  order.items &&
+                  order.items.map((item) => (
+                    <TableRow key={item.id}>
+                      <TableCell>{item.id}</TableCell>
+                      <TableCell>{item.itemName}</TableCell>
+                      <TableCell>{item.price} LKR</TableCell>
+                      <TableCell>{item.qty}</TableCell>
+                      <TableCell>{item.price * item.qty} LKR</TableCell>
+                      <TableCell>
+                        {item.restricted ? "Restricted" : "Not Restricted"}
+                      </TableCell>
+                    </TableRow>
+                  ))}
               </TableBody>
             </Table>
           </CardContent>
