@@ -42,7 +42,7 @@ const Page = () => {
   };
 
   const getItems = async () => {
-    const res = await axios.get(`${BASE_LOCAL}${API_URLS.ORDERS}`);
+    const res = await axios.get(`${BASE_URL}${API_URLS.ORDERS}`);
     setIsLoading(false);
     //console.log(res.data);
     // console.log(res.data[0]);
