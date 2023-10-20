@@ -21,8 +21,8 @@ import {
 } from "@/app/components/ui/table";
 import { Tabs, TabsContent } from "@/app/components/ui/tabs";
 import { budgetCalOrders } from "@/app/helpers/Manager/budgetCal";
-import { managerPendingFilter } from "@/app/helpers/Manager/managerPendingFilter";
-import { API_URLS, BASE_URL } from "@/app/utils/constants";
+import { managerPendingFilter } from "@/app/helpers/Manager/managerFilters";
+import { API_URLS, BASE_URL, ORDER_STATUS } from "@/app/utils/constants";
 import axios from "axios";
 import { format, set } from "date-fns";
 import { Eye } from "lucide-react";
@@ -79,8 +79,8 @@ const Page = () => {
                     <TableHead>Budget Status</TableHead>
                     <TableHead>Catalogue Status</TableHead>
                   </TableRow>
-                  {orders.length > 0 &&
-                    orders.filter(managerPendingFilter).map((order) => (
+                  {managerPendingFilter(orders).length > 0 &&
+                    managerPendingFilter(orders).map((order) => (
                       <TableRow key={order.id}>
                         <TableCell>{order.orderNo}</TableCell>
                         <TableCell>

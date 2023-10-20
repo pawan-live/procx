@@ -20,6 +20,7 @@ import {
   TableRow,
 } from "@/app/components/ui/table";
 import { Tabs, TabsContent } from "@/app/components/ui/tabs";
+import { managerRejectedFilter } from "@/app/helpers/Manager/managerFilters";
 import { API_URLS, BASE_LOCAL, BASE_URL } from "@/app/utils/constants";
 import axios from "axios";
 import { format, set } from "date-fns";
@@ -52,19 +53,6 @@ const Page = () => {
     );
   };
 
-  const filterCondition = (order) => {
-    for (let i = 0; i < order.items.length; i++) {
-      // console.log(order.managerstatus);
-      if (
-        // order.items[i].restricted === true &&
-        order.managerstatus === "Rejected"
-        // order.items[i].price * order.items[i].qty > 200000
-      ) {
-        return true;
-      }
-    }
-    return false;
-  };
   //budget calculation
   let totals = 0;
   const budgetCal = (order) => {
@@ -107,8 +95,8 @@ const Page = () => {
                     <TableHead>Budget Status</TableHead>
                     <TableHead>Catalogue Status</TableHead>
                   </TableRow>
-                  {orders.length > 0 &&
-                    orders.filter(filterCondition).map((order) => (
+                  {managerRejectedFilter(orders).length > 0 &&
+                    managerRejectedFilter(orders).map((order) => (
                       <TableRow key={order.id}>
                         <TableCell>{order.orderNo}</TableCell>
                         <TableCell>
