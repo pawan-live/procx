@@ -79,10 +79,7 @@ const Page = ({ params }) => {
 
   //btn APPROVE
   const handleBtnApprove = (id) => {
-    if (budgetCal(order.items) > 100000 && getCatalogueStatus == true) {
-      console.log("Order approve response: restricted");
-      setIsDialogOpen(true);
-    } else {
+    if (budgetCal(order.items) < 100000 && getCatalogueStatus == false) {
       console.log("Order approve response: not restricted");
       setIsDialogOpen(false);
 
@@ -98,12 +95,15 @@ const Page = ({ params }) => {
         }
       };
       updateOrder();
+    } else {
+      console.log("Order approve response: restricted");
+      setIsDialogOpen(true);
     }
   };
 
   //bt SEND TO MANAGEMENT
   const handleBtnManagement = (id) => {
-    if (budgetCal(order.items) < 100000 && getCatalogueStatus == false) {
+    if (budgetCal(order.items) > 100000 || getCatalogueStatus == true) {
       console.log("Order send response: true");
 
       const updateOrder = async () => {
@@ -124,7 +124,20 @@ const Page = ({ params }) => {
   };
 
   //btn REJECT
-  const handleBtnReject = () => {};
+  const handleBtnReject = (id) => {
+    const updateOrder = async () => {
+      try {
+        const res = await axios.put(`${BASE_URL}${API_URLS.ORDERS}/${id}`, {
+          orderStatus: "Rejected",
+        });
+        router.push("/dashboard/reviewOrders/procReview/pendingOrders");
+        console.log(res.data);
+      } catch (error) {
+        console.error("Error fetching item:", error);
+      }
+    };
+    updateOrder();
+  };
 
   //format date
   function formatDate(date) {
@@ -145,6 +158,7 @@ const Page = ({ params }) => {
     total = totals;
     totals = order.reduce((acc, order) => acc + order.price * order.qty, 0);
     return totals;
+    console.log("Budget response: true");
   };
 
   //get budget status
@@ -160,12 +174,20 @@ const Page = ({ params }) => {
 
   //get Catalogue status
   const getCatalogueStatus = () => {
+    console.log("Catalogue status response");
     return order.items.some((item) => item.restricted === true);
   };
 
   //get approval status if both false
   const getApprovalStatus = () => {
-    return getBudgetStatus == false && getCatalogueStatus == false;
+    console.log("Approval status response");
+    if (getBudgetStatus() === true || getCatalogueStatus() === true) {
+      console.log("Approval status response: restricted");
+      return true;
+    } else {
+      console.log("Approval status response: not restricted");
+      return false;
+    }
   };
 
   const handleViewSupplier = (e) => {
@@ -204,7 +226,7 @@ const Page = ({ params }) => {
                     <Label>Order raised by</Label>
                     <Input
                       type="text"
-                      defaultValue={"order.siteMgr"}
+                      defaultValue={"Site Manager"}
                       disabled
                     ></Input>
                     {/* <Label>Description</Label>
@@ -224,7 +246,7 @@ const Page = ({ params }) => {
                     <Label>Site Location</Label>
                     <Input
                       type="text"
-                      defaultValue={order.site}
+                      defaultValue={"Colombo"}
                       disabled
                     ></Input>
                   </div>
@@ -302,9 +324,7 @@ const Page = ({ params }) => {
                   <Input
                     type="text"
                     defaultValue={
-                      getCatalogueStatus(order.items)
-                        ? "Restricted"
-                        : "Not Restricted"
+                      getCatalogueStatus() ? "Restricted" : "Not Restricted"
                     }
                     disabled
                   ></Input>
@@ -315,7 +335,7 @@ const Page = ({ params }) => {
                   <Input
                     type="text"
                     defaultValue={
-                      getApprovalStatus() ? "Not Restricted" : "Restricted"
+                      getApprovalStatus() ? "Restricted" : "Not Restricted"
                     }
                     disabled
                   ></Input>
@@ -378,7 +398,9 @@ const Page = ({ params }) => {
                         <DialogHeader>
                           <DialogTitle>Please send to Management</DialogTitle>
                           <DialogDescription>
-                            You cannot approve orders above 100000LKR
+                            You cannot approve order with budget greater than
+                            100000LKR <br />
+                            You cannot approve orders with restricted items
                           </DialogDescription>
                         </DialogHeader>
                       </DialogContent>
@@ -439,7 +461,7 @@ const Page = ({ params }) => {
                       <AlertDialogAction
                         className="w-20"
                         onClick={() => {
-                          handleBtnReject();
+                          handleBtnReject(order.id);
                         }}
                       >
                         Send
