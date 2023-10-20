@@ -100,6 +100,7 @@ const Page = () => {
                   <TableRow>
                     <TableHead>Order Name</TableHead>
                     <TableHead>Order Date</TableHead>
+                    <TableHead>Required Date</TableHead>
                     <TableHead>Rejected Date</TableHead>
                     <TableHead>Site Location</TableHead>
                     <TableHead>Budget</TableHead>
