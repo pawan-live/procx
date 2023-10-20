@@ -38,7 +38,6 @@ const Page = ({ params }) => {
   //console.log(params);
   const [order, setOrder] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
-
   useEffect(() => {
     const getOrderByID = async () => {
       try {
@@ -63,43 +62,6 @@ const Page = ({ params }) => {
   }
   const orderDate = formatDate(order && order.createdAt);
   const deliveryDate = formatDate(order && order.deliverDate);
-
-  const handleApprove = (id) => {
-    const updateOrder = async () => {
-      try {
-        const res = await axios.put(`${BASE_URL}${API_URLS.ORDERS}/${id}`, {
-          managerstatus: "Approved",
-        });
-        router.push("/dashboard/management");
-        //console.log(res.data);
-      } catch (error) {
-        console.error("Error fetching item:", error);
-      }
-    };
-
-    updateOrder();
-  };
-
-  const handleReject = (id) => {
-    const updateOrder = async () => {
-      try {
-        const res = await axios.put(`${BASE_URL}${API_URLS.ORDERS}/${id}`, {
-          managerstatus: "Rejected",
-        });
-        // router.push({
-        //   pathname: "/dashboard/management",
-        //   query: { success: "Order rejected successfully!" },
-        // });
-        router.push("/dashboard/management");
-
-        //console.log(res.data);
-      } catch (error) {
-        console.error("Error fetching item:", error);
-      }
-    };
-
-    updateOrder();
-  };
 
   //budget calculation
   let totals = 0;
@@ -134,19 +96,14 @@ const Page = ({ params }) => {
     }
     return status;
   };
-
   return (
     <Tabs defaultValue="overview" className="space-y-4 p-5">
-      <ToastContainer />
       <TabsContent value="overview" className="space-y-4">
         <div className="flex gap-6"></div>
         {/* Review order */}
         <Card className="w-full">
           <CardHeader>
-            <CardTitle>Review Pending Order</CardTitle>
-            <CardDescription>
-              Review pending order sent by site manager
-            </CardDescription>
+            <CardTitle>Review Rejected Order</CardTitle>
           </CardHeader>
           <CardContent>
             {isLoading && (
@@ -158,8 +115,10 @@ const Page = ({ params }) => {
               <form>
                 <div className="flex flex-col md:flex-row gap-x-4 gap-y-4 w-full">
                   <div className="flex flex-col space-y-1.5 w-full lg:w-1/2">
-                    <Label>Order Name</Label>
+                    <Label>Order ID</Label>
                     <Input type="text" value={order.orderNo} readOnly></Input>
+                    <Label>Order Date</Label>
+                    <Input type="text" value={orderDate} readOnly></Input>
                     <Label>Order raised by</Label>
                     <Input type="text" value="Site Manager" readOnly></Input>
                     {/* <Label>Description</Label>
@@ -168,31 +127,18 @@ const Page = ({ params }) => {
                   <div className="flex flex-col space-y-1.5 lg:w-1/2">
                     <Label>Site Location</Label>
                     <Input type="text" value="Colombo 05" readOnly></Input>
+                    <Label>Required Date</Label>
+                    <Input type="text" value={deliveryDate} readOnly></Input>
                     <Label>Site Manager Phone</Label>
                     <Input type="text" value="0712345234" readOnly></Input>
                   </div>
                   <div className="flex flex-col space-y-1.5 w-full lg:w-1/2">
-                    <div className="flex flex-row  gap-x-4 justify-between">
-                      <div className="flex flex-col space-y-1.5 justify-between">
-                        <Label>Order Date</Label>
-                        <Input type="text" value={orderDate} readOnly></Input>
-                      </div>
-                      <div className="flex flex-col space-y-1.5 justify-between">
-                        <Label>Required Date</Label>
-                        <Input
-                          type="text"
-                          value={deliveryDate}
-                          readOnly
-                        ></Input>
-                      </div>
-                    </div>
                     <Label>Supplier Name</Label>
                     <Input
                       type="text"
                       value={order && order.supplier && order.supplier.name}
                       readOnly
                     ></Input>
-                    <Label></Label>
                   </div>
                 </div>
               </form>
@@ -216,7 +162,7 @@ const Page = ({ params }) => {
               </div>
             )}
             {!isLoading && (
-              <div className="flex flex-col md:flex-row gap-x-4 gap-y-4 w-full">
+              <div className="flex flex-col md:flex-row gap-x-4 gap-y-6 w-full">
                 <div className="flex flex-col space-y-1.5 w-full lg:w-1/2">
                   <Label>Total Budget</Label>
                   <Input
@@ -244,12 +190,24 @@ const Page = ({ params }) => {
                   ></Input>
                 </div>
 
-                {/* <div className="flex flex-col space-y-1.5 w-full lg:w-1/2">
-                <Label>Approval Status</Label>
-                <Input type="text" value="Restricted" readOnly></Input>
-              </div> */}
+                <div className="flex flex-col space-y-1.5 w-full lg:w-1/2">
+                  <Label>Approval Status</Label>
+                  <Input
+                    type="text"
+                    value={order.managerstatus}
+                    className="bg-destructive"
+                    readOnly
+                  ></Input>
+                </div>
               </div>
             )}
+          </CardContent>
+          <CardContent className="space-y-1.5">
+            <CardTitle>Rejected Reason</CardTitle>
+            <Input
+              value="All items in the order are restricted"
+              readOnly
+            ></Input>
           </CardContent>
         </Card>
 
@@ -275,7 +233,6 @@ const Page = ({ params }) => {
                     <TableHead>Budget</TableHead>
                     <TableHead>Catalogue Status</TableHead>
                   </TableRow>
-
                   {order &&
                     order.items &&
                     order.items.map((item) => (
@@ -294,24 +251,26 @@ const Page = ({ params }) => {
               </Table>
             )}
           </CardContent>
-          <CardFooter className="flex flex-col md:flex-row gap-x-40 gap-y-4 w-full">
-            <div className="flex flex-col space-y-3">
-              <div className="flex flex-row  gap-x-28">
-                <Button
-                  className="w-44"
-                  onClick={() => handleApprove(order.id)}
-                >
-                  Approve
-                </Button>
-                <Button
-                  className="w-44"
-                  variant="destructive"
-                  onClick={() => handleReject(order.id)}
-                >
-                  Reject
-                </Button>
+          <CardFooter>
+            {isLoading && (
+              <div className="flex flex-col justify-center items-center w-full h-60">
+                <BarLoader width={300} height={5} color="black" />
               </div>
-            </div>
+            )}
+            {!isLoading && (
+              <Card>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-2xl font-bold">
+                    Total Budget
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-sm font-medium">
+                    {budgetCal(order.items)} LKR
+                  </div>
+                </CardContent>
+              </Card>
+            )}
           </CardFooter>
         </Card>
       </TabsContent>

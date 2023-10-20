@@ -37,7 +37,7 @@ const Page = () => {
   const getItems = async () => {
     const res = await axios.get(`${BASE_URL}${API_URLS.ORDERS}`);
     setIsLoading(false);
-    //console.log(res.data);
+    console.log(res.data);
     // console.log(res.data[0]);
     // console.log(res.data[1]);
 
@@ -54,7 +54,8 @@ const Page = () => {
       if (
         order.items[i].restricted === true &&
         order.managerstatus === "pending" &&
-        order.items[i].price * order.items[i].qty > 200000
+        order.items[i].price * order.items[i].qty > 200000 &&
+        order.orderStatus === "Partially Approved"
       ) {
         return true;
       }
@@ -95,7 +96,7 @@ const Page = () => {
               <Table>
                 <TableBody>
                   <TableRow>
-                    <TableHead>Order ID</TableHead>
+                    <TableHead>Order Name</TableHead>
                     <TableHead>Order Date</TableHead>
                     <TableHead>Required Date</TableHead>
                     <TableHead>Site Location</TableHead>

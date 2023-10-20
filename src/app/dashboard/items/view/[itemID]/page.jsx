@@ -76,7 +76,7 @@ const Page = ({ params }) => {
       const response = await axios.delete(`${BASE_URL}${API_URLS.ITEMS}/${id}`);
       console.log("Item deleted successfully");
       console.log(response.data);
-      router.push("/dashboard/items");
+      router.push("/dashboard/items/view");
     } catch (error) {
       console.error("Error deleting item:", error);
     }
