@@ -20,17 +20,74 @@ import {
   TableRow,
 } from "@/app/components/ui/table";
 import { Tabs, TabsContent } from "@/app/components/ui/tabs";
-import { useRouter } from "next/navigation";
-import React from "react";
+import { API_URLS, BASE_LOCAL, BASE_URL } from "@/app/utils/constants";
+import axios from "axios";
+import { format } from "date-fns";
+import { Eye } from "lucide-react";
+import Link from "next/link";
+import React, { useEffect } from "react";
+import { BarLoader } from "react-spinners";
 
 const Page = () => {
-  const router = useRouter();
+  const [orders, setOrders] = React.useState([]);
+  const [isLoading, setIsLoading] = React.useState(true);
 
-  const handleApprovedReview = (e) => {
-    e.preventDefault();
-    router.push(
-      "/dashboard/reviewOrders/procReview/approvedOrders/viewApprovedOrder",
-    );
+  useEffect(() => {
+    getOrders();
+  }, []);
+
+  // function to send request to server
+  const getOrders = async () => {
+    try {
+      const res = await axios.get(`${BASE_URL}${API_URLS.ORDERS}`);
+      console.log("SERVER response:", res);
+      setIsLoading(false);
+      setOrders(res.data);
+    } catch (error) {
+      console.error("ERROR fetching data:", error);
+    }
+  };
+
+  //filter condition
+  const filterConditionApproved = (order) => {
+    for (let i = 0; i < orders.length; i++) {
+      console.log(order.orderStatus);
+      if (
+        order.orderStatus === "Approved" &&
+        order.managerStatus === "Pending"
+      ) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  //budget calculation
+  let totals = 0;
+  const budgetCal = (order) => {
+    let total = 0;
+    for (let i = 0; i < order.items.length; i++) {
+      total += order.items[i].price * order.items[i].qty;
+    }
+    total = totals;
+    totals = order.items.reduce((acc, item) => acc + item.price * item.qty, 0);
+    return totals;
+  };
+
+  //get Catalogue status
+  const getCatalogueStatus = (order) => {
+    return order.items.some((item) => item.restricted === true);
+  };
+
+  //get budget status
+  const getBudgetStatus = (budget) => {
+    if (budget > 100000) {
+      console.log("Budget status response: true");
+      return true;
+    } else {
+      console.log("Budget status response: false");
+      return false;
+    }
   };
 
   return (
@@ -43,57 +100,62 @@ const Page = () => {
             <CardDescription>Review previously approved orders</CardDescription>
           </CardHeader>
           <CardContent>
-            <Table>
-              <TableBody>
-                <TableRow>
-                  <TableHead>Order ID</TableHead>
-                  <TableHead>Order Date</TableHead>
-                  <TableHead>Required Date</TableHead>
-                  <TableHead>Approved Date</TableHead>
-                  <TableHead>Site Location</TableHead>
-                  <TableHead>Budget</TableHead>
-                  <TableHead>Budget Status</TableHead>
-                  <TableHead>Catalogue Status</TableHead>
-                </TableRow>
-                <TableRow>
-                  <TableCell>OID001</TableCell>
-                  <TableCell>Jan 20, 2022</TableCell>
-                  <TableCell>Jan 30, 2022</TableCell>
-                  <TableCell>Jan 25, 2022</TableCell>
-                  <TableCell>Colombo</TableCell>
-                  <TableCell>200 000 LKR</TableCell>
-                  <TableCell>Restricted</TableCell>
-                  <TableCell>Restricted</TableCell>
-                  <TableCell>
-                    <Button
-                      onClick={handleApprovedReview}
-                      variant="destructive"
-                    >
-                      Review
-                    </Button>
-                  </TableCell>
-                </TableRow>
-
-                <TableRow>
-                  <TableCell>OID002</TableCell>
-                  <TableCell>Jan 30, 2022</TableCell>
-                  <TableCell>Feb 10, 2022</TableCell>
-                  <TableCell>Feb 05, 2022</TableCell>
-                  <TableCell>Matara</TableCell>
-                  <TableCell>10 000 LKR</TableCell>
-                  <TableCell>Not Restricted</TableCell>
-                  <TableCell>Restricted</TableCell>
-                  <TableCell>
-                    <Button
-                      onClick={handleApprovedReview}
-                      variant="destructive"
-                    >
-                      Review
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
+            {isLoading && (
+              <div className="flex flex-col justify-center items-center w-full h-60">
+                <BarLoader width={300} height={5} color="black" />
+              </div>
+            )}
+            {!isLoading && (
+              <Table>
+                <TableBody>
+                  <TableRow>
+                    <TableHead>Order ID</TableHead>
+                    <TableHead>Order Date</TableHead>
+                    <TableHead>Required Date</TableHead>
+                    <TableHead>Approved Date</TableHead>
+                    <TableHead>Site Location</TableHead>
+                    <TableHead>Budget</TableHead>
+                    <TableHead>Budget Status</TableHead>
+                    <TableHead>Catalogue Status</TableHead>
+                  </TableRow>
+                  {orders.length > 0 &&
+                    orders.filter(filterConditionApproved).map((order) => (
+                      <TableRow key={order.id}>
+                        <TableCell>{order.id.toString()}</TableCell>
+                        <TableCell>
+                          {format(new Date(order.createdAt), "dd/MM/yyyy")}
+                        </TableCell>
+                        <TableCell>
+                          {format(new Date(order.deliverDate), "dd/MM/yyyy")}
+                        </TableCell>
+                        <TableCell>{"Approved Date"}</TableCell>
+                        <TableCell>{}</TableCell>
+                        <TableCell>{budgetCal(order)}</TableCell>
+                        <TableCell>
+                          {getBudgetStatus(budgetCal(order))
+                            ? "Restricted"
+                            : "Not Restricted"}
+                        </TableCell>
+                        <TableCell>
+                          {" "}
+                          {getCatalogueStatus(order)
+                            ? "Restricted"
+                            : "Not Restricted"}
+                        </TableCell>
+                        <TableCell>
+                          <Link
+                            href={`/dashboard/reviewOrders/procReview/approvedOrders/${order.id}`}
+                          ></Link>
+                          <Button variant="" className="flex items-center">
+                            View
+                            <Eye className="w-4 ml-2" />
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                </TableBody>
+              </Table>
+            )}
           </CardContent>
         </Card>
       </TabsContent>
