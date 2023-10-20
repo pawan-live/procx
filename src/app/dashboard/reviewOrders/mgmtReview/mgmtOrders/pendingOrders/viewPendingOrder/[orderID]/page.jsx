@@ -74,6 +74,10 @@ const Page = ({ params }) => {
           managerstatus: ORDER_STATUS.APPROVED,
           orderStatus: ORDER_STATUS.APPROVED,
         });
+        toast.success("Order Approved successfully!", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 3000,
+        });
         router.push("/dashboard/management");
         //console.log(res.data);
       } catch (error) {
@@ -95,6 +99,11 @@ const Page = ({ params }) => {
         //   pathname: "/dashboard/management",
         //   query: { success: "Order rejected successfully!" },
         // });
+        // Display a success toast message
+        toast.success("Order rejected successfully!", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 3000,
+        });
         router.push("/dashboard/management");
 
         //console.log(res.data);
@@ -108,7 +117,6 @@ const Page = ({ params }) => {
 
   return (
     <Tabs defaultValue="overview" className="space-y-4 p-5">
-      <ToastContainer />
       <TabsContent value="overview" className="space-y-4">
         <div className="flex gap-6"></div>
         {/* Review order */}
