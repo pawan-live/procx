@@ -115,7 +115,7 @@ const Page = ({ params }) => {
               <form>
                 <div className="flex flex-col md:flex-row gap-x-4 gap-y-4 w-full">
                   <div className="flex flex-col space-y-1.5 w-full lg:w-1/2">
-                    <Label>Order ID</Label>
+                    <Label>Order Name</Label>
                     <Input type="text" value={order.orderNo} readOnly></Input>
                     <Label>Order Date</Label>
                     <Input type="text" value={orderDate} readOnly></Input>
@@ -204,10 +204,7 @@ const Page = ({ params }) => {
           </CardContent>
           <CardContent className="space-y-1.5">
             <CardTitle>Rejected Reason</CardTitle>
-            <Input
-              value="All items in the order are restricted"
-              readOnly
-            ></Input>
+            <Input value="Order budget too high" readOnly></Input>
           </CardContent>
         </Card>
 

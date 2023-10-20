@@ -16,3 +16,11 @@ export const API_URLS = {
   SUPPLIERS: "/suppliers",
   ORDERS: "/orders",
 };
+
+export const ORDER_STATUS = {
+  PENDING: "pending",
+  PARTIALLY_APPROVED: "Partially Approved",
+  COMPLETED: "COMPLETED",
+  REJECTED: "Rejected",
+  APPROVED: "Approved",
+};
