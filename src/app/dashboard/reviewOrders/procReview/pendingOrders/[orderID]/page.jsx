@@ -160,10 +160,10 @@ const Page = ({ params }) => {
     for (let i = 0; i < order.length; i++) {
       total += order[i].price * order[i].qty;
     }
+    console.log("Budget response: true");
     total = totals;
     totals = order.reduce((acc, order) => acc + order.price * order.qty, 0);
     return totals;
-    console.log("Budget response: true");
   };
 
   //get budget status
@@ -280,7 +280,6 @@ const Page = ({ params }) => {
             )}
           </CardContent>
           <CardFooter className="flex flex-col md:flex-row gap-x-28 gap-y-4 w-full">
-            <Button className="w-44">View Site Manager</Button>
             <Button className="w-44">View Supplier</Button>
           </CardFooter>
         </Card>

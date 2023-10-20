@@ -48,13 +48,11 @@ const Page = () => {
     }
   };
 
-  //filter condition
   const filterConditionApproved = (order) => {
-    for (let i = 0; i < orders.length; i++) {
-      console.log(order.orderStatus);
+    for (let i = 0; i < order.items.length; i++) {
       if (
-        order.orderStatus === "Approved" &&
-        order.managerStatus === "Pending"
+        order.orderStatus === "Approved"
+        // order.managerStatus === "Partially Approved"
       ) {
         return true;
       }
@@ -115,8 +113,9 @@ const Page = () => {
                     <TableHead>Approved Date</TableHead>
                     <TableHead>Site Location</TableHead>
                     <TableHead>Budget</TableHead>
-                    <TableHead>Budget Status</TableHead>
-                    <TableHead>Catalogue Status</TableHead>
+                    <TableHead>Order Status</TableHead>
+                    {/* <TableHead>Budget Status</TableHead>
+                    <TableHead>Catalogue Status</TableHead> */}
                   </TableRow>
                   {orders.length > 0 &&
                     orders.filter(filterConditionApproved).map((order) => (
@@ -128,10 +127,11 @@ const Page = () => {
                         <TableCell>
                           {format(new Date(order.deliverDate), "dd/MM/yyyy")}
                         </TableCell>
-                        <TableCell>{"Approved Date"}</TableCell>
+                        <TableCell>{"21/10/2023"}</TableCell>
                         <TableCell>{}</TableCell>
                         <TableCell>{budgetCal(order)}</TableCell>
-                        <TableCell>
+                        <TableCell>{order.orderStatus}</TableCell>
+                        {/* <TableCell>
                           {getBudgetStatus(budgetCal(order))
                             ? "Restricted"
                             : "Not Restricted"}
@@ -141,15 +141,16 @@ const Page = () => {
                           {getCatalogueStatus(order)
                             ? "Restricted"
                             : "Not Restricted"}
-                        </TableCell>
+                        </TableCell> */}
                         <TableCell>
                           <Link
                             href={`/dashboard/reviewOrders/procReview/approvedOrders/${order.id}`}
-                          ></Link>
-                          <Button variant="" className="flex items-center">
-                            View
-                            <Eye className="w-4 ml-2" />
-                          </Button>
+                          >
+                            <Button variant="" className="flex items-center">
+                              View
+                              <Eye className="w-4 ml-2" />
+                            </Button>
+                          </Link>
                         </TableCell>
                       </TableRow>
                     ))}
