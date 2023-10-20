@@ -24,11 +24,16 @@ import {
   TableRow,
 } from "@/app/components/ui/table";
 import { Tabs, TabsContent } from "@/app/components/ui/tabs";
-import { budgetCalOrder } from "@/app/helpers/budgetCal";
-import { budgetStatus } from "@/app/helpers/budgetStatus";
-import { catalogueStatus } from "@/app/helpers/catalogueStatus";
-import { formatDate } from "@/app/helpers/formatDate";
-import { API_URLS, BASE_URL, ORDER_STATUS } from "@/app/utils/constants";
+import { budgetCalOrder } from "@/app/helpers/Manager/budgetCal";
+import { budgetStatus } from "@/app/helpers/Manager/budgetStatus";
+import { catalogueStatus } from "@/app/helpers/Manager/catalogueStatus";
+import { formatDate } from "@/app/helpers/Manager/formatDate";
+import {
+  API_URLS,
+  BASE_URL,
+  ORDER_RESTRICION,
+  ORDER_STATUS,
+} from "@/app/utils/constants";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
@@ -69,6 +74,10 @@ const Page = ({ params }) => {
           managerstatus: ORDER_STATUS.APPROVED,
           orderStatus: ORDER_STATUS.APPROVED,
         });
+        toast.success("Order Approved successfully!", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 3000,
+        });
         router.push("/dashboard/management");
         //console.log(res.data);
       } catch (error) {
@@ -90,6 +99,11 @@ const Page = ({ params }) => {
         //   pathname: "/dashboard/management",
         //   query: { success: "Order rejected successfully!" },
         // });
+        // Display a success toast message
+        toast.success("Order rejected successfully!", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 3000,
+        });
         router.push("/dashboard/management");
 
         //console.log(res.data);
@@ -103,7 +117,6 @@ const Page = ({ params }) => {
 
   return (
     <Tabs defaultValue="overview" className="space-y-4 p-5">
-      <ToastContainer />
       <TabsContent value="overview" className="space-y-4">
         <div className="flex gap-6"></div>
         {/* Review order */}
@@ -252,7 +265,9 @@ const Page = ({ params }) => {
                         <TableCell>{item.qty}</TableCell>
                         <TableCell>{item.price * item.qty} LKR</TableCell>
                         <TableCell>
-                          {item.restricted ? "Restricted" : "Not Restricted"}
+                          {item.restricted
+                            ? ORDER_RESTRICION.RESTRICTED
+                            : ORDER_RESTRICION.NOTRESTRICED}
                         </TableCell>
                       </TableRow>
                     ))}

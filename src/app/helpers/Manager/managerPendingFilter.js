@@ -1,4 +1,4 @@
-import { ORDER_STATUS } from "../utils/constants";
+import { ORDER_STATUS } from "../../utils/constants";
 
 export const managerPendingFilter = (order) => {
   for (let i = 0; i < order.items.length; i++) {
