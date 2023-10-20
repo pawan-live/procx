@@ -502,7 +502,7 @@ const Page = ({ params }) => {
                           handleBtnReject(order.id);
                         }}
                       >
-                        Send
+                        Reject
                       </AlertDialogAction>
                     </AlertDialogFooter>
                   </AlertDialogContent>
