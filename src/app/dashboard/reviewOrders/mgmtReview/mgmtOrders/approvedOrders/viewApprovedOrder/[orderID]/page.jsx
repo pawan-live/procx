@@ -10,7 +10,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/app/components/ui/card";
-import { Checkbox } from "@/app/components/ui/checkbox";
 import { Input } from "@/app/components/ui/input";
 import { Label } from "@/app/components/ui/label";
 import {
@@ -38,7 +37,6 @@ const Page = ({ params }) => {
   //console.log(params);
   const [order, setOrder] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
-
   useEffect(() => {
     const getOrderByID = async () => {
       try {
@@ -63,43 +61,6 @@ const Page = ({ params }) => {
   }
   const orderDate = formatDate(order && order.createdAt);
   const deliveryDate = formatDate(order && order.deliverDate);
-
-  const handleApprove = (id) => {
-    const updateOrder = async () => {
-      try {
-        const res = await axios.put(`${BASE_URL}${API_URLS.ORDERS}/${id}`, {
-          managerstatus: "Approved",
-        });
-        router.push("/dashboard/management");
-        //console.log(res.data);
-      } catch (error) {
-        console.error("Error fetching item:", error);
-      }
-    };
-
-    updateOrder();
-  };
-
-  const handleReject = (id) => {
-    const updateOrder = async () => {
-      try {
-        const res = await axios.put(`${BASE_URL}${API_URLS.ORDERS}/${id}`, {
-          managerstatus: "Rejected",
-        });
-        // router.push({
-        //   pathname: "/dashboard/management",
-        //   query: { success: "Order rejected successfully!" },
-        // });
-        router.push("/dashboard/management");
-
-        //console.log(res.data);
-      } catch (error) {
-        console.error("Error fetching item:", error);
-      }
-    };
-
-    updateOrder();
-  };
 
   //budget calculation
   let totals = 0;
@@ -137,15 +98,14 @@ const Page = ({ params }) => {
 
   return (
     <Tabs defaultValue="overview" className="space-y-4 p-5">
-      <ToastContainer />
       <TabsContent value="overview" className="space-y-4">
         <div className="flex gap-6"></div>
         {/* Review order */}
         <Card className="w-full">
           <CardHeader>
-            <CardTitle>Review Pending Order</CardTitle>
+            <CardTitle>Review Approved Order</CardTitle>
             <CardDescription>
-              Review pending order sent by procurement staff
+              Review approved order sent by procurement department
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -244,15 +204,18 @@ const Page = ({ params }) => {
                   ></Input>
                 </div>
 
-                {/* <div className="flex flex-col space-y-1.5 w-full lg:w-1/2">
-                <Label>Approval Status</Label>
-                <Input type="text" value="Restricted" readOnly></Input>
-              </div> */}
+                <div className="flex flex-col space-y-1.5 w-full lg:w-1/2">
+                  <Label>Approval Status</Label>
+                  <Input
+                    type="text"
+                    value={order.managerstatus}
+                    readOnly
+                  ></Input>
+                </div>
               </div>
             )}
           </CardContent>
         </Card>
-
         {/* Ordered Items */}
         <Card className="w-full">
           <CardHeader>
@@ -275,7 +238,6 @@ const Page = ({ params }) => {
                     <TableHead>Budget</TableHead>
                     <TableHead>Catalogue Status</TableHead>
                   </TableRow>
-
                   {order &&
                     order.items &&
                     order.items.map((item) => (
@@ -294,24 +256,26 @@ const Page = ({ params }) => {
               </Table>
             )}
           </CardContent>
-          <CardFooter className="flex flex-col md:flex-row gap-x-40 gap-y-4 w-full">
-            <div className="flex flex-col space-y-3">
-              <div className="flex flex-row  gap-x-28">
-                <Button
-                  className="w-44"
-                  onClick={() => handleApprove(order.id)}
-                >
-                  Approve
-                </Button>
-                <Button
-                  className="w-44"
-                  variant="destructive"
-                  onClick={() => handleReject(order.id)}
-                >
-                  Reject
-                </Button>
+          <CardFooter>
+            {isLoading && (
+              <div className="flex flex-col justify-center items-center w-full h-60">
+                <BarLoader width={300} height={5} color="black" />
               </div>
-            </div>
+            )}
+            {!isLoading && (
+              <Card>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-2xl font-bold">
+                    Total Budget
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-sm font-medium">
+                    {budgetCal(order.items)} LKR
+                  </div>
+                </CardContent>
+              </Card>
+            )}
           </CardFooter>
         </Card>
       </TabsContent>

@@ -34,17 +34,10 @@ const Page = () => {
   const [orders, setOrders] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
 
-  const handleReview = (e) => {
-    e.preventDefault();
-    router.push(
-      "/dashboard/reviewOrders/mgmtReview/mgmtOrders/pendingOrders/viewPendingOrder",
-    );
-  };
-
   const getItems = async () => {
     const res = await axios.get(`${BASE_URL}${API_URLS.ORDERS}`);
     setIsLoading(false);
-    console.log(res.data);
+    //console.log(res.data);
     // console.log(res.data[0]);
     // console.log(res.data[1]);
 
@@ -55,12 +48,13 @@ const Page = () => {
     getItems();
   }, []);
 
-  const filterCondition2 = (order) => {
+  const filterCondition = (order) => {
     for (let i = 0; i < order.items.length; i++) {
       // console.log(order.managerstatus);
       if (
         order.items[i].restricted === true &&
-        order.managerstatus === "pending"
+        order.managerstatus === "pending" &&
+        order.items[i].price * order.items[i].qty > 200000
       ) {
         return true;
       }
@@ -110,7 +104,7 @@ const Page = () => {
                     <TableHead>Catalogue Status</TableHead>
                   </TableRow>
                   {orders.length > 0 &&
-                    orders.filter(filterCondition2).map((order) => (
+                    orders.filter(filterCondition).map((order) => (
                       <TableRow key={order.id}>
                         <TableCell>{order.orderNo}</TableCell>
                         <TableCell>
