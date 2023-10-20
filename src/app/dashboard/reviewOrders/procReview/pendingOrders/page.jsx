@@ -21,6 +21,7 @@ import {
 } from "@/app/components/ui/table";
 import { Tabs, TabsContent } from "@/app/components/ui/tabs";
 import { API_URLS, BASE_LOCAL, BASE_URL } from "@/app/utils/constants";
+import { ORDER_STATUS } from "@/app/utils/constants";
 import axios from "axios";
 import { format } from "date-fns";
 import { Eye } from "lucide-react";
@@ -53,7 +54,7 @@ const Page = () => {
   const filterConditionPending = (order) => {
     for (let i = 0; i < orders.length; i++) {
       console.log(order.orderStatus);
-      if (order.orderStatus === "pending") {
+      if (order.orderStatus === ORDER_STATUS.PENDING) {
         return true;
       }
     }

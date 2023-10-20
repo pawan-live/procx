@@ -21,6 +21,7 @@ import {
 } from "@/app/components/ui/table";
 import { Tabs, TabsContent } from "@/app/components/ui/tabs";
 import { API_URLS, BASE_LOCAL, BASE_URL } from "@/app/utils/constants";
+import { ORDER_STATUS } from "@/app/utils/constants";
 import axios from "axios";
 import { format } from "date-fns";
 import { Eye } from "lucide-react";
@@ -51,7 +52,7 @@ const Page = () => {
   const filterConditionApproved = (order) => {
     for (let i = 0; i < order.items.length; i++) {
       if (
-        order.orderStatus === "Approved"
+        order.orderStatus === ORDER_STATUS.APPROVED
         // order.managerStatus === "Partially Approved"
       ) {
         return true;

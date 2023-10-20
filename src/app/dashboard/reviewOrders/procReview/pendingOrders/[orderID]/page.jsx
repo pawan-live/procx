@@ -44,6 +44,7 @@ import {
 } from "@/app/components/ui/table";
 import { Tabs, TabsContent } from "@/app/components/ui/tabs";
 import { API_URLS, BASE_LOCAL, BASE_URL } from "@/app/utils/constants";
+import { ORDER_STATUS } from "@/app/utils/constants";
 import axios from "axios";
 import { format, isValid, parseISO } from "date-fns";
 import { useRouter } from "next/navigation";
@@ -87,7 +88,7 @@ const Page = ({ params }) => {
       const updateOrder = async () => {
         try {
           const res = await axios.put(`${BASE_URL}${API_URLS.ORDERS}/${id}`, {
-            orderStatus: "Approved",
+            orderStatus: ORDER_STATUS.APPROVED,
           });
           router.push("/dashboard/reviewOrders/procReview/pendingOrders");
           console.log(res.data);
@@ -117,7 +118,7 @@ const Page = ({ params }) => {
     const updateOrder = async () => {
       try {
         const res = await axios.put(`${BASE_URL}${API_URLS.ORDERS}/${id}`, {
-          orderStatus: "Partially Approved",
+          orderStatus: ORDER_STATUS.PARTIALLY_APPROVED,
         });
         router.push("/dashboard/reviewOrders/procReview/pendingOrders");
         console.log(res.data);
@@ -133,7 +134,7 @@ const Page = ({ params }) => {
     const updateOrder = async () => {
       try {
         const res = await axios.put(`${BASE_URL}${API_URLS.ORDERS}/${id}`, {
-          orderStatus: "Rejected",
+          orderStatus: ORDER_STATUS.REJECTED,
         });
         router.push("/dashboard/reviewOrders/procReview/pendingOrders");
         console.log(res.data);
