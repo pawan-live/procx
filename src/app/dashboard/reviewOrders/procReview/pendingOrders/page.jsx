@@ -73,6 +73,22 @@ const Page = () => {
     return totals;
   };
 
+  //get Catalogue status
+  const getCatalogueStatus = (order) => {
+    return order.items.some((item) => item.restricted === true);
+  };
+
+  //get budget status
+  const getBudgetStatus = (budget) => {
+    if (budget > 100000) {
+      console.log("Budget status response: true");
+      return true;
+    } else {
+      console.log("Budget status response: false");
+      return false;
+    }
+  };
+
   return (
     <Tabs defaultValue="overview" className="space-y-4 p-5">
       <TabsContent value="overview" className="space-y-4">
@@ -114,8 +130,16 @@ const Page = () => {
                         </TableCell>
                         <TableCell>{order.site}</TableCell>
                         <TableCell>{budgetCal(order)}</TableCell>
-                        <TableCell>{order.status}</TableCell>
-                        <TableCell>{order.catalogue}</TableCell>
+                        <TableCell>
+                          {getBudgetStatus(budgetCal(order))
+                            ? "Restricted"
+                            : "Not Restricted"}
+                        </TableCell>
+                        <TableCell>
+                          {getCatalogueStatus(order)
+                            ? "Restricted"
+                            : "Not Restricted"}
+                        </TableCell>
                         <TableCell>
                           <Link
                             href={`/dashboard/reviewOrders/procReview/pendingOrders/${order.id}`}
