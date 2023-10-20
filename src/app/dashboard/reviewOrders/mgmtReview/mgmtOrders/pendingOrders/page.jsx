@@ -20,8 +20,8 @@ import {
   TableRow,
 } from "@/app/components/ui/table";
 import { Tabs, TabsContent } from "@/app/components/ui/tabs";
-import { budgetCalOrders } from "@/app/helpers/budgetCal";
-import { managerPendingFilter } from "@/app/helpers/managerPendingFilter";
+import { budgetCalOrders } from "@/app/helpers/Manager/budgetCal";
+import { managerPendingFilter } from "@/app/helpers/Manager/managerPendingFilter";
 import { API_URLS, BASE_URL } from "@/app/utils/constants";
 import axios from "axios";
 import { format, set } from "date-fns";
