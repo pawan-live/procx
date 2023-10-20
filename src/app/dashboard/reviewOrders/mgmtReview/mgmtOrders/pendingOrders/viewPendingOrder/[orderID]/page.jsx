@@ -69,6 +69,7 @@ const Page = ({ params }) => {
       try {
         const res = await axios.put(`${BASE_URL}${API_URLS.ORDERS}/${id}`, {
           managerstatus: "Approved",
+          orderStatus: "Approved",
         });
         router.push("/dashboard/management");
         //console.log(res.data);
@@ -85,6 +86,7 @@ const Page = ({ params }) => {
       try {
         const res = await axios.put(`${BASE_URL}${API_URLS.ORDERS}/${id}`, {
           managerstatus: "Rejected",
+          orderStatus: "Rejected",
         });
         // router.push({
         //   pathname: "/dashboard/management",

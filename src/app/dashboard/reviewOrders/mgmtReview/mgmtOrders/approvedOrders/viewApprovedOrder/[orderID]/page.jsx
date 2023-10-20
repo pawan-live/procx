@@ -118,7 +118,7 @@ const Page = ({ params }) => {
               <form>
                 <div className="flex flex-col md:flex-row gap-x-4 gap-y-4 w-full">
                   <div className="flex flex-col space-y-1.5 w-full lg:w-1/2">
-                    <Label>Order ID</Label>
+                    <Label>Order Name</Label>
                     <Input type="text" value={order.orderNo} readOnly></Input>
                     <Label>Order raised by</Label>
                     <Input type="text" value="Site Manager" readOnly></Input>
@@ -209,6 +209,7 @@ const Page = ({ params }) => {
                   <Input
                     type="text"
                     value={order.managerstatus}
+                    className="bg-green-200"
                     readOnly
                   ></Input>
                 </div>

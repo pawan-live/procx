@@ -52,9 +52,10 @@ const Page = () => {
     for (let i = 0; i < order.items.length; i++) {
       // console.log(order.managerstatus);
       if (
-        order.items[i].restricted === true &&
+        // order.items[i].restricted === true &&
+        // order.managerstatus === "pending" &&
+        // order.items[i].price * order.items[i].qty > 200000 &&
         order.managerstatus === "pending" &&
-        order.items[i].price * order.items[i].qty > 200000 &&
         order.orderStatus === "Partially Approved"
       ) {
         return true;

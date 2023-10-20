@@ -50,9 +50,9 @@ const Page = () => {
     for (let i = 0; i < order.items.length; i++) {
       // console.log(order.managerstatus);
       if (
-        order.items[i].restricted === true &&
-        order.managerstatus === "Approved" &&
-        order.items[i].price * order.items[i].qty > 200000
+        // order.items[i].restricted === true &&
+        order.managerstatus === "Approved"
+        // order.items[i].price * order.items[i].qty > 200000
       ) {
         return true;
       }
@@ -92,7 +92,7 @@ const Page = () => {
               <Table>
                 <TableBody>
                   <TableRow>
-                    <TableHead>Order ID</TableHead>
+                    <TableHead>Order Name</TableHead>
                     <TableHead>Order Date</TableHead>
                     <TableHead>Required Date</TableHead>
                     <TableHead>Approved Date</TableHead>
