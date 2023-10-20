@@ -24,9 +24,12 @@ import {
   TableRow,
 } from "@/app/components/ui/table";
 import { Tabs, TabsContent } from "@/app/components/ui/tabs";
-import { API_URLS, BASE_LOCAL, BASE_URL } from "@/app/utils/constants";
+import { budgetCalOrder } from "@/app/helpers/budgetCal";
+import { budgetStatus } from "@/app/helpers/budgetStatus";
+import { catalogueStatus } from "@/app/helpers/catalogueStatus";
+import { formatDate } from "@/app/helpers/formatDate";
+import { API_URLS, BASE_URL, ORDER_STATUS } from "@/app/utils/constants";
 import axios from "axios";
-import { format, isValid, parseISO } from "date-fns";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import { BarLoader } from "react-spinners";
@@ -56,11 +59,6 @@ const Page = ({ params }) => {
     getOrderByID();
   }, [params.orderID]);
 
-  function formatDate(date) {
-    return date && isValid(parseISO(date))
-      ? format(parseISO(date), "dd/MM/yyyy")
-      : null;
-  }
   const orderDate = formatDate(order && order.createdAt);
   const deliveryDate = formatDate(order && order.deliverDate);
 
@@ -68,8 +66,8 @@ const Page = ({ params }) => {
     const updateOrder = async () => {
       try {
         const res = await axios.put(`${BASE_URL}${API_URLS.ORDERS}/${id}`, {
-          managerstatus: "Approved",
-          orderStatus: "Approved",
+          managerstatus: ORDER_STATUS.APPROVED,
+          orderStatus: ORDER_STATUS.APPROVED,
         });
         router.push("/dashboard/management");
         //console.log(res.data);
@@ -85,8 +83,8 @@ const Page = ({ params }) => {
     const updateOrder = async () => {
       try {
         const res = await axios.put(`${BASE_URL}${API_URLS.ORDERS}/${id}`, {
-          managerstatus: "Rejected",
-          orderStatus: "Rejected",
+          managerstatus: ORDER_STATUS.REJECTED,
+          orderStatus: ORDER_STATUS.REJECTED,
         });
         // router.push({
         //   pathname: "/dashboard/management",
@@ -101,40 +99,6 @@ const Page = ({ params }) => {
     };
 
     updateOrder();
-  };
-
-  //budget calculation
-  let totals = 0;
-  const budgetCal = (order) => {
-    let total = 0;
-    for (let i = 0; i < order.length; i++) {
-      total += order[i].price * order[i].qty;
-    }
-    total = totals;
-    totals = order.reduce((acc, order) => acc + order.price * order.qty, 0);
-    return totals;
-  };
-
-  //budget status
-  const budgetStatus = (order) => {
-    let status = "Not Restricted";
-    for (let i = 0; i < order.length; i++) {
-      if (order[i].price * order[i].qty > 200000) {
-        status = "Restricted";
-      }
-    }
-    return status;
-  };
-
-  //catalogue status
-  const catStatus = (order) => {
-    let status = "Not Restricted";
-    for (let i = 0; i < order.length; i++) {
-      if (order[i].restricted == true) {
-        status = "Restricted";
-      }
-    }
-    return status;
   };
 
   return (
@@ -223,7 +187,7 @@ const Page = ({ params }) => {
                   <Label>Total Budget</Label>
                   <Input
                     type="text"
-                    value={budgetCal(order.items)}
+                    value={budgetCalOrder(order.items)}
                     readOnly
                   ></Input>
                 </div>
@@ -241,7 +205,7 @@ const Page = ({ params }) => {
                   <Label>Catalogue Status</Label>
                   <Input
                     type="text"
-                    value={catStatus(order.items)}
+                    value={catalogueStatus(order.items)}
                     readOnly
                   ></Input>
                 </div>
