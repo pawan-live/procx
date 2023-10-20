@@ -30,6 +30,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import { BarLoader } from "react-spinners";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Page = () => {
   const router = useRouter();
@@ -37,13 +39,15 @@ const Page = () => {
   const [isLoading, setIsLoading] = React.useState(true);
 
   const getItems = async () => {
-    const res = await axios.get(`${BASE_URL}${API_URLS.ORDERS}`);
-    setIsLoading(false);
-    console.log(res.data);
-    // console.log(res.data[0]);
-    // console.log(res.data[1]);
-
-    setOrders(res.data);
+    try {
+      const res = await axios.get(`${BASE_URL}${API_URLS.ORDERS}`);
+      setOrders(res.data);
+      setIsLoading(false);
+      console.log(res.data); // You can log the entire response data here if needed
+    } catch (error) {
+      // Handle any potential errors here
+      console.error("Error fetching data:", error);
+    }
   };
 
   useEffect(() => {
@@ -79,7 +83,7 @@ const Page = () => {
                     <TableHead>Budget Status</TableHead>
                     <TableHead>Catalogue Status</TableHead>
                   </TableRow>
-                  {managerPendingFilter(orders).length > 0 &&
+                  {managerPendingFilter(orders).length > 0 ? (
                     managerPendingFilter(orders).map((order) => (
                       <TableRow key={order.id}>
                         <TableCell>{order.orderNo}</TableCell>
@@ -107,7 +111,12 @@ const Page = () => {
                           </Link>
                         </TableCell>
                       </TableRow>
-                    ))}
+                    ))
+                  ) : (
+                    <TableRow>
+                      <TableCell colSpan={8}>No Pending Orders</TableCell>
+                    </TableRow>
+                  )}
                 </TableBody>
               </Table>
             )}
