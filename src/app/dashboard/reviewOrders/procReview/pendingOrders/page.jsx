@@ -127,7 +127,7 @@ const Page = () => {
                         <TableCell>
                           {format(new Date(order.deliverDate), "dd/MM/yyyy")}
                         </TableCell>
-                        <TableCell>{order.site}</TableCell>
+                        <TableCell>Colombo</TableCell>
                         <TableCell>{budgetCal(order)}</TableCell>
                         <TableCell>
                           {getBudgetStatus(budgetCal(order))
