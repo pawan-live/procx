@@ -25,12 +25,10 @@ import axios from "axios";
 import { format, set } from "date-fns";
 import { Eye } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import { BarLoader } from "react-spinners";
 
 const Page = () => {
-  const router = useRouter();
   const [orders, setOrders] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
 
