@@ -59,6 +59,7 @@ const Page = ({ params }) => {
   const [order, setOrder] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isMgrDialogOpen, setIsMgrDialogOpen] = useState(false);
 
   useEffect(() => {
     const getOrderByID = async () => {
@@ -79,7 +80,7 @@ const Page = ({ params }) => {
 
   //btn APPROVE
   const handleBtnApprove = (id) => {
-    if (budgetCal(order.items) < 100000 && getCatalogueStatus == false) {
+    if (budgetCal(order.items) < 100000 && !getCatalogueStatus()) {
       console.log("Order approve response: not restricted");
       setIsDialogOpen(false);
 
@@ -102,25 +103,29 @@ const Page = ({ params }) => {
   };
 
   //bt SEND TO MANAGEMENT
-  const handleBtnManagement = (id) => {
-    if (budgetCal(order.items) > 100000 || getCatalogueStatus == true) {
+  const handleBtnManagement = () => {
+    if (budgetCal(order.items) > 100000 || getCatalogueStatus()) {
+      setIsMgrDialogOpen(true);
       console.log("Order send response: true");
-
-      const updateOrder = async () => {
-        try {
-          const res = await axios.put(`${BASE_URL}${API_URLS.ORDERS}/${id}`, {
-            orderStatus: "Partially Approved",
-          });
-          router.push("/dashboard/reviewOrders/procReview/pendingOrders");
-          console.log(res.data);
-        } catch (error) {
-          console.error("Error fetching item:", error);
-        }
-      };
-      updateOrder();
     } else {
+      setIsMgrDialogOpen(false);
       console.log("Order send response: false");
     }
+  };
+
+  const handleMgrSend = (id) => {
+    const updateOrder = async () => {
+      try {
+        const res = await axios.put(`${BASE_URL}${API_URLS.ORDERS}/${id}`, {
+          orderStatus: "Partially Approved",
+        });
+        router.push("/dashboard/reviewOrders/procReview/pendingOrders");
+        console.log(res.data);
+      } catch (error) {
+        console.error("Error fetching item:", error);
+      }
+    };
+    updateOrder();
   };
 
   //btn REJECT
@@ -409,33 +414,67 @@ const Page = ({ params }) => {
                 </Dialog>
                 <AlertDialog>
                   <AlertDialogTrigger asChild>
-                    <Button className="w-44">Send to Management</Button>
+                    <Button
+                      onClick={() => {
+                        handleBtnManagement();
+                      }}
+                      className="w-44"
+                    >
+                      Send to Management
+                    </Button>
                   </AlertDialogTrigger>
-                  <AlertDialogContent>
-                    <AlertDialogHeader>
-                      <AlertDialogTitle>
-                        Send order to Management
-                      </AlertDialogTitle>
-                      <AlertDialogDescription>
-                        The order budget is above 100000LKR.
-                        <br />
-                        The order should be approved by the Management.
-                      </AlertDialogDescription>
-                    </AlertDialogHeader>
-                    <AlertDialogFooter>
-                      <AlertDialogCancel className="w-20">
-                        Cancel
-                      </AlertDialogCancel>
-                      <AlertDialogAction
-                        className="w-20"
-                        onClick={() => {
-                          handleBtnManagement(order.id);
-                        }}
-                      >
-                        Send
-                      </AlertDialogAction>
-                    </AlertDialogFooter>
-                  </AlertDialogContent>
+                  {isMgrDialogOpen && (
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>
+                          Send order to Management
+                        </AlertDialogTitle>
+                        <AlertDialogDescription>
+                          The order budget is above 100000LKR.
+                          <br />
+                          The order should be approved by the Management.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel className="w-20">
+                          Cancel
+                        </AlertDialogCancel>
+                        <AlertDialogAction
+                          className="w-20"
+                          onClick={() => {
+                            handleMgrSend(order.id);
+                          }}
+                        >
+                          Send
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  )}
+                  {!isMgrDialogOpen && (
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>
+                          You can approve or reject the order
+                        </AlertDialogTitle>
+                        <AlertDialogDescription>
+                          The order budget is below 100000LKR.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel className="w-20">
+                          OK
+                        </AlertDialogCancel>
+                        {/* <AlertDialogAction
+                          className="w-20"
+                          onClick={() => {
+                            handleBtnManagement(order.id);
+                          }}
+                        >
+                          Send
+                        </AlertDialogAction> */}
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  )}
                 </AlertDialog>
               </div>
               <div className="flex flex-row  gap-x-28">
