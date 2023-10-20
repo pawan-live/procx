@@ -81,7 +81,11 @@ const Page = ({ params }) => {
         router.push("/dashboard/management");
         //console.log(res.data);
       } catch (error) {
-        console.error("Error fetching item:", error);
+        console.error("Error approving order:", error);
+        toast.error("Error approving order", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 3000,
+        });
       }
     };
 
@@ -108,7 +112,11 @@ const Page = ({ params }) => {
 
         //console.log(res.data);
       } catch (error) {
-        console.error("Error fetching item:", error);
+        console.error("Error rejecting order:", error);
+        toast.error("Error rejecting order", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 3000,
+        });
       }
     };
 
