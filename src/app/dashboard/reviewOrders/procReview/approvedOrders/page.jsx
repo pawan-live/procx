@@ -20,6 +20,7 @@ import {
   TableRow,
 } from "@/app/components/ui/table";
 import { Tabs, TabsContent } from "@/app/components/ui/tabs";
+import { catalogueStatus } from "@/app/helpers/Manager/catalogueStatus";
 import { API_URLS, BASE_LOCAL, BASE_URL } from "@/app/utils/constants";
 import { ORDER_STATUS } from "@/app/utils/constants";
 import axios from "axios";
@@ -52,8 +53,8 @@ const Page = () => {
   const filterConditionApproved = (order) => {
     for (let i = 0; i < order.items.length; i++) {
       if (
-        order.orderStatus === ORDER_STATUS.APPROVED
-        // order.managerStatus === "Partially Approved"
+        order.orderStatus === ORDER_STATUS.APPROVED ||
+        order.orderStatus === ORDER_STATUS.PARTIALLY_APPROVED
       ) {
         return true;
       }
@@ -71,11 +72,6 @@ const Page = () => {
     total = totals;
     totals = order.items.reduce((acc, item) => acc + item.price * item.qty, 0);
     return totals;
-  };
-
-  //get Catalogue status
-  const getCatalogueStatus = (order) => {
-    return order.items.some((item) => item.restricted === true);
   };
 
   //get budget status
@@ -132,17 +128,7 @@ const Page = () => {
                         <TableCell>{}</TableCell>
                         <TableCell>{budgetCal(order)}</TableCell>
                         <TableCell>{order.orderStatus}</TableCell>
-                        {/* <TableCell>
-                          {getBudgetStatus(budgetCal(order))
-                            ? "Restricted"
-                            : "Not Restricted"}
-                        </TableCell>
-                        <TableCell>
-                          {" "}
-                          {getCatalogueStatus(order)
-                            ? "Restricted"
-                            : "Not Restricted"}
-                        </TableCell> */}
+
                         <TableCell>
                           <Link
                             href={`/dashboard/reviewOrders/procReview/approvedOrders/${order.id}`}

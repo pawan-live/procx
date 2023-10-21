@@ -25,7 +25,7 @@ export const ORDER_STATUS = {
   APPROVED: "Approved",
 };
 
-export const ORDER_RESTRICION = {
+export const ORDER_RESTRICTION = {
   RESTRICTED: "Restricted",
   NOTRESTRICED: "Not Restricted",
 };

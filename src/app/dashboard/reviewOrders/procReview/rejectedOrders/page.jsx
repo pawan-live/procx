@@ -20,7 +20,9 @@ import {
   TableRow,
 } from "@/app/components/ui/table";
 import { Tabs, TabsContent } from "@/app/components/ui/tabs";
+import { catalogueStatus } from "@/app/helpers/Manager/catalogueStatus";
 import { API_URLS, BASE_LOCAL, BASE_URL } from "@/app/utils/constants";
+import { ORDER_RESTRICTION, ORDER_STATUS } from "@/app/utils/constants";
 import axios from "axios";
 import { format } from "date-fns";
 import { Eye } from "lucide-react";
@@ -53,7 +55,7 @@ const Page = () => {
   const filterConditionPending = (order) => {
     for (let i = 0; i < orders.length; i++) {
       console.log(order.orderStatus);
-      if (order.orderStatus === "Rejected") {
+      if (order.orderStatus === ORDER_STATUS.REJECTED) {
         return true;
       }
     }
@@ -70,11 +72,6 @@ const Page = () => {
     total = totals;
     totals = order.items.reduce((acc, item) => acc + item.price * item.qty, 0);
     return totals;
-  };
-
-  //get Catalogue status
-  const getCatalogueStatus = (order) => {
-    return order.items.some((item) => item.restricted === true);
   };
 
   //get budget status
@@ -110,7 +107,7 @@ const Page = () => {
                 <TableRow>
                   <TableHead>Order ID</TableHead>
                   <TableHead>Order Date</TableHead>
-                  <TableHead>Rejected Date</TableHead>
+                  {/* <TableHead>Rejected Date</TableHead> */}
                   <TableHead>Site Location</TableHead>
                   <TableHead>Budget</TableHead>
                   <TableHead>Budget Status</TableHead>
@@ -124,29 +121,28 @@ const Page = () => {
                         {" "}
                         {format(new Date(order.createdAt), "dd/MM/yyyy")}
                       </TableCell>
-                      <TableCell>
+                      {/* <TableCell>
                         {format(new Date(order.deliverDate), "dd/MM/yyyy")}
-                      </TableCell>
+                      </TableCell> */}
                       <TableCell>Colombo</TableCell>
                       <TableCell>{budgetCal(order)}</TableCell>
                       <TableCell>
                         {" "}
                         {getBudgetStatus(budgetCal(order))
-                          ? "Restricted"
-                          : "Not Restricted"}
+                          ? ORDER_RESTRICTION.RESTRICTED
+                          : ORDER_RESTRICTION.NOTRESTRICED}
                       </TableCell>
-                      <TableCell>
-                        {" "}
-                        {getCatalogueStatus(order)
-                          ? "Restricted"
-                          : "Not Restricted"}
-                      </TableCell>
+                      <TableCell>{catalogueStatus(order)}</TableCell>
                       <TableCell>
                         <Link
                           href={`/dashboard/reviewOrders/procReview/rejectedOrders/${order.id}`}
                         >
-                          <Button variant="" className="flex items-center">
-                            View
+                          <Button
+                            variant="destructive"
+                            className="flex items-center"
+                          >
+                            Review
+                            <Eye className="w-4 ml-2" />
                           </Button>
                         </Link>
                       </TableCell>
