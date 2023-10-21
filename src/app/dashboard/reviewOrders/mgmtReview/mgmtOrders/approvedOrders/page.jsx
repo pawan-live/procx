@@ -20,6 +20,8 @@ import {
   TableRow,
 } from "@/app/components/ui/table";
 import { Tabs, TabsContent } from "@/app/components/ui/tabs";
+import { budgetCalOrders } from "@/app/helpers/Manager/budgetCal";
+import { managerApprovedFilter } from "@/app/helpers/Manager/managerFilters";
 import { API_URLS, BASE_LOCAL, BASE_URL } from "@/app/utils/constants";
 import axios from "axios";
 import { format, set } from "date-fns";
@@ -46,31 +48,6 @@ const Page = () => {
     getItems();
   }, []);
 
-  const filterCondition = (order) => {
-    for (let i = 0; i < order.items.length; i++) {
-      // console.log(order.managerstatus);
-      if (
-        // order.items[i].restricted === true &&
-        order.managerstatus === "Approved"
-        // order.items[i].price * order.items[i].qty > 200000
-      ) {
-        return true;
-      }
-    }
-    return false;
-  };
-  //budget calculation
-  let totals = 0;
-  const budgetCal = (order) => {
-    let total = 0;
-    for (let i = 0; i < order.items.length; i++) {
-      total += order.items[i].price * order.items[i].qty;
-    }
-    total = totals;
-    totals = order.items.reduce((acc, item) => acc + item.price * item.qty, 0);
-    return totals;
-  };
-
   return (
     <Tabs defaultValue="overview" className="space-y-4 p-5">
       <TabsContent value="overview" className="space-y-4">
@@ -92,7 +69,7 @@ const Page = () => {
               <Table>
                 <TableBody>
                   <TableRow>
-                    <TableHead>Order Name</TableHead>
+                    <TableHead>Order ID</TableHead>
                     <TableHead>Order Date</TableHead>
                     <TableHead>Required Date</TableHead>
                     <TableHead>Approved Date</TableHead>
@@ -101,10 +78,10 @@ const Page = () => {
                     <TableHead>Budget Status</TableHead>
                     <TableHead>Catalogue Status</TableHead>
                   </TableRow>
-                  {orders.length > 0 &&
-                    orders.filter(filterCondition).map((order) => (
+                  {managerApprovedFilter(orders).length > 0 &&
+                    managerApprovedFilter(orders).map((order) => (
                       <TableRow key={order.id}>
-                        <TableCell>{order.orderNo}</TableCell>
+                        <TableCell>#{order.id}</TableCell>
                         <TableCell>
                           {format(new Date(order.createdAt), "dd/MM/yyyy")}
                         </TableCell>
@@ -113,7 +90,7 @@ const Page = () => {
                         </TableCell>
                         <TableCell>21/20/2023</TableCell>
                         <TableCell>Colombo</TableCell>
-                        <TableCell>{budgetCal(order)}</TableCell>
+                        <TableCell>{budgetCalOrders(order)}</TableCell>
                         <TableCell>Restricted</TableCell>
                         <TableCell>Restricted</TableCell>
                         <TableCell>

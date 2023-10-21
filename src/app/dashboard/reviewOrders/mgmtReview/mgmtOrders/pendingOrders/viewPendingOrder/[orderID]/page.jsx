@@ -1,6 +1,18 @@
 "use client";
 
 import BreadCrumbs from "@/app/components/Navbar/BreadCrumbs";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/app/components/ui/alert-dialog";
+import { Badge } from "@/app/components/ui/badge";
 import { Button } from "@/app/components/ui/button";
 import {
   Card,
@@ -35,6 +47,7 @@ import {
   ORDER_STATUS,
 } from "@/app/utils/constants";
 import axios from "axios";
+import { Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import { BarLoader } from "react-spinners";
@@ -81,7 +94,11 @@ const Page = ({ params }) => {
         router.push("/dashboard/management");
         //console.log(res.data);
       } catch (error) {
-        console.error("Error fetching item:", error);
+        console.error("Error approving order:", error);
+        toast.error("Error approving order", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 3000,
+        });
       }
     };
 
@@ -108,7 +125,11 @@ const Page = ({ params }) => {
 
         //console.log(res.data);
       } catch (error) {
-        console.error("Error fetching item:", error);
+        console.error("Error rejecting order:", error);
+        toast.error("Error rejecting order", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 3000,
+        });
       }
     };
 
@@ -137,12 +158,10 @@ const Page = ({ params }) => {
               <form>
                 <div className="flex flex-col md:flex-row gap-x-4 gap-y-4 w-full">
                   <div className="flex flex-col space-y-1.5 w-full lg:w-1/2">
-                    <Label>Order Name</Label>
-                    <Input type="text" value={order.orderNo} readOnly></Input>
+                    <Label>Order ID</Label>
+                    <Input type="text" value={order.id} readOnly></Input>
                     <Label>Order raised by</Label>
                     <Input type="text" value="Site Manager" readOnly></Input>
-                    {/* <Label>Description</Label>
-                  <Input type="text" value="Fuck SLIIT" readOnly></Input> */}
                   </div>
                   <div className="flex flex-col space-y-1.5 lg:w-1/2">
                     <Label>Site Location</Label>
@@ -265,9 +284,15 @@ const Page = ({ params }) => {
                         <TableCell>{item.qty}</TableCell>
                         <TableCell>{item.price * item.qty} LKR</TableCell>
                         <TableCell>
-                          {item.restricted
-                            ? ORDER_RESTRICION.RESTRICTED
-                            : ORDER_RESTRICION.NOTRESTRICED}
+                          {item.restricted ? (
+                            <Badge variant="destructive">
+                              {ORDER_RESTRICION.RESTRICTED}
+                            </Badge>
+                          ) : (
+                            <Badge variant="outline">
+                              {ORDER_RESTRICION.NOTRESTRICED}
+                            </Badge>
+                          )}
                         </TableCell>
                       </TableRow>
                     ))}
@@ -278,19 +303,56 @@ const Page = ({ params }) => {
           <CardFooter className="flex flex-col md:flex-row gap-x-40 gap-y-4 w-full">
             <div className="flex flex-col space-y-3">
               <div className="flex flex-row  gap-x-28">
-                <Button
-                  className="w-44"
-                  onClick={() => handleApprove(order.id)}
-                >
-                  Approve
-                </Button>
-                <Button
-                  className="w-44"
-                  variant="destructive"
-                  onClick={() => handleReject(order.id)}
-                >
-                  Reject
-                </Button>
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button className="w-44">Approve</Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>
+                        Are you sure you want to Approve?
+                      </AlertDialogTitle>
+                      <AlertDialogDescription>
+                        <p>This action cannot be undone.</p>
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogAction
+                        // get params from URL
+                        onClick={() => handleApprove(order.id)}
+                      >
+                        Approve
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button className="w-44" variant="destructive">
+                      Reject
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>
+                        Are you sure you want to Reject?
+                      </AlertDialogTitle>
+                      <AlertDialogDescription>
+                        <p>This action cannot be undone.</p>
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogAction
+                        // get params from URL
+                        onClick={() => handleReject(order.id)}
+                      >
+                        Reject
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
               </div>
             </div>
           </CardFooter>

@@ -188,7 +188,7 @@ const Page = () => {
           </CardContent>
         </Card>
 
-        <Card className="col-span-4">
+        {/* <Card className="col-span-4">
           <CardHeader>
             <CardTitle>Procurement Department Orders</CardTitle>
             <CardDescription>
@@ -307,7 +307,7 @@ const Page = () => {
               </Card>
             </div>
           </CardContent>
-        </Card>
+        </Card> */}
 
         <div className="grid  lg:grid-cols-2">
           <Card>

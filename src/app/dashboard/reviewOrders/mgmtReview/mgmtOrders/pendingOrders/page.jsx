@@ -21,8 +21,10 @@ import {
 } from "@/app/components/ui/table";
 import { Tabs, TabsContent } from "@/app/components/ui/tabs";
 import { budgetCalOrders } from "@/app/helpers/Manager/budgetCal";
-import { managerPendingFilter } from "@/app/helpers/Manager/managerPendingFilter";
-import { API_URLS, BASE_URL } from "@/app/utils/constants";
+import { budgetStatusOrders } from "@/app/helpers/Manager/budgetStatus";
+import { catalogueStatusOrders } from "@/app/helpers/Manager/catalogueStatus";
+import { managerPendingFilter } from "@/app/helpers/Manager/managerFilters";
+import { API_URLS, BASE_URL, ORDER_STATUS } from "@/app/utils/constants";
 import axios from "axios";
 import { format, set } from "date-fns";
 import { Eye } from "lucide-react";
@@ -30,6 +32,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import { BarLoader } from "react-spinners";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Page = () => {
   const router = useRouter();
@@ -37,13 +41,15 @@ const Page = () => {
   const [isLoading, setIsLoading] = React.useState(true);
 
   const getItems = async () => {
-    const res = await axios.get(`${BASE_URL}${API_URLS.ORDERS}`);
-    setIsLoading(false);
-    console.log(res.data);
-    // console.log(res.data[0]);
-    // console.log(res.data[1]);
-
-    setOrders(res.data);
+    try {
+      const res = await axios.get(`${BASE_URL}${API_URLS.ORDERS}`);
+      setOrders(res.data);
+      setIsLoading(false);
+      console.log(res.data); // You can log the entire response data here if needed
+    } catch (error) {
+      // Handle any potential errors here
+      console.error("Error fetching data:", error);
+    }
   };
 
   useEffect(() => {
@@ -71,7 +77,7 @@ const Page = () => {
               <Table>
                 <TableBody>
                   <TableRow>
-                    <TableHead>Order Name</TableHead>
+                    <TableHead>Order ID</TableHead>
                     <TableHead>Order Date</TableHead>
                     <TableHead>Required Date</TableHead>
                     <TableHead>Site Location</TableHead>
@@ -79,10 +85,10 @@ const Page = () => {
                     <TableHead>Budget Status</TableHead>
                     <TableHead>Catalogue Status</TableHead>
                   </TableRow>
-                  {orders.length > 0 &&
-                    orders.filter(managerPendingFilter).map((order) => (
+                  {managerPendingFilter(orders).length > 0 ? (
+                    managerPendingFilter(orders).map((order) => (
                       <TableRow key={order.id}>
-                        <TableCell>{order.orderNo}</TableCell>
+                        <TableCell>#{order.id}</TableCell>
                         <TableCell>
                           {format(new Date(order.createdAt), "dd/MM/yyyy")}
                         </TableCell>
@@ -91,8 +97,8 @@ const Page = () => {
                         </TableCell>
                         <TableCell>Colombo</TableCell>
                         <TableCell>{budgetCalOrders(order)}</TableCell>
-                        <TableCell>Restricted</TableCell>
-                        <TableCell>Restricted</TableCell>
+                        <TableCell>{budgetStatusOrders(order)}</TableCell>
+                        <TableCell>{catalogueStatusOrders(order)}</TableCell>
                         <TableCell>
                           <Link
                             href={`/dashboard/reviewOrders/mgmtReview/mgmtOrders/pendingOrders/viewPendingOrder/${order.id}`}
@@ -107,7 +113,12 @@ const Page = () => {
                           </Link>
                         </TableCell>
                       </TableRow>
-                    ))}
+                    ))
+                  ) : (
+                    <TableRow>
+                      <TableCell colSpan={8}>No Pending Orders</TableCell>
+                    </TableRow>
+                  )}
                 </TableBody>
               </Table>
             )}
