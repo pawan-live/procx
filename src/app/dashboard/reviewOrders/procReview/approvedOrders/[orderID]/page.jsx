@@ -24,7 +24,10 @@ import {
   TableRow,
 } from "@/app/components/ui/table";
 import { Tabs, TabsContent } from "@/app/components/ui/tabs";
+import { catalogueStatus } from "@/app/helpers/Manager/catalogueStatus";
+import { budgetCalOrder } from "@/app/helpers/budgetCal";
 import { API_URLS, BASE_LOCAL, BASE_URL } from "@/app/utils/constants";
+import { ORDER_RESTRICTION, ORDER_STATUS } from "@/app/utils/constants";
 import axios from "axios";
 import { format, isValid, parseISO } from "date-fns";
 import { useRouter } from "next/navigation";
@@ -92,16 +95,13 @@ const Page = ({ params }) => {
     }
   };
 
-  //get Catalogue status
-  const getCatalogueStatus = () => {
-    console.log("Catalogue status response");
-    return order.items.some((item) => item.restricted === true);
-  };
-
   //get approval status if both false
   const getApprovalStatus = () => {
     console.log("Approval status response");
-    if (getBudgetStatus() === true || getCatalogueStatus() === true) {
+    if (
+      getBudgetStatus(budgetCalOrder(order.items)) === true ||
+      catalogueStatus(order.items) === ORDER_RESTRICTION.RESTRICTED
+    ) {
       console.log("Approval status response: restricted");
       return true;
     } else {
@@ -213,7 +213,7 @@ const Page = ({ params }) => {
                   <Label>Total Budget</Label>
                   <Input
                     type="text"
-                    defaultValue={budgetCal(order.items)}
+                    defaultValue={budgetCalOrder(order.items)}
                     disabled
                   ></Input>
                 </div>
@@ -223,9 +223,9 @@ const Page = ({ params }) => {
                   <Input
                     type="text"
                     defaultValue={
-                      getBudgetStatus(budgetCal(order.items))
-                        ? "Restricted"
-                        : "Not Restricted"
+                      getBudgetStatus(budgetCalOrder(order.items))
+                        ? ORDER_RESTRICTION.RESTRICTED
+                        : ORDER_RESTRICTION.NOTRESTRICED
                     }
                     disabled
                   ></Input>
@@ -235,9 +235,7 @@ const Page = ({ params }) => {
                   <Label>Catalogue Status</Label>
                   <Input
                     type="text"
-                    defaultValue={
-                      getCatalogueStatus() ? "Restricted" : "Not Restricted"
-                    }
+                    defaultValue={catalogueStatus(order.items)}
                     disabled
                   ></Input>
                 </div>
@@ -247,7 +245,9 @@ const Page = ({ params }) => {
                   <Input
                     type="text"
                     defaultValue={
-                      getApprovalStatus() ? "Restricted" : "Not Restricted"
+                      getApprovalStatus()
+                        ? ORDER_RESTRICTION.RESTRICTED
+                        : ORDER_RESTRICTION.NOTRESTRICED
                     }
                     disabled
                   ></Input>

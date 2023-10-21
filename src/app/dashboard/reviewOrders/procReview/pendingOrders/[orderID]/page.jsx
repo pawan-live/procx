@@ -21,7 +21,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/app/components/ui/card";
-import { Checkbox } from "@/app/components/ui/checkbox";
 import {
   Dialog,
   DialogContent,
@@ -43,9 +42,19 @@ import {
   TableRow,
 } from "@/app/components/ui/table";
 import { Tabs, TabsContent } from "@/app/components/ui/tabs";
-import { API_URLS, BASE_LOCAL, BASE_URL } from "@/app/utils/constants";
+import { catalogueStatus } from "@/app/helpers/Manager/catalogueStatus";
+import { getApprovalStatus } from "@/app/helpers/ProcStaff/approvalStatus";
+import { budgetCalOrder } from "@/app/helpers/budgetCal";
+import { getBudgetStatus } from "@/app/helpers/budgetStatus";
+import { formatDate } from "@/app/helpers/formatDate";
+import {
+  API_URLS,
+  BASE_LOCAL,
+  BASE_URL,
+  ORDER_RESTRICTION,
+} from "@/app/utils/constants";
+import { ORDER_STATUS } from "@/app/utils/constants";
 import axios from "axios";
-import { format, isValid, parseISO } from "date-fns";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import React from "react";
@@ -60,6 +69,10 @@ const Page = ({ params }) => {
   const [isLoading, setIsLoading] = React.useState(true);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isMgrDialogOpen, setIsMgrDialogOpen] = useState(false);
+
+  //format date
+  const orderDate = formatDate(order && order.createdAt);
+  const deliveryDate = formatDate(order && order.deliverDate);
 
   useEffect(() => {
     const getOrderByID = async () => {
@@ -80,14 +93,17 @@ const Page = ({ params }) => {
 
   //btn APPROVE
   const handleBtnApprove = (id) => {
-    if (budgetCal(order.items) < 100000 && !getCatalogueStatus()) {
+    if (
+      budgetCalOrder(order.items) < 100000 &&
+      catalogueStatus(order.items) === ORDER_RESTRICTION.NOTRESTRICED
+    ) {
       console.log("Order approve response: not restricted");
       setIsDialogOpen(false);
 
       const updateOrder = async () => {
         try {
           const res = await axios.put(`${BASE_URL}${API_URLS.ORDERS}/${id}`, {
-            orderStatus: "Approved",
+            orderStatus: ORDER_STATUS.APPROVED,
           });
           router.push("/dashboard/reviewOrders/procReview/pendingOrders");
           console.log(res.data);
@@ -102,9 +118,12 @@ const Page = ({ params }) => {
     }
   };
 
-  //bt SEND TO MANAGEMENT
+  //SEND TO MANAGEMENT
   const handleBtnManagement = () => {
-    if (budgetCal(order.items) > 100000 || getCatalogueStatus()) {
+    if (
+      budgetCalOrder(order.items) > 100000 ||
+      catalogueStatus(order.items) === ORDER_RESTRICTION.RESTRICTED
+    ) {
       setIsMgrDialogOpen(true);
       console.log("Order send response: true");
     } else {
@@ -112,12 +131,11 @@ const Page = ({ params }) => {
       console.log("Order send response: false");
     }
   };
-
   const handleMgrSend = (id) => {
     const updateOrder = async () => {
       try {
         const res = await axios.put(`${BASE_URL}${API_URLS.ORDERS}/${id}`, {
-          orderStatus: "Partially Approved",
+          orderStatus: ORDER_STATUS.PARTIALLY_APPROVED,
         });
         router.push("/dashboard/reviewOrders/procReview/pendingOrders");
         console.log(res.data);
@@ -133,7 +151,7 @@ const Page = ({ params }) => {
     const updateOrder = async () => {
       try {
         const res = await axios.put(`${BASE_URL}${API_URLS.ORDERS}/${id}`, {
-          orderStatus: "Rejected",
+          orderStatus: ORDER_STATUS.REJECTED,
         });
         router.push("/dashboard/reviewOrders/procReview/pendingOrders");
         console.log(res.data);
@@ -142,57 +160,6 @@ const Page = ({ params }) => {
       }
     };
     updateOrder();
-  };
-
-  //format date
-  function formatDate(date) {
-    return date && isValid(parseISO(date))
-      ? format(parseISO(date), "dd/MM/yyyy")
-      : null;
-  }
-  const orderDate = formatDate(order && order.createdAt);
-  const deliveryDate = formatDate(order && order.deliverDate);
-
-  //budget calculation
-  let totals = 0;
-  const budgetCal = (order) => {
-    let total = 0;
-    for (let i = 0; i < order.length; i++) {
-      total += order[i].price * order[i].qty;
-    }
-    console.log("Budget response: true");
-    total = totals;
-    totals = order.reduce((acc, order) => acc + order.price * order.qty, 0);
-    return totals;
-  };
-
-  //get budget status
-  const getBudgetStatus = (budget) => {
-    if (budget > 100000) {
-      console.log("Budget status response: true");
-      return true;
-    } else {
-      console.log("Budget status response: false");
-      return false;
-    }
-  };
-
-  //get Catalogue status
-  const getCatalogueStatus = () => {
-    console.log("Catalogue status response");
-    return order.items.some((item) => item.restricted === true);
-  };
-
-  //get approval status if both false
-  const getApprovalStatus = () => {
-    console.log("Approval status response");
-    if (getBudgetStatus() === true || getCatalogueStatus() === true) {
-      console.log("Approval status response: restricted");
-      return true;
-    } else {
-      console.log("Approval status response: not restricted");
-      return false;
-    }
   };
 
   const handleViewSupplier = (e) => {
@@ -305,7 +272,7 @@ const Page = ({ params }) => {
                   <Label>Total Budget</Label>
                   <Input
                     type="text"
-                    defaultValue={budgetCal(order.items)}
+                    defaultValue={budgetCalOrder(order.items)}
                     disabled
                   ></Input>
                 </div>
@@ -315,7 +282,7 @@ const Page = ({ params }) => {
                   <Input
                     type="text"
                     defaultValue={
-                      getBudgetStatus(budgetCal(order.items))
+                      getBudgetStatus(budgetCalOrder)
                         ? "Restricted"
                         : "Not Restricted"
                     }
@@ -327,9 +294,7 @@ const Page = ({ params }) => {
                   <Label>Catalogue Status</Label>
                   <Input
                     type="text"
-                    defaultValue={
-                      getCatalogueStatus() ? "Restricted" : "Not Restricted"
-                    }
+                    defaultValue={catalogueStatus(order.items)}
                     disabled
                   ></Input>
                 </div>
@@ -339,7 +304,7 @@ const Page = ({ params }) => {
                   <Input
                     type="text"
                     defaultValue={
-                      getApprovalStatus() ? "Restricted" : "Not Restricted"
+                      getApprovalStatus ? "Restricted" : "Not Restricted"
                     }
                     disabled
                   ></Input>

@@ -24,7 +24,11 @@ import {
   TableRow,
 } from "@/app/components/ui/table";
 import { Tabs, TabsContent } from "@/app/components/ui/tabs";
+import { catalogueStatus } from "@/app/helpers/Manager/catalogueStatus";
+import { budgetCalOrder } from "@/app/helpers/budgetCal";
+import { formatDate } from "@/app/helpers/formatDate";
 import { API_URLS, BASE_LOCAL, BASE_URL } from "@/app/utils/constants";
+import { ORDER_RESTRICTION, ORDER_STATUS } from "@/app/utils/constants";
 import axios from "axios";
 import { format, isValid, parseISO } from "date-fns";
 import { useRouter } from "next/navigation";
@@ -38,6 +42,10 @@ const Page = ({ params }) => {
   const router = useRouter();
   const [order, setOrder] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
+
+  //format date
+  const orderDate = formatDate(order && order.createdAt);
+  const deliveryDate = formatDate(order && order.deliverDate);
 
   useEffect(() => {
     const getOrderByID = async () => {
@@ -56,28 +64,6 @@ const Page = ({ params }) => {
     getOrderByID();
   }, [params.orderID]);
 
-  //format date
-  function formatDate(date) {
-    return date && isValid(parseISO(date))
-      ? format(parseISO(date), "dd/MM/yyyy")
-      : null;
-  }
-  const orderDate = formatDate(order && order.createdAt);
-  const deliveryDate = formatDate(order && order.deliverDate);
-
-  //budget calculation
-  let totals = 0;
-  const budgetCal = (order) => {
-    let total = 0;
-    for (let i = 0; i < order.length; i++) {
-      total += order[i].price * order[i].qty;
-    }
-    console.log("Budget response: true");
-    total = totals;
-    totals = order.reduce((acc, order) => acc + order.price * order.qty, 0);
-    return totals;
-  };
-
   //get budget status
   const getBudgetStatus = (budget) => {
     if (budget > 100000) {
@@ -89,16 +75,13 @@ const Page = ({ params }) => {
     }
   };
 
-  //get Catalogue status
-  const getCatalogueStatus = () => {
-    console.log("Catalogue status response");
-    return order.items.some((item) => item.restricted === true);
-  };
-
   //get approval status if both false
   const getApprovalStatus = () => {
     console.log("Approval status response");
-    if (getBudgetStatus() === true || getCatalogueStatus() === true) {
+    if (
+      getBudgetStatus(budgetCalOrder(order.items)) === true ||
+      catalogueStatus(order.items) === ORDER_RESTRICTION.RESTRICTED
+    ) {
       console.log("Approval status response: restricted");
       return true;
     } else {
@@ -203,7 +186,7 @@ const Page = ({ params }) => {
                 <Label>Total Budget</Label>
                 <Input
                   type="text"
-                  defaultValue={budgetCal(order.items)}
+                  defaultValue={budgetCalOrder(order.items)}
                   disabled
                 ></Input>{" "}
               </div>
@@ -213,9 +196,9 @@ const Page = ({ params }) => {
                 <Input
                   type="text"
                   defaultValue={
-                    getBudgetStatus(budgetCal(order.items))
-                      ? "Restricted"
-                      : "Not Restricted"
+                    getBudgetStatus(budgetCalOrder(order.items))
+                      ? ORDER_RESTRICTION.RESTRICTED
+                      : ORDER_RESTRICTION.NOTRESTRICED
                   }
                   disabled
                 ></Input>
@@ -225,28 +208,34 @@ const Page = ({ params }) => {
                 <Label>Catalogue Status</Label>
                 <Input
                   type="text"
-                  defaultValue={
-                    getCatalogueStatus() ? "Restricted" : "Not Restricted"
-                  }
-                  disabled
-                ></Input>{" "}
+                  defaultValue={catalogueStatus(order.items)}
+                  readOnly
+                ></Input>
               </div>
 
               <div className="flex flex-col space-y-1.5 w-full lg:w-1/2">
                 <Label>Approval Status</Label>
                 <Input
                   type="text"
-                  defaultValue={
-                    getApprovalStatus() ? "Restricted" : "Not Restricted"
-                  }
-                  disabled
+                  value={order.orderStatus}
+                  className="bg-destructive"
+                  readOnly
                 ></Input>
+                {/* <Input
+                  type="text"
+                  defaultValue={
+                    getApprovalStatus()
+                      ? ORDER_RESTRICTION.RESTRICTED
+                      : ORDER_RESTRICTION.NOTRESTRICED
+                  }
+                  
+                ></Input> */}
               </div>
             </div>
           </CardContent>
           <CardContent className="space-y-1.5">
             <CardTitle>Rejected Reason</CardTitle>
-            <Input value="Reject kala thamai. Ai?" readOnly></Input>
+            <Input value="Rejected reason" disabled></Input>
           </CardContent>
         </Card>
 
@@ -266,22 +255,20 @@ const Page = ({ params }) => {
                   <TableHead>Budget</TableHead>
                   <TableHead>Catalogue Status</TableHead>
                 </TableRow>
-                <TableRow>
-                  <TableCell>001</TableCell>
-                  <TableCell>Gal</TableCell>
-                  <TableCell>150 LKR</TableCell>
-                  <TableCell>12</TableCell>
-                  <TableCell>1800</TableCell>
-                  <TableCell>Restricted</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell>002</TableCell>
-                  <TableCell>Vali</TableCell>
-                  <TableCell>200 LKR</TableCell>
-                  <TableCell>200</TableCell>
-                  <TableCell>40000</TableCell>
-                  <TableCell>Not Restricted</TableCell>
-                </TableRow>
+                {order &&
+                  order.items &&
+                  order.items.map((item) => (
+                    <TableRow key={item.id}>
+                      <TableCell>{item.id}</TableCell>
+                      <TableCell>{item.itemName}</TableCell>
+                      <TableCell>{item.price}</TableCell>
+                      <TableCell>{item.qty}</TableCell>
+                      <TableCell>{item.qty * item.price}</TableCell>
+                      <TableCell>
+                        {item.restricted ? "Restricted" : "Not Restricted"}
+                      </TableCell>
+                    </TableRow>
+                  ))}
               </TableBody>
             </Table>
           </CardContent>

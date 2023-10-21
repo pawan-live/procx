@@ -20,9 +20,19 @@ import {
   TableRow,
 } from "@/app/components/ui/table";
 import { Tabs, TabsContent } from "@/app/components/ui/tabs";
-import { API_URLS, BASE_LOCAL, BASE_URL } from "@/app/utils/constants";
+import { catalogueStatus } from "@/app/helpers/Manager/catalogueStatus";
+import { filterOrders } from "@/app/helpers/ProcStaff/filter";
+import { budgetCalOrders } from "@/app/helpers/budgetCal";
+import { getBudgetStatus } from "@/app/helpers/budgetStatus";
+import { formatDate } from "@/app/helpers/formatDate";
+import {
+  API_URLS,
+  BASE_LOCAL,
+  BASE_URL,
+  ORDER_RESTRICTION,
+} from "@/app/utils/constants";
+import { ORDER_STATUS } from "@/app/utils/constants";
 import axios from "axios";
-import { format } from "date-fns";
 import { Eye } from "lucide-react";
 import Link from "next/link";
 import { useEffect } from "react";
@@ -48,46 +58,6 @@ const Page = () => {
       console.error("ERROR fetching data:", error);
     }
   };
-
-  //filter condition
-  const filterConditionPending = (order) => {
-    for (let i = 0; i < orders.length; i++) {
-      console.log(order.orderStatus);
-      if (order.orderStatus === "pending") {
-        return true;
-      }
-    }
-    return false;
-  };
-
-  //budget calculation
-  let totals = 0;
-  const budgetCal = (order) => {
-    let total = 0;
-    for (let i = 0; i < order.items.length; i++) {
-      total += order.items[i].price * order.items[i].qty;
-    }
-    total = totals;
-    totals = order.items.reduce((acc, item) => acc + item.price * item.qty, 0);
-    return totals;
-  };
-
-  //get Catalogue status
-  const getCatalogueStatus = (order) => {
-    return order.items.some((item) => item.restricted === true);
-  };
-
-  //get budget status
-  const getBudgetStatus = (budget) => {
-    if (budget > 100000) {
-      console.log("Budget status response: true");
-      return true;
-    } else {
-      console.log("Budget status response: false");
-      return false;
-    }
-  };
-
   return (
     <Tabs defaultValue="overview" className="space-y-4 p-5">
       <TabsContent value="overview" className="space-y-4">
@@ -100,12 +70,11 @@ const Page = () => {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            {isLoading && (
+            {isLoading ? (
               <div className="flex flex-col justify-center items-center w-full h-60">
                 <BarLoader width={300} height={5} color="black" />
               </div>
-            )}
-            {!isLoading && (
+            ) : (
               <Table>
                 <TableBody>
                   <TableRow>
@@ -118,27 +87,19 @@ const Page = () => {
                     <TableHead>Catalogue Status</TableHead>
                   </TableRow>
                   {orders.length > 0 &&
-                    orders.filter(filterConditionPending).map((order) => (
+                    filterOrders(orders, ORDER_STATUS.PENDING, (order) => (
                       <TableRow key={order.id}>
                         <TableCell>{order.id.toString()}</TableCell>
-                        <TableCell>
-                          {format(new Date(order.createdAt), "dd/MM/yyyy")}
-                        </TableCell>
-                        <TableCell>
-                          {format(new Date(order.deliverDate), "dd/MM/yyyy")}
-                        </TableCell>
+                        <TableCell>{formatDate(order.createdAt)}</TableCell>
+                        <TableCell>{formatDate(order.deliverDate)}</TableCell>
                         <TableCell>Colombo</TableCell>
-                        <TableCell>{budgetCal(order)}</TableCell>
+                        <TableCell>{budgetCalOrders(order)}</TableCell>
                         <TableCell>
-                          {getBudgetStatus(budgetCal(order))
-                            ? "Restricted"
-                            : "Not Restricted"}
+                          {getBudgetStatus(budgetCalOrders(order))
+                            ? ORDER_RESTRICTION.RESTRICTED
+                            : ORDER_RESTRICTION.NOTRESTRICED}
                         </TableCell>
-                        <TableCell>
-                          {getCatalogueStatus(order)
-                            ? "Restricted"
-                            : "Not Restricted"}
-                        </TableCell>
+                        <TableCell>{catalogueStatus(order.items)}</TableCell>
                         <TableCell>
                           <Link
                             href={`/dashboard/reviewOrders/procReview/pendingOrders/${order.id}`}
