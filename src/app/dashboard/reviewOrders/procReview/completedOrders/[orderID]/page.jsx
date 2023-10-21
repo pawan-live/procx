@@ -44,7 +44,7 @@ const Page = () => {
                   <Label>Order raised by</Label>
                   <Input
                     type="text"
-                    value="Haththikke Samarasuriya"
+                    value="Vimal Samarasuriya"
                     readOnly
                   ></Input>
                   {/* <Label>Description</Label>
@@ -60,11 +60,7 @@ const Page = () => {
                 </div>
                 <div className="flex flex-col space-y-1.5 w-full lg:w-1/2">
                   <Label>Supplier Name</Label>
-                  <Input
-                    type="text"
-                    value="Badu Hari Suppliers"
-                    readOnly
-                  ></Input>
+                  <Input type="text" value="Dhanu Suppliers" readOnly></Input>
                   <Label>Received Date</Label>
                   <Input type="text" value="Jan 20, 2022" readOnly></Input>
                 </div>

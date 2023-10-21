@@ -53,7 +53,7 @@ const Page = () => {
                 </TableRow>
                 <TableRow>
                   <TableCell>Invoice001</TableCell>
-                  <TableCell>Mara Puthra</TableCell>
+                  <TableCell>Sri Suppliers</TableCell>
                   <TableCell>Colombo</TableCell>
                   <TableCell>Jan 30, 2022</TableCell>
                   <TableCell>
