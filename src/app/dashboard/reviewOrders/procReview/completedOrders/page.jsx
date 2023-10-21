@@ -73,7 +73,6 @@ const Page = () => {
                   <TableHead>Order ID</TableHead>
                   <TableHead>Order Date</TableHead>
                   <TableHead>Required Date</TableHead>
-                  <TableHead>Site Location</TableHead>
                   <TableHead>Budget</TableHead>
                   <TableHead>Budget Status</TableHead>
                   <TableHead>Catalogue Status</TableHead>
@@ -84,7 +83,6 @@ const Page = () => {
                       <TableCell>{order.id.toString()}</TableCell>
                       <TableCell>{formatDate(order.createdAt)}</TableCell>
                       <TableCell>{formatDate(order.deliverDate)}</TableCell>
-                      <TableCell>{Colombo}</TableCell>
                       <TableCell>{budgetCalOrders(order)}</TableCell>
                       <TableCell>
                         {getBudgetStatus(budgetCalOrders(order))

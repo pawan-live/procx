@@ -108,7 +108,6 @@ const Page = () => {
                     <TableHead>Order Date</TableHead>
                     <TableHead>Required Date</TableHead>
                     <TableHead>Approved Date</TableHead>
-                    <TableHead>Site Location</TableHead>
                     <TableHead>Budget</TableHead>
                     <TableHead>Order Status</TableHead>
                     {/* <TableHead>Budget Status</TableHead>
@@ -125,7 +124,6 @@ const Page = () => {
                           {format(new Date(order.deliverDate), "dd/MM/yyyy")}
                         </TableCell>
                         <TableCell>{"21/10/2023"}</TableCell>
-                        <TableCell>{}</TableCell>
                         <TableCell>{budgetCal(order)}</TableCell>
                         <TableCell>{order.orderStatus}</TableCell>
 

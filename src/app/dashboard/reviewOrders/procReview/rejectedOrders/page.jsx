@@ -107,8 +107,7 @@ const Page = () => {
                 <TableRow>
                   <TableHead>Order ID</TableHead>
                   <TableHead>Order Date</TableHead>
-                  {/* <TableHead>Rejected Date</TableHead> */}
-                  <TableHead>Site Location</TableHead>
+                  <TableHead>Required Date</TableHead>
                   <TableHead>Budget</TableHead>
                   <TableHead>Budget Status</TableHead>
                   <TableHead>Catalogue Status</TableHead>
@@ -118,13 +117,11 @@ const Page = () => {
                     <TableRow key={order.id}>
                       <TableCell>{order.orderNo.toString()}</TableCell>
                       <TableCell>
-                        {" "}
                         {format(new Date(order.createdAt), "dd/MM/yyyy")}
                       </TableCell>
-                      {/* <TableCell>
+                      <TableCell>
                         {format(new Date(order.deliverDate), "dd/MM/yyyy")}
-                      </TableCell> */}
-                      <TableCell>Colombo</TableCell>
+                      </TableCell>
                       <TableCell>{budgetCal(order)}</TableCell>
                       <TableCell>
                         {" "}
