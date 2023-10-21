@@ -86,7 +86,7 @@ const Page = () => {
               <Table>
                 <TableBody>
                   <TableRow>
-                    <TableHead>Order Name</TableHead>
+                    <TableHead>Order ID</TableHead>
                     <TableHead>Order Date</TableHead>
                     <TableHead>Required Date</TableHead>
                     <TableHead>Rejected Date</TableHead>
@@ -98,7 +98,7 @@ const Page = () => {
                   {managerRejectedFilter(orders).length > 0 &&
                     managerRejectedFilter(orders).map((order) => (
                       <TableRow key={order.id}>
-                        <TableCell>{order.orderNo}</TableCell>
+                        <TableCell>{order.id}</TableCell>
                         <TableCell>
                           {format(new Date(order.createdAt), "dd/MM/yyyy")}
                         </TableCell>

@@ -77,7 +77,7 @@ const Page = () => {
               <Table>
                 <TableBody>
                   <TableRow>
-                    <TableHead>Order Name</TableHead>
+                    <TableHead>Order ID</TableHead>
                     <TableHead>Order Date</TableHead>
                     <TableHead>Required Date</TableHead>
                     <TableHead>Site Location</TableHead>
@@ -88,7 +88,7 @@ const Page = () => {
                   {managerPendingFilter(orders).length > 0 ? (
                     managerPendingFilter(orders).map((order) => (
                       <TableRow key={order.id}>
-                        <TableCell>{order.orderNo}</TableCell>
+                        <TableCell>{order.id}</TableCell>
                         <TableCell>
                           {format(new Date(order.createdAt), "dd/MM/yyyy")}
                         </TableCell>
