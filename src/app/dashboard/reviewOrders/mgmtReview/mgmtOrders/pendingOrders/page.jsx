@@ -21,6 +21,8 @@ import {
 } from "@/app/components/ui/table";
 import { Tabs, TabsContent } from "@/app/components/ui/tabs";
 import { budgetCalOrders } from "@/app/helpers/Manager/budgetCal";
+import { budgetStatusOrders } from "@/app/helpers/Manager/budgetStatus";
+import { catalogueStatusOrders } from "@/app/helpers/Manager/catalogueStatus";
 import { managerPendingFilter } from "@/app/helpers/Manager/managerFilters";
 import { API_URLS, BASE_URL, ORDER_STATUS } from "@/app/utils/constants";
 import axios from "axios";
@@ -95,8 +97,8 @@ const Page = () => {
                         </TableCell>
                         <TableCell>Colombo</TableCell>
                         <TableCell>{budgetCalOrders(order)}</TableCell>
-                        <TableCell>Restricted</TableCell>
-                        <TableCell>Restricted</TableCell>
+                        <TableCell>{budgetStatusOrders(order)}</TableCell>
+                        <TableCell>{catalogueStatusOrders(order)}</TableCell>
                         <TableCell>
                           <Link
                             href={`/dashboard/reviewOrders/mgmtReview/mgmtOrders/pendingOrders/viewPendingOrder/${order.id}`}

@@ -1,6 +1,7 @@
 "use client";
 
 import BreadCrumbs from "@/app/components/Navbar/BreadCrumbs";
+import { Badge } from "@/app/components/ui/badge";
 import { Button } from "@/app/components/ui/button";
 import {
   Card,
@@ -273,9 +274,15 @@ const Page = ({ params }) => {
                         <TableCell>{item.qty}</TableCell>
                         <TableCell>{item.price * item.qty} LKR</TableCell>
                         <TableCell>
-                          {item.restricted
-                            ? ORDER_RESTRICION.RESTRICTED
-                            : ORDER_RESTRICION.NOTRESTRICED}
+                          {item.restricted ? (
+                            <Badge variant="destructive">
+                              {ORDER_RESTRICION.RESTRICTED}
+                            </Badge>
+                          ) : (
+                            <Badge variant="outline">
+                              {ORDER_RESTRICION.NOTRESTRICED}
+                            </Badge>
+                          )}
                         </TableCell>
                       </TableRow>
                     ))}
