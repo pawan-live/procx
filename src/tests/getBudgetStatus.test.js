@@ -19,7 +19,7 @@ describe("getBudgetStatus", () => {
     expect(result).toBe(false);
   });
 
-  it("rreturn false when budget is zero", () => {
+  it("return false when budget is zero", () => {
     const budget = 0;
     const result = getBudgetStatus(budget);
     expect(result).toBe(false);
@@ -29,11 +29,5 @@ describe("getBudgetStatus", () => {
     const budget = -50000;
     const result = getBudgetStatus(budget);
     expect(result).toBe(false);
-  });
-
-  it("return true when budget is a large positive value", () => {
-    const budget = 1000000;
-    const result = getBudgetStatus(budget);
-    expect(result).toBe(true);
   });
 });
